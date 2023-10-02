@@ -6,11 +6,12 @@ import java.util.ArrayList;
 
 class Solution {
     public int[] solution(String[] keymap, String[] targets) {
-        
+        int[] answer = new int[targets.length];
+
         ArrayList<Integer> list = new ArrayList<>();
         // keymap의 각 문자에 대한 인덱스를 map에 추가 
         Map<Character, Integer> map = new HashMap<>();
-        
+
         for(String s : keymap) {
             for(int i = 0; i < s.length(); i++) {
                 char tmp = s.charAt(i);
@@ -33,16 +34,13 @@ class Solution {
                 } else {
                     count += map.getOrDefault(c, -1);
                 }
-                
+
             }
-            list.add(count);
+            answer[index++] = count;
         }
+
         
-        int[] answer = new int[list.size()];
         
-        for(int i = 0; i < list.size(); i++) {
-            answer[i] = list.get(i);
-        }
         return answer;
     }
 }
