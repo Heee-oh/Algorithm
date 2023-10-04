@@ -1,16 +1,15 @@
 class Solution {
     public int solution(int n, int m, int[] section) {
-        int count = 1;
-        int paint = section[0] + m - 1;
+        int answer = 0;
+        int paint = 0;
         
-        for(int wall : section) {
-            if(paint < wall) {
-                paint = wall + m - 1;
-                count++;
+        for(int no : section) {
+
+            if(paint < no){
+                paint = no + m - 1;
+                answer++;
             }
         }
-        return count;
+        return answer;
     }
 }
-
-
