@@ -11,7 +11,7 @@ public class Main {
         dp[1] = 1; //2x1 로 하나 채우기
         dp[2] = 2; // 2x1로 || 1x2로 2가지 방법
 
-        for(int i = 3; i <= 1000; i++) {
+        for(int i = 3; i <= n; i++) {
             dp[i] = (dp[i-2] + dp[i-1]) % 10007;
         }
 
