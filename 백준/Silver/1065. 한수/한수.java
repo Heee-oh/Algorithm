@@ -7,14 +7,14 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringBuilder sb = new StringBuilder(br.readLine());
         
-        if(sb.length() < 3) {
-            bw.write(Integer.parseInt(sb.toString())+"");
+        int x = Integer.parseInt(sb.toString());
+        
+        if(x < 100) {
+            bw.write(sb.toString());
             bw.flush();
             return;
         }
 
-        int x = Integer.parseInt(sb.toString());
-   
         int[][] arr = new int[x+1][4];
         
         for(int i = 100; i <= x; i++) {
@@ -25,12 +25,8 @@ public class Main {
 
         int count = 0;
         for(int i = 100; i <= x; i++) {
-
-            if (arr[i][0] - arr[i][1] == arr[i][1] - arr[i][2] && arr[i][0] != arr[i][2])
+            if (arr[i][0] - arr[i][1] == arr[i][1] - arr[i][2] )
                 count++;
-            if(arr[i][0] == arr[i][1] && arr[i][1] == arr[i][2]) {
-                count++;
-            }
         }
 
         bw.write((count + 99) + "");
