@@ -1,8 +1,5 @@
 import java.io.*;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Scanner;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
 
@@ -35,7 +32,7 @@ public class Main {
 
         }
 
-        dfs(1);
+        dfs_stack(1);
 
         bw.write(count + "");
         bw.flush();
@@ -52,6 +49,27 @@ public class Main {
                 dfs(i);
             }
 
+        }
+
+    }
+
+    public static void dfs_stack(int startN) {
+
+        Stack<Integer> stack = new Stack<>();
+
+        visited[startN] = true;
+        stack.push(startN);
+
+        while (!stack.isEmpty()) {
+            int node = stack.pop();
+
+            for (int i = 1; i <= V; i++) {
+                if (graph[node][i] == 1 && !visited[i]) {
+                    visited[i] = true;
+                    stack.push(i);
+                    count++;
+                }
+            }
         }
 
     }
