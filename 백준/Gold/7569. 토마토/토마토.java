@@ -26,6 +26,7 @@ public class Main {
 
         graph = new int[H][N][M];
         visited = new boolean[H][N][M];
+        Queue<int[]> q = new LinkedList<>();
 
 
         for (int i = 0; i < H; i++) {
@@ -35,32 +36,15 @@ public class Main {
                 line = line.replaceAll("-1", "2").replaceAll(" ", "");
 
                 for (int k = 0; k < M; k++) {
-
                     int tomato = line.charAt(k) - '0';
-
                     graph[i][j][k] = (tomato == 2) ? -1 : tomato;
 
-                }
-
-            }
-        }
-
-        Queue<int[]> q = new LinkedList<>();
-
-        for (int i = 0; i < H; i++) {
-            for (int j = 0; j < N; j++) {
-                for (int k = 0; k < M; k++) {
-
                     if (graph[i][j][k] == 1) {
-
                         q.add(new int[]{i,j,k});
                     }
-
-
                 }
             }
         }
-
 
         bfs(q);
 
@@ -77,12 +61,9 @@ public class Main {
 
                     }
                     max = Math.max(max, width);
-
                 }
             }
         }
-
-
 
 
         bw.write( max -1 + "");
@@ -94,18 +75,13 @@ public class Main {
 
         int h,n,m;
 
-
         while (!q.isEmpty()) {
             int[]node = q.poll();
 
-
             for (int i = 0; i < 3; i++) {
                 h = node[0] + floor[i];
-                
-                
-                
-                if (h < 0 || h >= H) {
 
+                if (h < 0 || h >= H) {
                     continue;
                 }
                 
@@ -119,14 +95,9 @@ public class Main {
                     n =  node[1] + updown[j];
                     m =  node[2] + leftright[j];
 
-                    if (n < 0 || m < 0) {
+                    if (n < 0 || m < 0 || n >= N || m >= M) {
                         continue;
                     }
-
-                    if (n >= N || m >= M) {
-                        continue;
-                    }
-
 
                     if (graph[node[0]][n][m] == 0) {
                         graph[node[0]][n][m] = graph[node[0]][node[1]][node[2]] + 1;
@@ -135,15 +106,11 @@ public class Main {
                     }
 
 
-
-
-
                 }
             }
 
         }
-
-
+        
     }
 
 }
