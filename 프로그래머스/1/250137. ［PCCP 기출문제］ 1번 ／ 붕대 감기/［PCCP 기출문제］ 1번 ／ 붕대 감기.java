@@ -4,7 +4,7 @@ class Solution {
         int timeIndex = 0;
         int healthTime = 0;
         int maxHp = health;
-        
+
         //공격 시간 
         int attackTime = attacks[timeIndex][0];
 
@@ -21,7 +21,7 @@ class Solution {
                     attackTime = attacks[timeIndex][0];
                 }
                 healthTime = 0;
-            
+
                 // 회복
             } else {
                 if (maxHp > health + bandage[1]) {
@@ -33,7 +33,7 @@ class Solution {
 
                 if (healthTime == bandage[0]) {
                     healthTime = 0;
-                    
+
                     // 추가 회복량 
                     if (maxHp >= health + bandage[2]) {
                         health += bandage[2];
