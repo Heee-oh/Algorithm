@@ -10,10 +10,10 @@ class Solution {
             
             if (h + dh[i] >= board.length || w + dw[i] >= board[0].length || h + dh[i] < 0 || w + dw[i] < 0) {
                 continue;
-            } else {
-                if (board[ h+dh[i] ][ w+dw[i] ].equals(currentColor)) {
+            } 
+            
+            if (board[ h+dh[i] ][ w+dw[i] ].equals(currentColor)) {
                     count++;
-                }
             }
         }
         
