@@ -37,11 +37,13 @@ class Solution {
 
             numberSet.clear();
         }
+        
+        int max = 0;
+        for (int ia : depth) {
+            max = Math.max(max, ia);
+        }
 
-        return Arrays.stream(depth)
-                .max()
-                .getAsInt();
-
+        return max;
     }
 
     public  int bfs(int row, int col, int number, int temp) {
