@@ -11,8 +11,6 @@ class Solution {
                 break;    
         }
         
-            
-        
         return fibonacci[n];
     }
 }
