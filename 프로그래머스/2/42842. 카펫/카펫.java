@@ -5,12 +5,11 @@ class Solution {
         // 가로 길이 >= 세로
         
         int area = brown + yellow;
-        
+
         for (int i = 3; i < 5001; i++) {
             if (area % i == 0 && (area / i) <= i ) {   
-                if (check(new int[] {i, area/i}, brown, yellow)) 
+                if (check(new int[] {i, area/i}, brown)) 
                     return new int[] {i, area/i};     
-                
             }
         }
         
@@ -18,7 +17,7 @@ class Solution {
         return answer;
     }
     
-    public boolean check(int[] arr, int br, int ye) {
+    public boolean check(int[] arr, int br) {
         int temp = (br - (arr[0] * 2)) / 2;
         if (temp <= arr[1] - 2)
             return true;
