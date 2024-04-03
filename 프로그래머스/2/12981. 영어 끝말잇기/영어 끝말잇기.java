@@ -17,7 +17,7 @@ class Solution {
                 return new int[]{(i % n) + 1 , (int)Math.ceil((float)(i + 1) / n)};
                 
             else if (lastWord != words[i].charAt(0)) 
-                return new int[]{(i % n) + 1 , (int)Math.round((float)(i + 1) / n)};
+                return new int[]{(i % n) + 1 , (int)Math.ceil((float)(i + 1) / n)};
             
             map.put(words[i], true);
             lastWord = words[i].charAt(words[i].length() - 1);
