@@ -14,10 +14,10 @@ class Solution {
         
         for (int i = 0; i < words.length; i++) {          
             if(map.getOrDefault(words[i], false)) 
-                return new int[]{(i % n) + 1 , (int)Math.ceil((float)(i + 1) / n)};
+                return new int[]{(i % n) + 1, (i  / n) + 1};
                 
             else if (lastWord != words[i].charAt(0)) 
-                return new int[]{(i % n) + 1 , (int)Math.ceil((float)(i + 1) / n)};
+                return new int[]{(i % n) + 1 , (i / n) + 1};
             
             map.put(words[i], true);
             lastWord = words[i].charAt(words[i].length() - 1);
