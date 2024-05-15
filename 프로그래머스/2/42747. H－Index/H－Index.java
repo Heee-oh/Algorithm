@@ -3,8 +3,6 @@ import java.util.Arrays;
 class Solution {
     public int solution(int[] citations) {
         Arrays.sort(citations);
-        
-        if (citations.length == 1) return citations[0];
         int max = 0;
         
         for (int i = 0; i < citations[citations.length - 1]; i++) {
