@@ -9,9 +9,8 @@ class Solution {
         for (int i = 0; i < speeds.length; i++) {
             int tmp = (100 - progresses[i]) / speeds[i];
             if ((100 - progresses[i]) % speeds[i] != 0) tmp++;
+            if (max == 0) max = tmp;
             
-            if (max == 0) max = tmp;  
-             
             if (max < tmp) {
                 list.add(count);
                 count = 0;
@@ -23,12 +22,12 @@ class Solution {
         }
         
         if (count != 0) list.add(count);
-
         
+        int[] answer = new int[list.size()];
         
-        
-        return list.stream()
-            .mapToInt(x->x)
-            .toArray();
+        for (int i = 0; i < answer.length; i++) {
+            answer[i] = list.get(i);
+        }
+        return answer;
     }
 }
