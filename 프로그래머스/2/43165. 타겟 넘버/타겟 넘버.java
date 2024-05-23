@@ -9,15 +9,13 @@ class Solution {
     // + - 로 두갈림길로 계속해서 나뉨 
     private void dfs(int[] arr, int target, int index, int sum) {
         if (index == arr.length) {
-            if (sum == target) count++;
+            if (sum == target) 
+                count++;    
             return;
         } 
         
-        sum += arr[index];
-        dfs(arr, target, index+1, sum);
-        
-        sum -= arr[index] * 2;
-        dfs(arr, target, index+1, sum);
+        dfs(arr, target, index+1, sum + arr[index]);
+        dfs(arr, target, index+1, sum - arr[index]);
         
     }
 }
