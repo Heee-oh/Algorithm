@@ -6,8 +6,7 @@ class Solution {
         // 이전X , 이동후 X, 이전Y, 이동후 Y
         Set<String> set = new HashSet<>();
         StringBuilder sb = new StringBuilder();
-        
-        int count = 0;
+
         for (char command : dirs.toCharArray()) {
             if (command == 'L' && currentX - 1 >= -5) {
                 sb.append(currentX).append(currentX - 1).append(currentY).append(currentY);
@@ -22,7 +21,6 @@ class Solution {
                 set.add(sb.toString());
                 sb.delete(0, sb.length());
                 currentX--;
-                count++;
                     
             }else if (command == 'D' && currentY - 1 >= -5) {
                 sb.append(currentX).append(currentX).append(currentY).append(currentY - 1);
@@ -37,7 +35,6 @@ class Solution {
                 set.add(sb.toString());
                 sb.delete(0, sb.length());
                 currentY--;
-                count++;
                 
             }else if (command == 'R' && currentX + 1 <= 5) {
                 sb.append(currentX).append(currentX + 1).append(currentY).append(currentY);
@@ -52,7 +49,6 @@ class Solution {
                 set.add(sb.toString());
                 sb.delete(0, sb.length());
                 currentX++;
-                count++;
                     
             }else if (command == 'U' && currentY + 1 <= 5) {
                 sb.append(currentX).append(currentX).append(currentY).append(currentY + 1);
@@ -67,11 +63,11 @@ class Solution {
                 set.add(sb.toString());
                 sb.delete(0, sb.length());
                 currentY++;
-                count++;
+
             }
         }
 
         
-        return  count;
+        return  set.size()/2;
     }
 }
