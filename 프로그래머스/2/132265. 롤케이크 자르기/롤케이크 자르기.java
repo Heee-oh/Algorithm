@@ -17,7 +17,7 @@ class Solution {
             cheolsuSet.add(topping[i]);
             int broTopping = map.getOrDefault(topping[i], 0);
             
-            if (broTopping == 0 || broTopping == 1) 
+            if (broTopping == 1) 
                 map.remove(topping[i]);
             else 
                 map.put(topping[i], broTopping - 1);
