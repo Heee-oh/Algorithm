@@ -15,10 +15,10 @@ public class Main {
             int count = 0;
             int N = Integer.parseInt(br.readLine());
 
-            while(N > 0) {
-                count += (N / 5);
-                N /= 5;
+            for (int i = 5; i <= N; i *= 5) {
+                count += N / i;
             }
+
 
             bw.write(count+ "\n");
             bw.flush();
