@@ -35,13 +35,13 @@ public class Main {
             return;
         }
 
-        // 설치 후 암것도 안함 and 0으로 가득채움
-        nSeconds --;
-//        System.out.println(nSeconds);
+        // 설치 후 무동작이기에 1초를 빼고 시작
+        nSeconds--;
 
-        while (nSeconds-->0) {
-
-            nSeconds--;
+        while (nSeconds > 0) {
+            
+            // 0으로 채우고(1초) + 폭발시키기(1초) 
+            nSeconds -= 2;
 
             // 폭팔한 곳은 0으로 채우기
             for (int i = 0; i < R; i++) {
@@ -68,7 +68,7 @@ public class Main {
 
             }
 
-            // 폭발 후 원래  상황으로 만듦
+            // 폭발 후 상황으로 만듦
             for (int i = 0; i < R; i++) {
 
                 for (int j = 0; j < C; j++) {
@@ -81,19 +81,9 @@ public class Main {
                 }
 
             }
-
-//            for (char[] chars : graph) {
-//                System.out.println(chars);
-//            }
-//            System.out.println();
-
-
             visited = new boolean[R][C];
-
-
         }
-
-//
+        
         for (char[] chars : graph) {
             for (char aChar : chars) {
                 bw.write(aChar);
@@ -103,26 +93,7 @@ public class Main {
         }
 
         bw.close();
-
-        // 1초가 지난 뒤에는 아무것도 안함
-        nSeconds--;
-
-
-        // 폭탄 true 로 설정
-        // 터지면 터진범위 true로 설정
-        // false면 true / true 면 false
-
-
-
-
-        // true 면 false
-
-        // 제출전 한번 뒤집기
-
-
-
-
-
+        
     }
 
 }
