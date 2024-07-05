@@ -22,22 +22,13 @@ public class Main {
 
         String[] split = s.split("0+");
         String[] split1 = s.split("1+");
-
-        int oneCount = 0, zeroCount = 0;
-
-        for (String string : split) {
-            if (string.contains("1")) {
-                oneCount++;
-            }
+        
+        if (split[0].equals("")) {
+            System.out.println(Math.min(split.length - 1, split1.length));
+        } else if (split1[0].equals("")) {
+            System.out.println(Math.min(split.length, split1.length - 1));
         }
 
-        for (String string : split1) {
-            if (string.contains("0")) {
-                zeroCount++;
-            }
-        }
-
-        System.out.println(Math.min(oneCount, zeroCount));
 
 
     }
