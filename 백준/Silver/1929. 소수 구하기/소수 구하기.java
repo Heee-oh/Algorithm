@@ -17,8 +17,7 @@ public class Main {
         int max = Integer.parseInt(st.nextToken());
 
 
-        System.out.println(prime(min,max));
-
+        bw.write(prime(min,max));
         bw.flush();
         bw.close();
 
@@ -28,9 +27,10 @@ public class Main {
         boolean[] arr = new boolean[1000001];
         StringBuilder sb = new StringBuilder();
         arr[1] = true;
-        
-        for (int i = 2; i <= max; i++) {
-            for (int j = i * 2; j <= max; j+= i) {
+
+        for (int i = 2; i * i <= max; i++) {
+            for (int j = i * i; j <= max; j+= i) {
+
                 if (!arr[j]) {
                     arr[j] = true;
                 }
