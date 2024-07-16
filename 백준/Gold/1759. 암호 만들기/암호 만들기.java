@@ -7,7 +7,8 @@ import java.util.StringTokenizer;
 public class Main {
     static int L;
     static int C;
-    static String[] vowel = {"a", "e", "i", "o", "u"};
+//    static String[] vowel = {"a", "e", "i", "o", "u"};
+    static String vowel2 = "aeiou";
     static String[] keyword;
     static String[] password;
     static boolean[] visited;
@@ -66,11 +67,7 @@ public class Main {
         int vowCount = 0;
         for (String s : password) {
             // 검증
-            for (String v : vowel) {
-                if (s.equals(v)) {
-                    vowCount++;
-                }
-            }
+            vowCount += vowel2.contains(s) ? 1 : 0;
 
         }
         // 전체길이 - 모음의 개수 = 자음의 개수
