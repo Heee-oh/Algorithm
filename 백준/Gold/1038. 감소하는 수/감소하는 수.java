@@ -7,12 +7,9 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
-        int length = 1;
-        while(length <= 10) {
 
-            recursion(length++, 10);
-
-
+        for (int i = 1; i <= 10; i++) {
+            recursion(i, 10);
 
             if (list.size() > n) {
                 System.out.println(list.get(n));
@@ -21,8 +18,6 @@ public class Main {
         }
 
         System.out.println(-1);
-
-
     }
 
 
