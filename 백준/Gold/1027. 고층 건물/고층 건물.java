@@ -30,22 +30,22 @@ public class Main {
 
 
     private static int countBuildings(int[] arr, int num) {
-        double gradient = -1000000001;
+        double gradient = 0;
         int count = 0;
-        for (double j = num + 1; j <arr.length; j++) {
-            double m = ((arr[(int)j] - arr[num]) / (j - num));
+        for (int j = num + 1; j <arr.length; j++) {
+            double m = (double) (arr[j] - arr[num]) / (j - num);
 
-            if (gradient < m) {
+            if (j == num + 1 || gradient < m) {
                 count++;
                 gradient = m;
             }
         }
 
-        gradient = 1000000001;
-        for (double j = num - 1 ; j >= 1; j--) {
-            double m = (arr[(int) j] - arr[num]) / (j - num);
 
-            if (gradient > m) {
+        for (int j = num - 1 ; j >= 1; j--) {
+            double m = (double) (arr[j] - arr[num]) / (j - num);
+
+            if (j == num - 1 || gradient > m) {
                 count++;
                 gradient = m;
             }
