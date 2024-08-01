@@ -12,7 +12,7 @@ public class Main {
         int[] arr = new int[n + 1];
         int start = 1, end = 1;
         int sum = 0;
-        int count = n;
+        int count = n + 1;
 
         st = new StringTokenizer(br.readLine());
 
@@ -21,12 +21,10 @@ public class Main {
         }
 
         
-        boolean flag = false;
-        
         while (true) {
-            if (end >= arr.length  && sum < s) {
+            if (end >= arr.length  && sum < s)
                 break;
-            }
+
 
             if (sum < s) {
                 sum += arr[end++];
@@ -35,16 +33,11 @@ public class Main {
                 count = Math.min((end - start), count);
                 sum -= arr[start++];
 
-                flag = true;
-
             }
         }
 
-        if (flag) {
-            System.out.println(count);
-        } else {
-            System.out.println(0);
-        }
+        if (count == n + 1) count = 0;
+        System.out.println(count);
 
 
     }
