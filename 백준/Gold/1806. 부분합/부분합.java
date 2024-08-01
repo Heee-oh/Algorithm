@@ -20,11 +20,10 @@ public class Main {
             arr[i] = Integer.parseInt(st.nextToken());
         }
 
-        
-        while (true) {
-            if (end >= arr.length  && sum < s)
-                break;
 
+        while (end < arr.length || sum >= s) {
+//            if (end >= arr.length  && sum < s)
+//                break;
 
             if (sum < s) {
                 sum += arr[end++];
@@ -36,8 +35,8 @@ public class Main {
             }
         }
 
-        if (count == n + 1) count = 0;
-        System.out.println(count);
+        
+        System.out.println((count == n + 1) ? 0 : count);
 
 
     }
