@@ -25,10 +25,8 @@ public class Main {
             return;
         }
 
-        int index = (k != 0 && n != 0) ? (k / n) * n + (n + 1) :
-                n == 0 && k != 0 ? (k * 2) + 1 : 0;
 
-        visited = new boolean[index];
+        visited = new boolean[100001];
 
 
         bfs(n, k);
@@ -56,9 +54,8 @@ public class Main {
                 }
 
                 int nextNode = node.cur - 1;
-                if (nextNode < visited.length && nextNode >= 0 && !visited[nextNode]) {
+                if (nextNode >= 0 && !visited[nextNode]) {
                     q.add(new Node(nextNode, node.cost + 1));
-
                 }
 
                 int nextNode1 = node.cur + 1;
