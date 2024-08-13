@@ -21,7 +21,7 @@ public class Main {
         }
     }
     static int m; // 치킨 집 개수
-    static int chickenStreet = 0;
+    static int chickenStreet = Integer.MAX_VALUE;
     static boolean[] visited;
     static ArrayList<Location> house = new ArrayList<>();
     static ArrayList<Location> chicken = new ArrayList<>();
@@ -57,37 +57,37 @@ public class Main {
 
     private static void recursion(int depth, int start) {
         if (depth == m) {
-            int tmp = 0;
-            for (int i = 0; i < house.size(); i++) {
-                int min = Integer.MAX_VALUE;
-                Location home = house.get(i);
-
-                for (int j = 0; j < chicken.size(); j++) {
-                    if (visited[j]) {
-                        Location chick = chicken.get(j);
-                        int street = Math.abs(home.r - chick.r) + Math.abs(home.c - chick.c);
-                        if (street < min)
-                            min = street;
-                    }
-
-                }
-                tmp += min;
-            }
-
-            if (chickenStreet == 0)
-                chickenStreet = tmp;
-            else
-                chickenStreet = Math.min(tmp, chickenStreet);
-
+            int tmp = clacMin();
+            chickenStreet = Math.min(tmp, chickenStreet);
             return;
         }
 
         for (int i = start; i < chicken.size(); i++) {
             if (!visited[i]) {
                 visited[i] = true;
-                recursion(depth + 1,i + 1);
+                recursion(depth + 1,i + 1); // 백트래킹에서 조합을 효율적으로 나누는 방법
                 visited[i] = false;
             }
         }
+    }
+
+    private static int clacMin() {
+        int tmp = 0;
+        for (int i = 0; i < house.size(); i++) {
+            int min = Integer.MAX_VALUE;
+            Location home = house.get(i);
+
+            for (int j = 0; j < chicken.size(); j++) {
+                if (visited[j]) {
+                    Location chick = chicken.get(j);
+                    int street = Math.abs(home.r - chick.r) + Math.abs(home.c - chick.c);
+                    if (street < min)
+                        min = street;
+                }
+
+            }
+            tmp += min;
+        }
+        return tmp;
     }
 }
