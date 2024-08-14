@@ -32,14 +32,14 @@ public class Main {
         // 0을 처음 시작으로
         for (int i = 1; i < check.length; i++) {
             if (check[i] == 0) {
-                q.add(i);
+                list[0].add(i);
+                check[i]++;
             }
         }
 
+        q.add(0);
         while (!q.isEmpty()) {
             int seq = q.poll();
-
-            bw.write(seq + " ");
 
             for (int i = 0; i < list[seq].size(); i++) {
                 int tmp = list[seq].get(i);
@@ -47,6 +47,7 @@ public class Main {
 
                 if (check[tmp] == 0 ) {
                     q.add(tmp);
+                    bw.write(tmp + " ");
                 }
             }
         }
@@ -54,4 +55,5 @@ public class Main {
         bw.flush();
         bw.close();
     }
+
 }
