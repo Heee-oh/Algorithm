@@ -31,6 +31,8 @@ public class Main {
                 }
             }
 
+            
+
             for (int i = 1; i < check.length; i++) {
                 if (check[i]) {
                     bw.write(scenarioNum + " " + students[i-1] + "\n");
@@ -46,3 +48,43 @@ public class Main {
     }
 
 }
+
+// 2번째 방법 
+
+//         do {
+//             scenarioNum++; // 시나리오 번호
+
+//             n = Integer.parseInt(br.readLine());
+//             int num = 0;
+//             String[] students = new String[n];
+//             boolean[] check = new boolean[n + 1];
+
+//             // 이름 배열에 담기
+//             for (int i = 0; i < n; i++) {
+//                 students[i] = br.readLine();
+//             }
+
+//             for (int i = 0; i < (n * 2) - 1; i++) {
+//                 String[] split = br.readLine().split(" ");
+//                 int idx = Integer.parseInt(split[0]);
+
+//                 if (check[idx]) {
+//                     check[idx] = false;
+//                     num -= idx;
+//                 } else {
+//                     check[idx] = true; // true 인 학생이 잃어버린 학생
+//                     num += idx;
+//                 }
+//             }
+
+//             if (n > 0) bw.write(scenarioNum + " " + students[num - 1] + "\n");
+
+// //            for (int i = 1; i < check.length; i++) {
+// //                if (check[i]) {
+// //                    bw.write(scenarioNum + " " + students[i-1] + "\n");
+// //                    break;
+// //                }
+// //            }
+
+
+//         } while (n != 0);
