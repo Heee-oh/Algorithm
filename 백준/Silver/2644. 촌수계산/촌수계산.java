@@ -2,11 +2,9 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-
     static boolean[][] kinship;
     static boolean[] visited;
-    static StringBuilder sb = new StringBuilder();
-    static ArrayList<String> list = new ArrayList<>();
+    
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
@@ -31,17 +29,7 @@ public class Main {
             kinship[parent][child] = true;
             kinship[child][parent] = true;
         }
-
-
-
-
-
-
-
-        // 입력 차수가 0인 부모를 찾아서 리스트에 담기.
-        // 최상위 부모가 다르면 -1
-        // 같으면 무시하고 다음 번호로 , 번호가 다르면 그 위치부터 길이만큼 더하기
-
+        
         int answer = bfs(x, y);
         bw.write((answer == 0 ? -1 : answer) + "\n");
         bw.flush();
@@ -66,8 +54,8 @@ public class Main {
 
             for (int i = 1; i < kinship.length; i++) {
                 if (kinship[num][i] && !visited[i]) {
-                    visited[i] = true;
                     q.add(new int[] {i, level + 1});
+                    visited[i] = true;
                 }
             }
 
