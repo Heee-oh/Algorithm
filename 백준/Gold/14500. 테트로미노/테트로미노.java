@@ -45,7 +45,7 @@ public class Main {
             for (int j = 0; j < graph[i].length; j++) {
                 visited[i][j] = true;
                 recursion(i, j, 1, 0);
-                cross(i,j);
+                findArrowShape(i,j);
                 visited[i][j] = false;
             }
         }
@@ -60,7 +60,7 @@ public class Main {
 //    static int[] dx = {0, 0, 1, -1};
 //    static int[] dy = {1, -1, 0, 0};
 
-    private static void cross(int r, int c) {
+    private static void findArrowShape(int r, int c) {
         int tmp;
 
         for (String seq : list) {
