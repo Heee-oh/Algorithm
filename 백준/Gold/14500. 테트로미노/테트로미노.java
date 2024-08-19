@@ -1,83 +1,111 @@
-// [백준] 14500. 테트로미노 (Java)
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
 public class Main {
 
-	static int max = Integer.MIN_VALUE;
-	static int[][] arr;
-	static boolean[][] visit;
-	static int n;
-	static int m;
+    static int[] dx = {0, 0, 1, -1};
+    static int[] dy = {1, -1, 0, 0};
+    static int[][] graph;
+    static boolean[][] visited;
 
-	// 상하좌우
-	static int[] dx = {-1,1,0,0};
-	static int[] dy = {0,0,-1,1};
+    static ArrayList<String> list = new ArrayList<>();
 
-	public static void main(String[] args) throws NumberFormatException, IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static int max = 0;
 
-		StringTokenizer st = new StringTokenizer(br.readLine());
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        StringBuilder sb = new StringBuilder();
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
 
-		n = Integer.parseInt(st.nextToken());
-		m = Integer.parseInt(st.nextToken());
-		arr = new int[n][m];
-		visit = new boolean[n][m];
+        graph = new int [n][m];
+        visited = new boolean[n][m];
 
-		// 입력
-		for(int i = 0; i < n; i++) {
-			st = new StringTokenizer(br.readLine());
-			for(int j = 0; j < m; j++) {
-				arr[i][j] = Integer.parseInt(st.nextToken());
-			}
-		}
+        for (int i = 0; i < n; i++) {
+            st = new StringTokenizer(br.readLine());
+            for (int j = 0; j < m; j++) {
+                graph[i][j] = Integer.parseInt(st.nextToken());
+            }
+        }
 
-		// 전체 탐색 (dfs)
-		for(int i = 0; i < n; i++) {
-			for(int j = 0; j < m; j++) {
-				visit[i][j] = true;
-				solve(i,j,arr[i][j],1);
-				visit[i][j] = false;
-			}
-		}
+        for (int i = 0; i < 2; i++) {
+            for (int j = i + 1; j < 3; j++) {
+                for (int k = j + 1; k < 4; k++) {
+                    sb.append(i).append(j).append(k);
+                    list.add(sb.toString());
+                    sb.delete(0, sb.length());
+                }
+            }
+        }
 
-		System.out.println(max);
-	}
 
-	static void solve(int row, int col, int sum, int count) {
+        for (int i = 0; i < graph.length; i++) {
+            for (int j = 0; j < graph[i].length; j++) {
+                visited[i][j] = true;
+                recursion(i, j, 1, 0);
+                cross(i,j);
+                visited[i][j] = false;
+            }
+        }
 
-		// 테트로미노 완성 시 수들의 합 계산
-		if(count == 4) {
-			max = Math.max(max, sum);
-			return;
-		}
 
-		// 상하좌우 탐색
-		for(int i = 0; i < 4; i++) {
-			int curRow = row + dx[i];
-			int curCol = col + dy[i];
+        bw.write(max + "\n");
+        bw.flush();
+        bw.close();
 
-			// 범위 벗어나면 예외 처리
-			if(curRow < 0 || curRow >= n || curCol < 0 || curCol >= m) {
-				continue;
-			}
+    }
 
-			// 아직 방문하지 않은 곳이라면
-			if(!visit[curRow][curCol]) {
+//    static int[] dx = {0, 0, 1, -1};
+//    static int[] dy = {1, -1, 0, 0};
 
-				// 보라색(ㅗ) 테트로미노 만들기 위해 2번째 칸에서 탐색 한번 더 진행
-				if(count == 2) {
-					visit[curRow][curCol] = true;
-					solve(row, col, sum + arr[curRow][curCol], count + 1);
-					visit[curRow][curCol] = false;
-				}
+    private static void cross(int r, int c) {
+        int tmp;
 
-				visit[curRow][curCol] = true;
-				solve(curRow, curCol, sum + arr[curRow][curCol], count + 1);
-				visit[curRow][curCol] = false;
-			}
-		}
-	}
+        for (String seq : list) {
+            tmp = graph[r][c];
+            for (int i = 0; i < seq.length(); i++) {
+                int idx = seq.charAt(i) - '0';
+
+                int nextRow = r + dy[idx];
+                int nextCol = c + dx[idx];
+
+                // 범위를 벗어나면 넘긴다.
+                if (nextRow < 0 || nextRow >= graph.length
+                        || nextCol < 0 || nextCol >= graph[0].length) continue;
+
+
+                tmp += graph[nextRow][nextCol];
+            }
+
+            max = Math.max(max, tmp);
+        }
+
+    }
+
+    private static void recursion(int r, int c, int depth, int cost) {
+        if (depth == 4) {
+            max = Math.max(max, cost + graph[r][c]);
+            return;
+        }
+
+
+        for (int i = 0; i < 4; i++) {
+            int nextRow = r + dy[i];
+            int nextCol = c + dx[i];
+
+            // 범위를 벗어나면 넘긴다.
+            if (nextRow < 0 || nextRow >= graph.length
+                    || nextCol < 0 || nextCol >= graph[0].length) continue;
+
+            if (visited[nextRow][nextCol]) continue;
+
+            visited[nextRow][nextCol] = true;
+            recursion(nextRow, nextCol, depth + 1, cost + graph[r][c]);
+            visited[nextRow][nextCol] = false;
+        }
+
+    }
+
 }
