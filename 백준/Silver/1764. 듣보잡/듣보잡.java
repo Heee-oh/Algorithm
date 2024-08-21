@@ -9,6 +9,7 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         ArrayList<String> list = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
         StringTokenizer st = new StringTokenizer(br.readLine());
 
         int n = Integer.parseInt(st.nextToken());
@@ -30,11 +31,12 @@ public class Main {
 
         list.sort(String::compareTo);
 
-        bw.write(list.size() + "\n");
+        sb.append(list.size()).append("\n");
         for (String name : list) {
-            bw.write(name + "\n");
+            sb.append(name).append("\n");
         }
-        
+
+        bw.write(sb.toString());
         bw.flush();
         bw.close();
     }
