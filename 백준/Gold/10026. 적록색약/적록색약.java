@@ -10,8 +10,8 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-
         int n = Integer.parseInt(br.readLine());
+
         rb = new char[n][n];
         color = new char[n][n];
         visited = new boolean[n][n];
@@ -32,7 +32,6 @@ public class Main {
             }
         }
 
-
         int count = 0;
         for (int i = 0; i < rb.length; i++) {
             for (int j = 0; j < rb[0].length; j++) {
@@ -45,10 +44,7 @@ public class Main {
 
         bw.write(count +" ");
 
-        for (int i = 0; i < visited.length; i++) {
-            Arrays.fill(visited[i], false);
-        }
-
+        visited = new boolean[n][n];
         count = 0;
 
         for (int i = 0; i < rb.length; i++) {
