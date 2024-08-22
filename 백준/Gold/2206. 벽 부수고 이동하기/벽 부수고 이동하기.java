@@ -13,9 +13,7 @@ public class Main {
         StringTokenizer st = new StringTokenizer(br.readLine());
         int n = Integer.parseInt(st.nextToken());
         int m = Integer.parseInt(st.nextToken());
-
-
-
+        
         graph = new int[n][m];
         visited = new boolean[n][m][2]; // 벽을 부순 경우 , 안부순 경우
 
@@ -48,27 +46,18 @@ public class Main {
                 int count = poll[2];
                 int check = poll[3];
 
+                // 범위 및 방문 검증
                 if (validBound(newY, newX, check)) continue;
 
                 // 다음이 벽이고, 아직 벽을 안부쉈다면
                 if (check == 1 && graph[newY][newX] == 1) check = 0;
+                // 다음이 벽이고 벽을 부순적이 있다면
                 else if (graph[newY][newX] == 1) continue;
-                
+
                 q.add(new int[] {newY, newX, count + 1, check});
                 visited[newY][newX][check] = true;
-//
-//                if (check == 1 && graph[newY][newX] == 1) {
-//                    q.add(new int[] {newY, newX, count + 1, 0});
-//                    visited[newY][newX][0] = true;
-//
-//                } else if (graph[newY][newX] == 0){
-//                    q.add(new int[] {newY, newX, count + 1, check});
-//                    visited[newY][newX][check] = true;
-//                }
-
             }
         }
-
         return -1;
     }
 
