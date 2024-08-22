@@ -2,8 +2,8 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    static boolean[][][] visited;
     static int[][] graph;
+    static boolean[][][] visited;
     static int[] dx = {0, 0, 1, -1};
     static int[] dy = {1, -1, 0, 0};
 
@@ -27,19 +27,12 @@ public class Main {
             }
         }
 
-        // k 번의 말처럼 이동 가능
-        // 그 외에는 상하좌우 이동
 
         bw.write( bfs(h - 1, w - 1, k) + "\n");
 
         bw.flush();
         bw.close();
     }
-
-
-    // 말 이동
-    // dx dy 를 한번 더 더한 후
-    // 양옆, 위아래 +1
 
     private static int bfs(int h, int w, int cnt) {
         Queue<int[]> q = new LinkedList<>();
@@ -55,60 +48,38 @@ public class Main {
                 return loc[3];
             }
 
-
             for (int i = 0; i < 4; i++) {
                 int nextY = loc[0] + dy[i];
                 int nextX = loc[1] + dx[i];
                 int k = loc[2];
 
-
                 // 말 처럼 이동
                 if (k > 0) {
+                    int idx = i < 2 ? 2 : 0;
+                    
+                    for (int j = idx; j < idx + 2; j++) {
+                        int horseY = nextY + dy[i] + dy[j];
+                        int horseX = nextX + dx[i] + dx[j];
 
-                    // 좌우 탐색 및 이동
-                    if (i < 2) {
-                        for (int j = 2; j < 4; j++) {
-                            int horseY = nextY + dy[i] + dy[j];
-                            int horseX = nextX + dx[i] + dx[j];
-
-                            if (checkBound(horseY, horseX, k - 1) || graph[horseY][horseX] == 1) continue;
-                            q.add(new int[]{horseY, horseX, k - 1, loc[3] + 1});
-                            visited[horseY][horseX][k - 1] = true;
-                        }
-
-                        // 상하 탐색 및 이동
-                    } else {
-                        for (int j = 0; j < 2; j++) {
-                            int horseY = nextY + dy[i] + dy[j];
-                            int horseX = nextX + dx[i] + dx[j];
-
-                            if (checkBound(horseY, horseX, k - 1) || graph[horseY][horseX] == 1) continue;
+                        if (!checkBound(horseY, horseX, k - 1)) {
                             q.add(new int[]{horseY, horseX, k - 1, loc[3] + 1});
                             visited[horseY][horseX][k - 1] = true;
                         }
                     }
                 }
 
-                if (checkBound(nextY, nextX, k) || graph[nextY][nextX] == 1) continue;
-
-                q.add(new int[]{nextY, nextX, k, loc[3] + 1});
-                visited[nextY][nextX][k] = true;
-
+                if (!checkBound(nextY, nextX, k)) {
+                    q.add(new int[]{nextY, nextX, k, loc[3] + 1});
+                    visited[nextY][nextX][k] = true;
+                }
             }
         }
-
-
-
-
-
         return -1;
     }
 
-
-
     private static boolean checkBound(int nextY, int nextX, int k) {
         return nextY < 0 || nextY >= graph.length ||
-                nextX < 0 || nextX >= graph[0].length || visited[nextY][nextX][k];
+                nextX < 0 || nextX >= graph[0].length || visited[nextY][nextX][k] || graph[nextY][nextX] == 1;
     }
 
 }
