@@ -30,8 +30,8 @@ public class Main {
         // k 번의 말처럼 이동 가능
         // 그 외에는 상하좌우 이동
 
-        int bfs = bfs(h - 1, w - 1, k);
-        bw.write( (bfs == Integer.MAX_VALUE ? -1 : bfs) + "\n");
+        bw.write( bfs(h - 1, w - 1, k) + "\n");
+
         bw.flush();
         bw.close();
     }
@@ -47,11 +47,12 @@ public class Main {
         visited[0][0][cnt] = true;
 
         int min = Integer.MAX_VALUE;
+
         while (!q.isEmpty()) {
             int[] loc = q.poll();
 
             if (loc[0] == h && loc[1] == w) {
-                min = Math.min(min, loc[3]);
+                return loc[3];
             }
 
 
@@ -100,7 +101,7 @@ public class Main {
 
 
 
-        return min;
+        return -1;
     }
 
 
