@@ -12,34 +12,30 @@ public class Main {
         int n = Integer.parseInt(br.readLine());
         int m = Integer.parseInt(br.readLine());
 
-        StringBuilder sb = new StringBuilder(br.readLine());
-
-
-        int idx = (2 * n) + 1;
-
-        String match = "IO".repeat(n) + "I";
-
+        String line = br.readLine();
 
         int answer = 0;
-
+        int count = 0;
         for (int i = 0; i < m; i++) {
 
-            if (i + idx > m) {
+            if (i + 2 >= m) {
                 break;
             }
 
-            if (sb.charAt(i) == 'I') {
-                if (sb.substring(i, i + idx).matches(match)) {
+            if (line.charAt(i) == 'I' && line.charAt(i+1) == 'O' && line.charAt(i+2) == 'I') {
+                count++;
+                i++;
+
+                if (count == n) {
                     answer++;
+                    count--;
                 }
+
+            } else {
+                count = 0;
             }
 
-
-
-
-
         }
-
 
         bw.write(answer + "");
         bw.flush();
