@@ -1,51 +1,47 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 public class Main {
 
+    static int[] dp;
     public static void main(String[] args) throws IOException {
-
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        ArrayList<Integer> list = new ArrayList<>();
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        String expression = br.readLine();
+        String exp = expression.replaceAll("[0-9]", "");
 
-        String s = br.readLine();
-        String[] number = s.split("[+-]");
-        String sign = s.replaceAll("[0-9]", "");
-        Stack<Character> stack = new Stack<>();
-        int first = 0;
+        int[] num = new int[exp.length() + 1];
+        int idx = 0;
 
-        if (sign.contains("-")) {
-            first = sign.indexOf("-");
+        for (String n : expression.split("[-+]")) {
+            num[idx++] = Integer.parseInt(n);
         }
 
-        for (String string : number) {
-            list.add(Integer.parseInt(string));
-        }
+        int sum = num[0];
+        int tmp = 0;
+        boolean minus = false;
 
-        for (int i = 0; i < sign.length(); i++) {
-            if (sign.charAt(i) == '+') {
-                int value = list.get(i) + list.get(i + 1);
-                list.set(i, 0);
-                list.set(i+1, value);
-            } else {
-                stack.push('-');
+        for (int i = 1; i < num.length; i++) {
+            if (exp.charAt(i - 1) == '-' ) {
+                minus = true;
             }
 
+            if (minus) {
+                tmp += num[i];
+            } else {
+                sum += num[i];
+            }
+
+
         }
 
-        int sum = 0;
-        for (int i = first + 1; i < list.size(); i++) {
-            sum += list.get(i);
-        }
 
-        if (!stack.isEmpty()) {
-            sum *= -1;
-        }
+        if (tmp > 0) sum -= tmp;
 
 
-        System.out.println(sum + list.get(first));
 
+        bw.write(sum +"");
+        bw.flush();
+        bw.close();
     }
 }
