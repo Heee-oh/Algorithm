@@ -14,6 +14,11 @@ public class Main {
             StringTokenizer st = new StringTokenizer(br.readLine());
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
+            if (b % 2 == 0) {
+                a *= a;
+                b /= 2;
+            }
+
             int num = 1;
             for (int j = 0; j < b; j++) {
                 num *= a;
