@@ -7,9 +7,9 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringBuilder sb = new StringBuilder();
-        ArrayList<Integer> list = new ArrayList<>();
-        int n = Integer.parseInt(br.readLine());
         Stack<int[]> stack = new Stack<>();
+        
+        int n = Integer.parseInt(br.readLine());
         int[] arr = new int[n];
         int[] answer = new int[n];
 
@@ -20,31 +20,25 @@ public class Main {
 
         stack.push(new int[] {arr[0], 0});
 
-        int idx = 0;
         for (int i = 1; i < n; i++) {
             while (!stack.isEmpty() && stack.peek()[0] < arr[i]) {
-                int[] pop = stack.pop();
-                list.add(arr[i]);
-
-                answer[pop[1]] = arr[i];
-
-                idx++;
+                int[] num = stack.pop();
+                answer[num[1]] = arr[i];
             }
             stack.push(new int[] {arr[i], i});
-
         }
 
 
         while (!stack.isEmpty()) {
-            int[] pop = stack.pop();
-            answer[pop[1]] = -1;
+            int[] num = stack.pop();
+            answer[num[1]] = -1;
         }
 
         for (int i : answer) {
             sb.append(i).append(" ");
         }
 
-        bw.write(sb.deleteCharAt(sb.length() - 1).toString());
+        bw.write(sb.toString());
         bw.flush();
         bw.close();
     }
