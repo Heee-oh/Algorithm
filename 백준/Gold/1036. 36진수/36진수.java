@@ -37,17 +37,12 @@ public class Main {
             }
         }
 
-        List<Map.Entry<Integer, BigInteger>> list = new LinkedList<>(map.entrySet());
-        Collections.sort(list, new Comparator<Map.Entry<Integer, BigInteger>>() {
-            @Override
-            public int compare(Map.Entry<Integer, BigInteger> o1, Map.Entry<Integer, BigInteger> o2) {
-                return o2.getValue().compareTo(o1.getValue());
-            }
-        });
+        List<Map.Entry<Integer, BigInteger>> list = new ArrayList<>(map.entrySet());
+        Collections.sort(list, (o1, o2) -> o2.getValue().compareTo(o1.getValue()));
 
 
         int k = Integer.parseInt(br.readLine());
-        
+
         if (k != 0) {
             for (int i = 0; i < k; i++) {
                 if (list.size() <= i) break;
@@ -60,7 +55,7 @@ public class Main {
         calculateNum(word, arr, nums);
 
         int idx = change36(nums);
-        
+
         // 36진수로 바꿔서 출력
         for (int i = idx - 1; i >= 0; i--) {
             char cc = (char) (nums[i] >= 10 ? (nums[i] + '7') : (nums[i] + '0'));
