@@ -3,19 +3,15 @@ import java.math.BigInteger;
 import java.util.*;
 
 public class Main {
-
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         HashMap<Integer, BigInteger> map = new HashMap<>();
-
         StringBuilder sb = new StringBuilder();
+
         int n = Integer.parseInt(br.readLine());
         String[] word = new String[n];
-        String[] makeWord = new String[n];
         int[] arr = new int[36];
-        int[] nums = new int[36];
-
 
         int min = 100, max = 0;
         for (int i = 0; i < n; i++) {
@@ -30,23 +26,14 @@ public class Main {
                 BigInteger bInt = new BigInteger("0");
                 // 최댓값을 구하기 위한 개수 구하기
                 int power = word[i].length() - j;
-                if (number >= 'A') {
-                    int key = number - '7';
-                    BigInteger value = map.getOrDefault(key, bInt);
-                    bInt = BigInteger.valueOf(35);
-                    bInt = bInt.pow(power).multiply(BigInteger.valueOf(35 - key)).add(value);
+                int key = number >= 'A' ? number - '7' : number - '0';
 
-                    map.put(key, bInt);
+                BigInteger value = map.getOrDefault(key, bInt);
+                bInt = BigInteger.valueOf(35);
+                bInt = bInt.pow(power).multiply(BigInteger.valueOf(35 - key)).add(value);
 
-                } else {
-                    int key = number - '0';
-                    BigInteger value = map.getOrDefault(key, bInt);
-                    bInt = BigInteger.valueOf(35);
-                    bInt = bInt.pow(power).multiply(BigInteger.valueOf(35 - key)).add(value);
 
-                    map.put(key, bInt);
-
-                }
+                map.put(key, bInt);
             }
         }
 
@@ -57,46 +44,36 @@ public class Main {
                 return o2.getValue().compareTo(o1.getValue());
             }
         });
-//
-//        for (int i = 0; i < word.length; i++) {
-//            while (word[i].length() < max - sb.length()) {
-//                sb.append("Z");
-//
-//            }
-//            makeWord[i] = sb.append(word[i]).toString();
-//            sb.delete(0, sb.length());
-//        }
-//
-//        sb = new StringBuilder();
 
-//        for (int num : nums) {
-//            System.out.println(num);
-//        }
 
         int k = Integer.parseInt(br.readLine());
+        
         if (k != 0) {
-
             for (int i = 0; i < k; i++) {
                 if (list.size() <= i) break;
                 Map.Entry<Integer, BigInteger> entry = list.get(i);
                 arr[entry.getKey()] = 35;
             }
-
         }
 
-//        while (k--> 0) {
-//            if (pq.isEmpty()) break;
-//            int[] poll = pq.poll();
-//            int idx = poll[0];
-//            arr[idx] = 35;
-//            System.out.println(idx);
-//        }
+        int[] nums = new int[53];
+        calculateNum(word, arr, nums);
 
+        int idx = change36(nums);
+        
+        // 36진수로 바꿔서 출력
+        for (int i = idx - 1; i >= 0; i--) {
+            char cc = (char) (nums[i] >= 10 ? (nums[i] + '7') : (nums[i] + '0'));
+            sb.append(cc);
+        }
 
-        nums = new int[100];
+        bw.write(sb.toString().isEmpty() ? "0" : sb.toString());
+        bw.flush();
+        bw.close();
+    }
 
+    private static void calculateNum(String[] word, int[] arr, int[] nums) {
         // 각 자리수의 값 계산
-        // 뒤집어서 생각
         for (int i = 0; i < word.length; i++) {
 
             for (int j = 0; j < word[i].length(); j++) {
@@ -106,8 +83,10 @@ public class Main {
                 else nums[j] += getIndex(c);
             }
         }
+    }
 
-
+    // 36진수 계산
+    private static int change36(int[] nums) {
         int idx = 0;
         for (int i = 0; i < nums.length - 1; i++) {
             if (nums[i] > 0) {
@@ -118,16 +97,7 @@ public class Main {
                 idx = Math.max(idx, i+1);
             }
         }
-
-
-        for (int i = idx - 1; i >= 0; i--) {
-            char cc = (char) (nums[i] >= 10 ? (nums[i] + '7') : (nums[i] + '0'));
-            sb.append(cc);
-        }
-
-        bw.write(sb.toString().isEmpty() ? "0" : sb.toString());
-        bw.flush();
-        bw.close();
+        return idx;
     }
 
     private static int getIndex(char c) {
