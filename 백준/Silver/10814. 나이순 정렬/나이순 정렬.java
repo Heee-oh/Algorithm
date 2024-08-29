@@ -18,31 +18,32 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringBuilder sb = new StringBuilder();
 
+        HashMap<Integer, ArrayList<String>> map = new HashMap<>();
         int n = Integer.parseInt(br.readLine());
-        Info[] people = new Info[n];
 
         for (int i = 0; i < n; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
             int age = Integer.parseInt(st.nextToken());
             String name = st.nextToken();
-            people[i] = new Info(age, name);
-        }
-
-        Arrays.sort(people, (o1, o2) -> o1.age - o2.age);
-
-
-        for (Info person : people) {
-            sb.append(person.age).append(" ").append(person.name).append("\n");
+            map.putIfAbsent(age, new ArrayList<>());
+            map.get(age).add(name);
         }
 
 
+        ArrayList<Map.Entry<Integer, ArrayList<String>>> list = new ArrayList<>(map.entrySet());
+        list.sort((o1, o2) -> o1.getKey() - o2.getKey());
+
+        for (Map.Entry<Integer, ArrayList<String>> entry : list) {
+
+            for (String name : entry.getValue()) {
+                sb.append(entry.getKey()).append(" ").append(name).append("\n");
+
+
+            }
+        }
 
         bw.write(sb.toString());
         bw.flush();
         bw.close();
     }
-
-
-
-
 }
