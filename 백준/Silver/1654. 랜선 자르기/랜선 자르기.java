@@ -13,14 +13,14 @@ public class Main {
         int k = Integer.parseInt(st.nextToken());
         n = Integer.parseInt(st.nextToken());
         lanCables = new long[k];
-        long max = 0;
+
 
         for (int i = 0; i < k; i++) {
             lanCables[i] = Integer.parseInt(br.readLine());
-            max = Math.max(lanCables[i], max);
+//            max = Math.max(lanCables[i], max);
         }
 
-        binarySearch(1, max);
+        binarySearch(1, Integer.MAX_VALUE);
 
         bw.write(maxCableLen + "");
         bw.flush();
