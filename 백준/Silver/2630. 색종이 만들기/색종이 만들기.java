@@ -35,28 +35,20 @@ public class Main {
 
         int divSize = size / 2;
         int count = 0;
-        boolean flag = false;
 
         for (int i = r; i < r+size; i++) {
             for (int j = c; j < c+size; j++) {
                 if (isBlue != map[i][j]) {
-                    flag = true;
-                    break;
+                    recursion(r, c, divSize, map[r][c]);
+                    recursion(r, c + divSize, divSize, map[r][c + divSize]);
+                    recursion(r + divSize, c, divSize, map[r + divSize][c]);
+                    recursion(r + divSize, c + divSize, divSize, map[r + divSize][c + divSize]);
+                    return;
                 }
             }
-            if (flag) break;
         }
 
-        if (flag) {
-            recursion(r, c, divSize, map[r][c]);
-            recursion(r, c + divSize, divSize, map[r][c + divSize]);
-            recursion(r + divSize, c, divSize, map[r + divSize][c]);
-            recursion(r + divSize, c + divSize, divSize, map[r + divSize][c + divSize]);
-
-        } else {
-            count++;
-        }
-
+        count++;
 
         if (isBlue == 1) {
             blue += count;
