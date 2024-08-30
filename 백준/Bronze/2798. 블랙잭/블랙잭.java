@@ -3,6 +3,9 @@ import java.util.*;
 
 public class Main {
 
+    static int max = 0;
+    static int[] cards;
+    static boolean[] visited;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -11,47 +14,34 @@ public class Main {
         StringTokenizer st = new StringTokenizer(br.readLine());
         int n = Integer.parseInt(st.nextToken());
         int m = Integer.parseInt(st.nextToken());
-        int[] cards = new int[n];
-
+        cards = new int[n];
+        visited = new boolean[n];
         st = new StringTokenizer(br.readLine());
 
         for (int i = 0; i < n; i++) {
             cards[i] = Integer.parseInt(st.nextToken());
         }
-        Arrays.sort(cards);
 
-        int answer = calculateMaxCardSum(n - 1, cards, m);
+        calculateMaxCardSum(n - 1, m, 0, 0);
 
 
-        bw.write(answer + "");
+        bw.write(max + "");
         bw.flush();
         bw.close();
     }
 
-    private static int calculateMaxCardSum(int n, int[] cards, int m) {
-        int sum = 0;
-        int tmp = 0;
-        // 3장의 합
-        for (int i = n; i >= 2 ; i--) {
-            sum = cards[i];
-            for (int j = i - 1; j >= 1; j--) {
-                if (sum + cards[j] > m) {
-                    continue;
-                }
-                sum += cards[j];
+    private static void calculateMaxCardSum(int start, int m, int count, int sum) {
 
-
-                for (int k = j - 1; k >= 0; k--) {
-                    if (sum + cards[k] <= m) {
-                        tmp = Math.max(tmp, sum + cards[k]);
-                    }
-                }
-
-                sum = cards[i];
-            }
+        if (count == 3) {
+            max = Math.max(sum, max);
+            return;
         }
 
-        return tmp;
+        for (int i = start; i >= 0; i--) {
+            if (sum + cards[i] <= m ) {
+                calculateMaxCardSum(i - 1, m, count +1, sum + cards[i]);
+            }
+        }
     }
 
 }
