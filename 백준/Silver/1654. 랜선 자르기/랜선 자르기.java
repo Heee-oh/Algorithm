@@ -20,7 +20,7 @@ public class Main {
             max = Math.max(lanCables[i], max);
         }
 
-        binarySearch(1, Integer.MAX_VALUE);
+        binarySearch(1, max);
 
         bw.write(maxCableLen + "");
         bw.flush();
@@ -42,7 +42,7 @@ public class Main {
             if (count >= n) {
                 maxCableLen = Math.max(maxCableLen, mid);
                 binarySearch(mid + 1, right);
-            }else {
+            } else {
                 binarySearch(left, mid - 1);
             }
         }
