@@ -6,43 +6,28 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringBuilder sb = new StringBuilder();
+        HashMap<Integer, Integer> map = new HashMap<>();
 
         int n = Integer.parseInt(br.readLine());
         int[] cards = new int[n];
 
         StringTokenizer st = new StringTokenizer(br.readLine());
         for (int i = 0; i < n; i++) {
-            cards[i] = Integer.parseInt(st.nextToken());
+            int num = Integer.parseInt(st.nextToken());
+            map.put(num, i);
         }
         Arrays.sort(cards);
 
         int m = Integer.parseInt(br.readLine());
         st = new StringTokenizer(br.readLine());
+
         for (int i = 0; i < m; i++) {
-            int left = 0;
-            int right = n - 1;
-            int checkCard = Integer.parseInt(st.nextToken());
-            boolean flag = true;
+            int key = Integer.parseInt(st.nextToken());
+            int idx = map.getOrDefault(key, -1);
 
-            while (left <= right) {
-
-                int mid = (left + right) / 2;
-
-                if (cards[mid] == checkCard) {
-                    sb.append(1).append(" ");
-                    flag = false;
-                    break;
-                }else if (cards[mid] > checkCard) {
-                    right = mid - 1;
-                }else {
-                    left = mid + 1;
-                }
-            }
-
-            if (flag) sb.append(0).append(" ");
+            sb.append(idx == -1 ? 0 : 1).append(" ");
 
         }
-
         bw.write(sb.toString());
         bw.flush();
         bw.close();
