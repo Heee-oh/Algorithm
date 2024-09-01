@@ -11,15 +11,16 @@ public class Main {
 
         int count = 0;
         for (int i = 666; i < Integer.MAX_VALUE; i++) {
-            sb.append(i);
-            if (sb.toString().contains("666")) {
+            if (String.valueOf(i).contains("666")) {
                 count++;
-                if (count == n) break;
+                if (count == n) {
+                    count = i;
+                    break;
+                }
             }
-            sb.delete(0, sb.length());
         }
 
-        bw.write(sb.toString());
+        bw.write(count + "");
         bw.flush();
         bw.close();
     }
