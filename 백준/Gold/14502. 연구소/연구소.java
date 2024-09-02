@@ -8,6 +8,7 @@ public class Main {
     static int[] dy = {1, -1, 0, 0};
     static int virusCount = Integer.MAX_VALUE;
     static ArrayList<int[]> list = new ArrayList<>();
+    static ArrayList<int[]> zeroList = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -28,6 +29,7 @@ public class Main {
                 graph[i][j] = Integer.parseInt(st.nextToken());
                 if (graph[i][j] == 1) wallCount++;
                 else if (graph[i][j] == 2) list.add(new int[]{i, j});
+                else zeroList.add(new int[]{i, j});
             }
         }
 
@@ -46,19 +48,14 @@ public class Main {
             return;
         }
 
-
-        for (int i = 0; i < graph.length; i++) {
-            for (int j = 0; j < graph[0].length; j++) {
-
-                if (!visited[i][j] && graph[i][j] == 0) {
-                    visited[i][j] = true;
-                    graph[i][j] = 1;
-                    dfs(i, j + 1, depth + 1);
-                    visited[i][j] = false;
-                    graph[i][j] = 0;
-                }
-            }
+        for (int i = r; i < zeroList.size(); i++) {
+            int[] tmp = zeroList.get(i);
+            graph[tmp[0]][tmp[1]] = 1;
+            dfs(i + 1, 0, depth + 1);
+            graph[tmp[0]][tmp[1]] = 0;
         }
+
+
 //
 //        for (int i = 0; i < 4; i++) {
 //            int nextY = r + dy[i];
@@ -118,6 +115,4 @@ public class Main {
         }
         return tmp;
     }
-
-
 }
