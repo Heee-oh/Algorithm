@@ -53,7 +53,7 @@ public class Main {
                 if (!visited[i][j] && graph[i][j] == 0) {
                     visited[i][j] = true;
                     graph[i][j] = 1;
-                    dfs(i, j , depth + 1);
+                    dfs(i, j + 1, depth + 1);
                     visited[i][j] = false;
                     graph[i][j] = 0;
                 }
