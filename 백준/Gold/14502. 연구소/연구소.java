@@ -3,7 +3,6 @@ import java.util.*;
 
 public class Main {
     static int[][] graph;
-    static boolean[][] visited;
     static int[] dx = {0, 0, 1, -1};
     static int[] dy = {1, -1, 0, 0};
     static int virusCount = Integer.MAX_VALUE;
@@ -14,14 +13,13 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st = new StringTokenizer(br.readLine());
-        StringBuilder sb = new StringBuilder();
 
         int n = Integer.parseInt(st.nextToken());
         int m = Integer.parseInt(st.nextToken());
         int wallCount = 0;
 
         graph = new int[n][m];
-        visited = new boolean[n][m];
+
         // 그래프 초기화
         for (int i = 0; i < n; i++) {
             st = new StringTokenizer(br.readLine());
@@ -33,14 +31,14 @@ public class Main {
             }
         }
 
-        dfs(0, 0, 0);
+        dfs(0, 0);
 
         bw.write( ((n * m) - (wallCount + virusCount + 3)) + "");
         bw.flush();
         bw.close();
     }
 
-    private static void dfs(int r, int c, int depth) {
+    private static void dfs(int start, int depth) {
 
         if (depth == 3) {
             int newVirus = bfs(copyArray(graph));
@@ -48,32 +46,12 @@ public class Main {
             return;
         }
 
-        for (int i = r; i < zeroList.size(); i++) {
+        for (int i = start; i < zeroList.size(); i++) {
             int[] tmp = zeroList.get(i);
             graph[tmp[0]][tmp[1]] = 1;
-            dfs(i + 1, 0, depth + 1);
+            dfs(i + 1, depth + 1);
             graph[tmp[0]][tmp[1]] = 0;
         }
-
-
-//
-//        for (int i = 0; i < 4; i++) {
-//            int nextY = r + dy[i];
-//            int nextX = c + dx[i];
-//
-//            if (nextY < 0 || nextY >= graph.length ||
-//                    nextX < 0 || nextX >= graph[0].length || visited[nextY][nextX]) continue;
-//
-//            if (graph[nextY][nextX] == 0) {
-//                visited[nextY][nextX] = true;
-//                graph[nextY][nextX] = 1;
-//                dfs(nextY, nextX, depth + 1);
-//                visited[nextY][nextX] = false;
-//                graph[nextY][nextX] = 0;
-//            }
-//
-//        }
-
     }
 
     private static int bfs(int[][] map) {
@@ -95,7 +73,7 @@ public class Main {
                 int nextX = loc[1] + dx[i];
 
                 if (nextY < 0 || nextY >= map.length ||
-                        nextX < 0 || nextX >= map[0].length || visited[nextY][nextX]) continue;
+                        nextX < 0 || nextX >= map[0].length ) continue;
 
                 if (map[nextY][nextX] == 0) {
                     map[nextY][nextX] = 2;
