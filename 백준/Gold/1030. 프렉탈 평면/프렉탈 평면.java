@@ -31,6 +31,8 @@ public class Main {
 
         recursion(0, 0, size,0, false);
 
+        System.out.println(27 / 2 );
+
         for (int[] ints : graph) {
             for (int n : ints) {
                 sb.append(n);
@@ -67,17 +69,12 @@ public class Main {
             for (int i = r; i < r + length; i += div) {
                 for (int j = c; j < c + length; j += div) {
 
-                    // 중앙 블랙 처리
-                    if (blackR == i && blackC == j) {
-                        recursion(i, j, div, second + 1, true);
-                    } else {
-                        recursion(i, j, div, second + 1,  i >= blackR && j >= blackC && i < blackR + (k * div) && j < blackC + (k * div) || isBlack);
-                    }
+                    // 중앙 블랙 처리 (블랙 범위 안에 있던지, 이전 분할 에서 해당 구역이 블랙이면 black 
+                    recursion(i, j, div, second + 1,  i >= blackR && j >= blackC && i < blackR + (k * div) && j < blackC + (k * div) || isBlack);
+
                 }
             }
         }
 
     }
-
-
 }
