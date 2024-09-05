@@ -47,14 +47,12 @@ public class Main {
     private static void recursion(int r, int c, int length, int second, boolean isBlack) {
 
         // 정해진 범위를 벗어낫 구역이면 넘기기
-        if ((r < r1 && r + length < r1) || (c < c1 && c + length < c1) || r > r2 || c > c2 ) return;
+        if ((r < r1 && r + length <= r1) || (c < c1 && c + length <= c1) || r > r2 || c > c2 ) return;
 
         // 크기가 1이고 블랙이면 1 처리
         if (length == 1 && isBlack) {
-            if (r - r1 >= 0 && c - c1 >= 0) {
-                graph[r -r1][c -c1] = 1;
-                return;
-            }
+            graph[r -r1][c -c1] = 1;
+            return;
         }
 
 
