@@ -1,33 +1,50 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
-	public static void main(String[] args) throws IOException {
+
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	    BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
         int n = Integer.parseInt(br.readLine());
+
+        int[] arr = new int[n];
+
         StringTokenizer st = new StringTokenizer(br.readLine());
-        
-        int[] sequence = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
+        }
+
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                if (arr[i] < arr[j]) {
+                    // 현재 삽입할 값을 미리 저장
+                    int cur = arr[i];
+
+                    // 뒤에서부터 땡겨온다.
+                    for (int k = i; k > j; k--) {
+                        arr[k] = arr[k - 1];
+                    }
+                    
+                    // 알맞는 자리에 삽입
+                    arr[j] = cur;
+                }
+            }
+        }
+
         int sum = 0;
-        
-        for(int i = 0; i < n; i++) {
-            sequence[i] = Integer.parseInt(st.nextToken());
+        int answer = 0;
+        for (int i : arr) {
+            sum += i;
+            answer += sum;
         }
-        Arrays.sort(sequence);
-        
-        for(int i = 1; i < n; i++) {
-            sequence[i] += sequence[i-1];
-        }
-        
-        for(int min : sequence) {
-            sum += min;
-        }
-        
-        
-        bw.write(sum+"\n"); // 문자열 or 변수명+"" 
-		// 백준은 값도 줄바꿈 처리되어있으면 해줘야함
-		bw.flush();  //버퍼 비우기  이것을 계속 호출하면 시간초과 뜸 한번만 아니면 필요할때만 호
-		bw.close(); // 종료
+
+        bw.write(answer + "");
+        bw.flush();
+        bw.close();
     }
+
+
 }
