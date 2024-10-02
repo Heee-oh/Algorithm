@@ -29,17 +29,17 @@ public class Main {
         bw.close();
     }
 
+
     private static void merge_sort(int[] a, int left, int right) {
 
-        // 한 개의 원소로 분할되었으면 return;
         if (left == right) return;
 
         int mid = (left + right) / 2;
+
         merge_sort(a, left, mid);
         merge_sort(a, mid + 1, right);
 
         merge(a, left, mid, right);
-
     }
 
     private static void merge(int[] a, int left, int mid, int right) {
@@ -59,14 +59,12 @@ public class Main {
             }
         }
 
-        // 오른쪽 남은 원소 처리
         while (r <= right) {
             sorted[idx] = a[r];
             idx++;
             r++;
         }
 
-        // 왼쪽 남은 원소 처리
         while (l <= mid) {
             sorted[idx] = a[l];
             idx++;
@@ -74,11 +72,11 @@ public class Main {
         }
 
 
-
         for (int i = left; i <= right; i++) {
             a[i] = sorted[i];
         }
 
     }
+
 
 }
