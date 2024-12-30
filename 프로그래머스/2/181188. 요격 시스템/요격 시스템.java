@@ -14,7 +14,7 @@ class Solution {
     
     // 문제 : 모든 폭격 미사일을 요격하기 위해 필요한 요격 미사일 수의 최솟값
     public int solution(int[][] targets) {
-        boolean[] check = new boolean[targets.length];
+        boolean[] check = new boolean[targets.length]; // 미사일 요격 여부 
         int answer = 0;
         
         // s 기준으로 오름차순 정렬, 같다면 e 기준으로 오름차순 정렬
@@ -30,11 +30,14 @@ class Solution {
             // 요격당했다면 다음 미사일로
             if (check[i]) continue;
             
+            // 미사일의 e의 값 저장
             int cutLine = targets[i][1];
+            
             // 요격할 미사일들 선택
             for (int j = i + 1; j < targets.length; j++) {
                 
                 if (cutLine > targets[j][0]) {
+                    // 요격 가능 미사일의 e값과 현재 cutLine 값중 최솟값을 가짐
                     cutLine = Math.min(cutLine, targets[j][1]);
                     check[j] = true;
                 }else {
