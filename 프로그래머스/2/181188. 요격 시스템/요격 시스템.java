@@ -12,13 +12,7 @@ class Solution {
         int answer = 0;
 
         // s 기준으로 오름차순 정렬, 같다면 e 기준으로 오름차순 정렬
-        Arrays.sort(targets, (o1, o2) -> {
-            if (o1[0] - o2[0] == 0) {
-                return o1[1] - o2[1];
-            }else {
-                return o1[0] - o2[0];
-            }
-        });
+        Arrays.sort(targets, (o1, o2) -> o1[0] - o2[0]);
 
         for (int i = 0; i < targets.length; i++) {
             // 요격당했다면 다음 미사일로
