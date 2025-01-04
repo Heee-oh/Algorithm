@@ -21,7 +21,6 @@ class Solution {
                 back++;
                 
             } else if (sum > k) {
-                if (front > back) break;
                 sum -= sequence[front];
                 front++;
             
