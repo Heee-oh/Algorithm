@@ -17,15 +17,6 @@ class Solution {
             this.x = x;
             this.step = step;
         }
-
-        @Override
-        public String toString() {
-            return "Token{" +
-                    "y=" + y +
-                    ", x=" + x +
-                    ", step=" + step +
-                    '}';
-        }
     }
 
     public int solution(String[] board) {
