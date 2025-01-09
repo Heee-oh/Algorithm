@@ -1,6 +1,3 @@
-import java.util.Queue;
-import java.util.LinkedList;
-
 import java.util.*;
 
 class Solution {
@@ -52,27 +49,19 @@ class Solution {
                     tmp_y += dy[i];
                     tmp_x += dx[i];
 
-                    // 벽을 만나거나, 이미 방문한 곳이면 멈춤
+                    // 벽을 만나거나, D인 장애물을 만나면 멈춤
                     if (tmp_y == -1 || tmp_y == board.length
-                            || tmp_x == -1|| tmp_x == board[0].length()) {
+                            || tmp_x == -1|| tmp_x == board[0].length()
+                            || board[tmp_y].charAt(tmp_x) == 'D') {
                         tmp_y -= dy[i];
                         tmp_x -= dx[i];
-
-                        if (checkCurrentPoint(board, tmp_y, tmp_x, currentRB, i, q)) return;
                         break;
                     }
-
-                    if (visited[i][tmp_y][tmp_x]) break;
-
-                    // D인 장애물을 만났을 경우
-                    if (board[tmp_y].charAt(tmp_x) == 'D') {
-                        tmp_y -= dy[i];
-                        tmp_x -= dx[i];
-
-                        if (checkCurrentPoint(board, tmp_y, tmp_x, currentRB, i, q)) return;
-                        break;
-                    }
+                    
                 }
+                
+                if (visited[i][tmp_y][tmp_x]) continue;
+                if (checkCurrentPoint(board, tmp_y, tmp_x, currentRB, i, q)) return;
             }
         }
     }
@@ -82,11 +71,9 @@ class Solution {
             answer = currentRB.step + 1;
             return true;
         }
-
-        if (!visited[i][tmp_y][tmp_x]) {
-            q.add(new Token(tmp_y, tmp_x, currentRB.step + 1));
-            visited[i][tmp_y][tmp_x] = true;
-        }
+        
+        q.add(new Token(tmp_y, tmp_x, currentRB.step + 1));
+        visited[i][tmp_y][tmp_x] = true;
         return false;
     }
 
@@ -101,5 +88,4 @@ class Solution {
         return null;
     }
 }
-
 
