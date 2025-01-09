@@ -1,7 +1,6 @@
 import java.util.*;
-
 class Solution {
-    boolean[][][] visited;
+    boolean[][] visited;
     int[] dx = {0, 0, 1, -1};
     int[] dy = {1, -1, 0, 0};
     int answer = 0;
@@ -19,13 +18,13 @@ class Solution {
     }
 
     public int solution(String[] board) {
-        visited = new boolean[4][board.length][board[0].length()];
+        visited = new boolean[board.length][board[0].length()];
         Token robot = getRobotInfo(board);
 
         // 로봇 시작 위치는 방문 처리
-        for (int i = 0; i < 4; i++) {
-            visited[i][robot.y][robot.x] = true;
-        }
+
+        visited[robot.y][robot.x] = true;
+        
 
         findGoalPointDistance(robot, board);
 
@@ -57,10 +56,10 @@ class Solution {
                         tmp_x -= dx[i];
                         break;
                     }
-                    
+
                 }
-                
-                if (visited[i][tmp_y][tmp_x]) continue;
+
+                if (visited[tmp_y][tmp_x]) continue;
                 if (checkCurrentPoint(board, tmp_y, tmp_x, currentRB, i, q)) return;
             }
         }
@@ -71,9 +70,9 @@ class Solution {
             answer = currentRB.step + 1;
             return true;
         }
-        
+
         q.add(new Token(tmp_y, tmp_x, currentRB.step + 1));
-        visited[i][tmp_y][tmp_x] = true;
+        visited[tmp_y][tmp_x] = true;
         return false;
     }
 
@@ -88,4 +87,3 @@ class Solution {
         return null;
     }
 }
-
