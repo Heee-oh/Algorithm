@@ -30,7 +30,6 @@ class Solution {
         } 
         
         // 빙고였을 때 
-        
         // 가로
         for (int i = 0; i < 3; i++) {
             int bingoO = 0;
@@ -79,7 +78,7 @@ class Solution {
     }
     
     private boolean checkBingo(int bingoO, int bingoX, int countO, int countX) {
-        if ((bingoO == 3 && bingoX == 3) || bingoO == 3) {
+        if (bingoO == 3) {
                 if (countO <= countX) return false;
                 
             } else if (bingoX == 3) {
