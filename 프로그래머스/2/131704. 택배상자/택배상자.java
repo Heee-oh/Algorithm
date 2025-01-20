@@ -8,36 +8,34 @@ class Solution {
     // 보조써도 기사가 알려준 순서대로 못싣는다면 더이상 X
     
     public int solution(int[] order) {
-        
         Stack<Integer> subBelt = new Stack<>();
         int answer = 0;
         int boxNum = 1;
         int idx = 0;
         
-        while (boxNum <= order.length || !subBelt.isEmpty()) {
-            
-            if (subBelt.size() > order.length) break;
+        while (idx < order.length) {
+    
+            // 알려준 순서에 맞는 택배상자 번호 전까지 보조 벨트에 옮기기
+            while (boxNum < order[idx]) {
+                subBelt.push(boxNum++);
+            }
             
             // 순서와 메인 컨테이너벨트의 상자 번호가 같다면
             if (order[idx] == boxNum) {
                 answer++;
-                idx++;
                 boxNum++;
+                idx++;
                 
                 // 보조벨트에 있다면 
             } else if (!subBelt.isEmpty() && order[idx] == subBelt.peek()) {
+                subBelt.pop();
                 answer++;
                 idx++;
-                subBelt.pop();
                 
+                // 둘다 없다면 그만 싣는다.
             } else {
-                
-                do {
-                  subBelt.push(boxNum);
-                }while (boxNum++ < order[idx]);
-                
+                break;
             }
-            
         }
         
         
