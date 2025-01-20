@@ -8,10 +8,10 @@ class Solution {
     // 보조써도 기사가 알려준 순서대로 못싣는다면 더이상 X
     
     public int solution(int[] order) {
+        
         Stack<Integer> subBelt = new Stack<>();
+        int boxNum = 1, idx = 0;
         int answer = 0;
-        int boxNum = 1;
-        int idx = 0;
         
         while (idx < order.length) {
     
