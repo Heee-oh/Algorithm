@@ -11,36 +11,29 @@ class Solution {
     
     private void divAndConquer(int r, int c, int size, int[][] arr) {
         
-        // 영역이 1칸으로 분할되었으면 처리
-        if (size == 1) {
-            int idx = arr[r][c];
-            count[idx]++;
+        //S 내부의 모든 수가 같은지 확인용
+        if (areaSearch(r,c,size,arr)) {
+            int firstIdx = arr[r][c];
+            count[firstIdx]++;
             return;
         }
         
-        // 시작점의 값을 저장
-        int first = arr[r][c];
-        boolean check = true; //S 내부의 모든 수가 같은지 확인용
-        int div = size / 2;
-        
+        int div = size / 2; // 반으로 나눈다. 
+        divAndConquer(r,c + div, div, arr);       // 1사분면
+        divAndConquer(r, c, div, arr);            // 2사분면
+        divAndConquer(r + div, c, div, arr);      // 3사분면
+        divAndConquer(r + div, c + div, div,arr); // 4사분면
+    }
+    
+    private boolean areaSearch(int r, int c, int size, int[][] target) {
         for (int i = r; i < r + size; i++) {
             for (int j = c; j < c+ size; j++) {
                 // 하나라도 다르다면 이영역은 4등분해야함
-                if (first != arr[i][j]) {
-                    check = false; 
-                    break;
+                if (target[r][c] != target[i][j]) {
+                    return false;
                 }
             }
         }
-        
-        if (check) {
-            count[first]++;
-            return;
-        }
-        
-        divAndConquer(r, c, div, arr);
-        divAndConquer(r + div, c, div, arr);
-        divAndConquer(r,c + div, div, arr);
-        divAndConquer(r + div, c + div, div,arr);    
+        return true;
     }
 }
