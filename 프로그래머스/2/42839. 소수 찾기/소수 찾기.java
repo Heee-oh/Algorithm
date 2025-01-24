@@ -17,14 +17,15 @@ class Solution {
     // 0, 1, 2는 소수가 아님
     private void dfs(char[] num, int n) {
         
-        // 소수 판별 체크
-        if (n > 1 && !check[n] && isPrime(n)) {
-            answer++;
-        } 
-        
         // 이미 확인한 숫자이면 
         if (check[n]) return;
         check[n] = true;
+        
+        // 소수 판별 체크
+        if (n > 1 && isPrime(n)) {
+            answer++;
+        } 
+        
         
         for (int i = 0; i < num.length; i++) {
             if (!visited[i]) {
