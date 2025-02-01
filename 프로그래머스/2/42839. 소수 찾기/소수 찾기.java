@@ -1,6 +1,8 @@
+import java.util.*;
+
 class Solution {
     boolean[] visited;
-    boolean[] check = new boolean[10000000];
+    Set<Integer> set = new HashSet<>();    
     int answer = 0;
     
     public int solution(String numbers) {
@@ -18,8 +20,8 @@ class Solution {
     private void dfs(char[] num, int n) {
         
         // 이미 확인한 숫자이면 
-        if (check[n]) return;
-        check[n] = true;
+        if (set.contains(n)) return;
+        set.add(n);
         
         // 소수 판별 체크
         if (n > 1 && isPrime(n)) {
