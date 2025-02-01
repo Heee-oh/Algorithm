@@ -12,12 +12,9 @@ class Solution {
     public int solution(int[] arrayA, int[] arrayB) {
         Set<Integer> setA = new HashSet<>();
         Set<Integer> setB = new HashSet<>();
-        Arrays.sort(arrayA);
-        Arrays.sort(arrayB);
-        
+
         getPrimeFactorization(setA, arrayA[0]);
         getPrimeFactorization(setB, arrayB[0]);
-        
         
         checkDiv(setA, arrayA, arrayB);
         checkDiv(setB, arrayB, arrayA);
@@ -39,20 +36,19 @@ class Solution {
     }
     // 자신 것을 나눠서 나눠지는지 확인 
     private void checkDiv(Set<Integer> baseSet, int[] base, int[] target) {
-        int divN = 0;
-        
         for (int n : baseSet) {
-            divN = n;
+            boolean check = true;
+            
             for (int j = 0; j < base.length; j++) {
+                // 자신 것이 안나눠지거나 타겟이 나눠지면 멈춤
                 if (base[j] % n != 0 || target[j] % n == 0) {
-                    divN = -1;
+                    check = false;
                     break;
                 }
             }
+            
             // 두 조건을 만족하면 최댓값 찾기
-            if (divN != -1) {
-                max = Math.max(divN, max);
-            }   
+            if (check) max = Math.max(n, max);
         }
     }
 }
