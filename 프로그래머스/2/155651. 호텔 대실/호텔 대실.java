@@ -3,7 +3,7 @@ import java.util.*;
 class Solution {
     public int solution(String[][] book_time) {
         // 최대 룸 개수, 시-분 
-        Integer[] time = new Integer[1001];
+        Integer[] time = new Integer[1000];
         // 시작 시간 순 정렬
         Arrays.sort(book_time, (o1, o2) -> o1[0].compareTo(o2[0]));
         int answer = 0;
@@ -19,7 +19,7 @@ class Solution {
             for (int i = 0; i < time.length; i++) {
                 // 빈 방이라면
                 if (time[i] == null) {
-                    time[i] = (endTime + 10) ; // 23:59분을 넘기면 다시 00:00으로 
+                    time[i] = (endTime + 10) ; // 예약 시각이 자정을 넘기는 경우는 없음
                     answer++;
                     break;
                     
