@@ -19,12 +19,13 @@ class Solution {
         
         // 시작 점 찾기
         for (int i = 0; i < maps.length; i++) {
-            if (maps[i].indexOf("S") != -1) {
+            if (maps[i].indexOf("S") != -1) { 
                 bfs(maps, new int[] {i, maps[i].indexOf("S"), 0}); // r, c, 걸린 시간
                 break;
             }
         }
         
+        // 시간이 0이면 탈출 불가이므로 -1반환
         return time == 0 ? -1 : time;
     }
     
@@ -62,18 +63,16 @@ class Solution {
                     isLeverOn = true;
                     q.clear(); // 레버를 당긴 곳부터 시작해야하므로 초기화
                     
+                    // 레버 위치만 저장 및 방문처리 후 멈춘다. (이 위치부터 다시 탐색하기 위함)
                     q.add(new int[] {nextY, nextX, current[2] + 1});
                     visited[nextY][nextX] = true;
-                    break;
+                    break; 
                 }
                 
                 // 방문 처리 및 다음 노드 큐에 넣기
                 q.add(new int[] {nextY, nextX, current[2] + 1});
                 visited[nextY][nextX] = true;
-            }
-            
+            }   
         }
-        
-        
     }
 }
