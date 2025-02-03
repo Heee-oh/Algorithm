@@ -16,7 +16,7 @@ public class Main {
             return o1[0] - o2[0];
         }); // 날짜들을 시작 날짜 순으로, 같다면 긴 일정 먼저
 
-        boolean[][] calendar = new boolean[1001][366];
+        boolean[][] calendar = new boolean[1001][367];
         int[] height = new int[366];
 
         int n = Integer.parseInt(br.readLine());
@@ -67,10 +67,6 @@ public class Main {
                 maxHeight = 1;
                 dayCnt = 0;
             }
-        }
-
-        if (dayCnt != 0) {
-            sum += dayCnt * maxHeight;
         }
 
 
