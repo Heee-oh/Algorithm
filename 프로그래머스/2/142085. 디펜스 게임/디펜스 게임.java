@@ -19,13 +19,14 @@ class Solution {
                 continue;
             }
             
-            // 무적권사용으로 넘어간 최대 적 수보다 현재 적 수가 더 많다면
+            // 무적권 사용으로 넘어간 적 최대수 보다 현재 라운드 적이 많거나
+            // 무적권 사용으로 넘어간 적 최소수 보다 현재 라운드 적이 더 많다면
             if ((max <= enemy[i] || pq.peek() < enemy[i]) && n >= pq.peek()) {
                 n -= pq.poll();
                 pq.add(enemy[i]);
                 answer++;
                 
-                max = enemy[i];
+                max = enemy[i]; // 최댓값 갱신
                 
                 // n명으로 막기
             } else if (n >= enemy[i]){
