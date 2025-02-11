@@ -8,6 +8,7 @@ class Solution {
     
     public int solution(int[][] data, int col, int row_begin, int row_end) {
         int[] S = new int[row_end - row_begin + 1];
+        int answer = 0;
         
         // col 기준 오름차순, 같다면 기본키 기준 내림차순 정렬
         Arrays.sort(data, (o1, o2) -> o1[col - 1] != o2[col - 1] 
@@ -20,13 +21,7 @@ class Solution {
             for (int j = 0; j < data[i].length; j++) {
                 tmp += data[i][j] % (i + 1);
             }
-            
-            S[i - (row_begin - 1)] = tmp;
-        }
-        
-        int answer = S[0];
-        for (int i = 1; i < S.length; i++) {
-            answer ^= S[i];
+            answer ^= tmp;
         }
         
         return answer;
