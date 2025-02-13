@@ -15,12 +15,12 @@ class Solution {
         
         
         int size = 0;
-        int rightValue = (size + 1) * (size + 1);
-        boolean flag = false;
+        int rightValue = (size + 1) * (size + 1); // 정사각형 안에 존재하는 1의 개수
+        boolean flag = false; // 0일 경우 대비
         
         // 처음부터 탐색
         // 사각형 모양 찾기 
-        // dp[i + r][j + c] - dp[i - 1][j] - dp[i][j - 1] + dp[i - 1][j - 1] * 2
+        // dp[i + r][j + c] - dp[i - 1][j] - dp[i][j - 1] + dp[i - 1][j - 1] 
         for (int i = 1; i < dp.length; i++) {
             for (int j = 1; j < dp[0].length; j++) {
                 
@@ -29,10 +29,11 @@ class Solution {
                     
                     int result = dp[i + size][j + size] - dp[i - 1][j + size] - dp[i + size][j - 1] + (dp[i-1][j-1]);    
                     
+                    // 정사각형이 아니면 다음 위치에서 탐색
                     if (result != rightValue) break;
                     
-                    size++;                        
-                    flag = true;
+                    size++; // 다음 탐색 사각형 사이즈 증가 
+                    flag = true; 
                     rightValue = (size + 1) * (size + 1);
                 }
             }
