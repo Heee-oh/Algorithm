@@ -42,11 +42,13 @@ class Solution {
 
             for (int j = 0; j < len; j++) {
                 if (name.charAt(j) != 'A' && i != j) {
+                    
+                    // 두 위치 사이 반시계, 시계방향 거리 구하기
+                    // Math.min((a - b + n) % n , (b - a + n) % n)
                     int minCost = Math.min((j - i + len) % len, (i - j + len) % len); // 왼쪽 이동 , 오른쪽 이동 최솟값
                     graph[i].add(new Alpha(j, minCost));
                 }
             }
-            Collections.sort(graph[i], (o1, o2) -> o1.cost - o2.cost);
         }
 
         visited[0] = true;
@@ -57,8 +59,6 @@ class Solution {
 
 
     private void dfs(int idx, int cost, int depth) {
-
-        int cnt = 0;
 
         if (depth == graph[0].size()) {
             min = Math.min(min, cost);
@@ -72,7 +72,6 @@ class Solution {
                 visited[alpha.next] = true;
                 dfs(alpha.next, cost + alpha.cost, depth + 1);
                 visited[alpha.next] = false;
-                cnt++;
             }
         }
     }
