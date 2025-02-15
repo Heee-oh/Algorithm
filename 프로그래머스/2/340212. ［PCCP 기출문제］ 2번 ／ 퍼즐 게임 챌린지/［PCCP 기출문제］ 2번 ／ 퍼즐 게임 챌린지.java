@@ -24,18 +24,18 @@ class Solution {
 
         int front = 1, back = 100000;
 
+
         while(front <= back) {
             long sum = 0;
 
             int mid = (front + back) / 2;
             
+            // O(n)
             for (int j = 1; j < diffs.length; j++) {
                 if (diffs[j] != 1 && diffs[j] - mid > 0) {
                     sum += (long)(diffs[j] - mid) * timeSum[j];
                 }
             }
-
-            
             
             if (limit >= sum) {
                 back = mid - 1;
