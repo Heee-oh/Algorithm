@@ -34,6 +34,7 @@ class Solution {
                 }
             }
             
+            // 다음 단어 알파벳이 2개이상 또는 완전히 같은 경우 바꾸지 않음
             if (alphaCnt > 1 || alphaCnt == 0) continue;
             
             visited[i] = true;
