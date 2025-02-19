@@ -31,7 +31,7 @@ class Solution {
             }
         }
         
-        
+        // 야근 피로도 계산
         for (int i = max; i >= 1; i--) {
             if (schedule[max] > 0) {
                 answer += i * i * schedule[i];
