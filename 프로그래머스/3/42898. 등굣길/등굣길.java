@@ -2,7 +2,6 @@ class Solution {
     // 단순 dp 
     public int solution(int m, int n, int[][] puddles) {
         int[][] dp = new int[n + 1][m + 1];
-        int answer = 0;
         
         // 웅덩이 -1로 저장
         for (int i = 0; i < puddles.length; i++) {
@@ -16,8 +15,7 @@ class Solution {
         for (int i = 1; i <= n; i++) {
             for (int j = 1; j <= m; j++) {
                 if (dp[i][j] == -1) continue;
-                
-                dp[i][j] = (dp[i][j] + checkPuddle(dp[i - 1][j]) + checkPuddle(dp[i][j - 1])) % 1000000007;
+                dp[i][j] += (checkPuddle(dp[i - 1][j]) + checkPuddle(dp[i][j - 1])) % 1000000007;
             }
         }
         
