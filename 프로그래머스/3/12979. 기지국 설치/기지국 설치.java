@@ -8,19 +8,24 @@ class Solution {
         
         // 처음 기지국이 전파 도달 거리가 1번아파트까지 닿지 않을 경우
         if (stations[0] - w > 0) {
-           answer += Math.ceil((double)(stations[0] - w - 1) / waveRange);
+           answer += (((stations[0] - w - 1) / waveRange) 
+               + ((stations[0] - w - 1) % waveRange == 0 ? 0 : 1));
         }
         
+  
         // 기지국 사이의 전파거리가 안닿는 곳도 채움
         for (int i = 1; i < stations.length; i++) {
             int twoApartDist = (stations[i] - w) - (stations[i-1] + w) - 1;
-            answer += Math.ceil((double)twoApartDist / waveRange);
+            
+            if (twoApartDist > 0) {
+                answer += ((twoApartDist / waveRange) + (twoApartDist % waveRange == 0 ? 0 : 1));
+            }
         }
-        
         
         // 마지막 기지국이 마지막 아파트에 닿지 않을 경우
         if (stations[stations.length - 1] + w < n) {
-            answer += Math.ceil((double)(n - (stations[stations.length - 1] + w)) / waveRange);
+            int tmp  = n - (stations[stations.length - 1] + w);
+            answer += ((tmp / waveRange) + (tmp % waveRange == 0 ? 0 : 1));
         }
 
         
