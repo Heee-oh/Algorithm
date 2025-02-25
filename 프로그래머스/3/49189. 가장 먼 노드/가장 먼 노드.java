@@ -11,9 +11,18 @@ class Solution {
             graph[edge[i][0]][edge[i][1]] = true;
             graph[edge[i][1]][edge[i][0]] = true;
         }
-        int max = bfs(graph, visited, dist);
         
-        return (int)Arrays.stream(dist).filter(x -> max == x).count();
+        int max = bfs(graph, visited, dist);
+        int answer = 0;
+        
+        for (int distance : dist) {
+            
+            if (distance == max) {
+                answer++;
+            }
+        }
+        
+        return answer;
     }
     
     private int bfs(boolean[][] graph, boolean[] visited, int[] dist) {
