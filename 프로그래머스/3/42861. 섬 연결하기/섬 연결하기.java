@@ -39,6 +39,6 @@ class Solution {
     // 부모가 누구인지 찾음
     private int find(int x) {
         if (parent[x] == x) return x; // 서로소 집합으로 부모는 자기 자신을 가리킴
-        return find(parent[x]); // 경로 압축 
+        return parent[x] = find(parent[x]); // 경로 압축 
     }
 }
