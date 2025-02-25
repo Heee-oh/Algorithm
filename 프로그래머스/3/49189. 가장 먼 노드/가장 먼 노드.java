@@ -27,8 +27,8 @@ class Solution {
             
             for (int i = 1; i < graph.length; i++) {
                 if (!visited[i] && graph[node[0]][i]) {
-                    q.add(new int[] {i, node[1] + 1});
                     dist[i] = node[1] + 1;
+                    q.add(new int[] {i, dist[i]});
                     visited[i] = true;
                     
                     max = max < dist[i] ? dist[i] : max;
