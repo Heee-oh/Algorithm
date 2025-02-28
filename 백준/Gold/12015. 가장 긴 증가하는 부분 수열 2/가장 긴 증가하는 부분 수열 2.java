@@ -18,6 +18,11 @@ public class Main {
             int num =  Integer.parseInt(st.nextToken());
             int front = 0, back = size - 1;
 
+            if (sequence[back] < num) {
+                sequence[size++] = num;
+                continue;
+            }
+
             while (front <= back) {
                 int mid = (front + back) / 2;
 
