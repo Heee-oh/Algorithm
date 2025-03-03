@@ -44,6 +44,13 @@ public class Main {
             max = Math.max(max, C); // 탐색 범위 max 값
         }
 
+        // 비용 내림차순 정렬
+        for (ArrayList<Island> list : graph) {
+            if (list != null) {
+                Collections.sort(list, (o1, o2) -> o2.cost - o1.cost);
+            }
+        }
+
         // 공장이 있는 두 섬
         st = new StringTokenizer(br.readLine());
         int start = Integer.parseInt(st.nextToken());
@@ -86,7 +93,6 @@ public class Main {
             }
 
             ArrayList<Island> list = graph[curIsland.next];
-            Collections.sort(list, (o1, o2) -> o2.cost - o1.cost);
             for (int i = 0; i < list.size(); i++) {
 
                 Island nextIsland = list.get(i);
