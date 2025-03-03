@@ -1,21 +1,13 @@
 import java.io.*;
 import java.util.*;
+import java.util.stream.IntStream;
 
 public class Main {
 
 
-    static class Island {
-        int next;
-        int cost;
-        public Island (int next, int cost) {
-            this.next = next;
-            this.cost = cost;
-        }
-
-    }
-    static ArrayList<Island>[] graph;
-    static boolean[] visited;
-    static int max = 0;
+    static int[][] graph;
+    static int[] parent;
+    static int min = Integer.MAX_VALUE;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -24,85 +16,48 @@ public class Main {
         int n = Integer.parseInt(st.nextToken()); // 섬 개수
         int m = Integer.parseInt(st.nextToken()); // 다리 개수
 
-        graph = new ArrayList[n + 1];
-        visited = new boolean[n + 1];
+        graph = new int [m][3];
+        parent = IntStream.range(0, n + 1).toArray(); // 부모
 
         // 섬 그래프로 초기화
         for (int i = 0; i < m; i++) {
             st = new StringTokenizer(br.readLine());
-            int A = Integer.parseInt(st.nextToken()); // 섬1
-            int B = Integer.parseInt(st.nextToken()); // 섬2
-            int C = Integer.parseInt(st.nextToken()); // 비용
-
-            if (graph[A] == null) graph[A] = new ArrayList<>();
-            if (graph[B] == null) graph[B] = new ArrayList<>();
-            graph[A].add(new Island(B, C));
-            graph[B].add(new Island(A, C));
-            max = Math.max(max, C); // 탐색 범위 max 값
+            graph[i][0] = Integer.parseInt(st.nextToken()); // 섬1
+            graph[i][1] = Integer.parseInt(st.nextToken()); // 섬2
+            graph[i][2] = Integer.parseInt(st.nextToken()); // 비용
         }
-
-        // 비용 내림차순 정렬
-        for (ArrayList<Island> list : graph) {
-            if (list != null) {
-                Collections.sort(list, (o1, o2) -> o2.cost - o1.cost);
-            }
-        }
-
-        // 공장이 있는 두 섬
         st = new StringTokenizer(br.readLine());
         int start = Integer.parseInt(st.nextToken());
         int end = Integer.parseInt(st.nextToken());
 
+        // 비용 내림차순 정렬
+        Arrays.sort(graph, (o1, o2) -> o2[2] - o1[2]);
 
-        int front = 1, back = max;
-        int max = 0;
-
-        while (front <= back) {
-
-            int mid = (front + back) >>> 1;
-
-            if (bfs(start, end, mid)) {
-                front = mid + 1;
-                max = mid;
-            } else {
-                back = mid - 1;
-            }
-
-            visited = new boolean[n + 1];
-        }
-
-        System.out.println(max);
-
-    }
-
-    // bfs로 공장이 있는 A -> B로 가는 길에 mid값으로 갈 수 있는 지 확인
-    private static boolean bfs(int start, int end, int cost) {
-        Queue<Island> q = new LinkedList<>();
-        q.add(new Island(start, 0));
-        visited[start] = true;
-
-        while (!q.isEmpty()) {
-            Island curIsland = q.poll();
-
-            // 반대편 공장이 있는 섬에 도착했다면 true 반환
-            if (curIsland.next == end) {
-                return true;
-            }
-
-            ArrayList<Island> list = graph[curIsland.next];
-            for (int i = 0; i < list.size(); i++) {
-
-                Island nextIsland = list.get(i);
-                // 방문하지 않았으면서, cost로 이동 가능하면 큐에 추가
-                if (!visited[nextIsland.next] && nextIsland.cost >= cost) {
-                    q.add(nextIsland);
-
-                    visited[nextIsland.next] = true;
+        for (int i = 0; i < m; i++) {
+            if (find(graph[i][0]) != find(graph[i][1])) { // 서로 다른 부모 즉, 사이클이 생기지 않는다면
+                union(graph[i][0], graph[i][1]);
+                if (find(parent[start]) == find(parent[end])) { // 시작과 끝점의 부모가 같다면 현재 비용이 이동가능한 무게 최댓값
+                    min = graph[i][2];
+                    break;
                 }
             }
         }
 
-        return false;
+        System.out.println(min);
+    }
+    private static void union(int a, int b) {
+        a = find(a);
+        b = find(b);
+
+        if (a > b) {
+            parent[a] = b;
+        } else {
+            parent[b] = a;
+        }
     }
 
+    private static int find(int x) {
+        if (parent[x] == x) return x;
+        return parent[x] = find(parent[x]); // 경로압축
+    }
 }
