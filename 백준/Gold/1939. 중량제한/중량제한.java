@@ -1,7 +1,4 @@
-import java.beans.Visibility;
 import java.io.*;
-import java.sql.Time;
-import java.time.LocalDateTime;
 import java.util.*;
 
 public class Main {
@@ -87,7 +84,7 @@ public class Main {
         while (!q.isEmpty()) {
             Island curIsland = q.poll();
 
-
+            // 반대편 공장이 있는 섬에 도착했다면 true 반환
             if (curIsland.next == end) {
                 return true;
             }
