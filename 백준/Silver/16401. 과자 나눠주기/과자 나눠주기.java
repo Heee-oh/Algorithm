@@ -15,13 +15,14 @@ public class Main {
 
         st = new StringTokenizer(br.readLine());
         int[] snacks = new int[n];
+        int max = 0;
 
         for (int i = 0; i < n; i++) {
             snacks[i] = Integer.parseInt(st.nextToken());
+            max = Math.max(snacks[i], max);
         }
 
-        Arrays.sort(snacks);
-        int front = 1, back = snacks[n-1];
+        int front = 1, back = max;
         int size = -1;
         while (front <= back) {
 
