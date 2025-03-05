@@ -11,13 +11,14 @@ public class Main {
         int gold;
         int silver;
         int bronze;
-        String total = "" + gold + silver + bronze;
+        String total;
 
         public Medal(int countryNum, int gold, int silver, int bronze) {
             this.countryNum = countryNum;
             this.gold = gold;
             this.silver = silver;
             this.bronze = bronze;
+            total = "" + gold + silver + bronze;
         }
 
 
@@ -38,9 +39,8 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         PriorityQueue<Medal> pq = new PriorityQueue<>();
-        Set<String> set = new HashSet<>();
+        Map<String, ArrayList<Integer>> map = new HashMap<>();
         StringTokenizer st = new StringTokenizer(br.readLine());
-        StringBuilder sb = new StringBuilder();
 
 
 
@@ -56,22 +56,29 @@ public class Main {
             pq.add(new Medal(country, gold, silver, bronze));
         }
 
-        int cnt = 1;
+        String answer = "";
         while ((!pq.isEmpty())) {
             Medal nextCountry = pq.poll();
+
+            ArrayList<Integer> list = map.getOrDefault(nextCountry.total, new ArrayList<>());
+            list.add(nextCountry.countryNum);
+            map.put(nextCountry.total, list);
+
             if (nextCountry.countryNum == k) {
+                answer = nextCountry.total;
                 break;
             }
+        }
 
-            if (!set.contains(nextCountry.total)) {
-                set.add(nextCountry.total);
-                cnt++;
-            }
+        int all = 1;
 
+        for (String key : map.keySet()) {
+            if(key.equals(answer)) continue;
+            all += map.get(key).size();
         }
 
 
-        bw.write(cnt + "");
+        bw.write(all + "");
         bw.flush();
         bw.close();
     }
