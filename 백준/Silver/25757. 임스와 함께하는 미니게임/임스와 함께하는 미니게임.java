@@ -17,7 +17,7 @@ public class Main {
             playerCheck.add(player);
         }
 
-        int count = getPlayerCount(gameCode) - 1;
+        int count = getPlayerCount(gameCode) - 1; // 임스는 항상 참여하므로 게임 인원에서 1을 빼야함
         int playCount = playerCheck.size() / count;
 
         bw.write(playCount + "");
