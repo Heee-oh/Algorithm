@@ -2,10 +2,9 @@ import java.io.*;
 import java.util.*;
 
 class Main {
-
     static ArrayList<Integer> list = new ArrayList<>();
     static int min = 500001;
-    static int len;
+    
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
@@ -35,7 +34,7 @@ class Main {
             backTracking(n, 1, target.length(), i);
         }
 
-        bw.write(Math.min(Math.abs(100 - n), min + len) + "");
+        bw.write(Math.min(Math.abs(100 - n), min) + "");
         bw.flush();
         bw.close();
     }
