@@ -4,7 +4,7 @@ import java.util.*;
 class Main {
     static ArrayList<Integer> list = new ArrayList<>();
     static int min = 500001;
-    
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
@@ -22,6 +22,11 @@ class Main {
                 brokenBtn[idx] = true;
             }
 
+        } else if (m == 0) {
+            bw.write(Math.min(target.length(), Math.abs(100 - n)) + "");
+            bw.flush();
+            bw.close();
+            return;
         }
 
         for (int i = 0; i < 10; i++) {
