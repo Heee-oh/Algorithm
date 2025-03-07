@@ -49,8 +49,13 @@ class Main {
         //  size보다 1작은 길이의 숫자 혹은 길이가 1큰 숫자도 고려해야함
         if (size - 1 <= depth && depth <= size + 1) {
             int abs = Math.abs(num - target);
-            int len = String.valueOf(num).length();
+            int len = depth;
             min = Math.min(abs + len, min);
+            /**
+             * 기존 코드 32퍼 실패 이유
+             * 길이와 min 값의 합으로 비교하지 않았기 떄문
+             *
+             */
         }
 
         for (int n : list) {
