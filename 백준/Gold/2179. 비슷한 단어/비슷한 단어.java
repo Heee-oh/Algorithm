@@ -40,6 +40,8 @@ public class Main {
             int len = Math.min(word1.length(), word2.length()); // 짧은 단어 기준으로 순회
             int cnt = 0; // 접두사 길이 측정
 
+            if (len < max) continue;
+
             for (int j = 0; j < len; j++) {
                 if (word1.charAt(j) == word2.charAt(j)) {
                     cnt++;
