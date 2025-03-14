@@ -60,7 +60,7 @@ public class Main {
 
 
     private static void dijkstra(int start) {
-        Queue<Integer> q = new LinkedList<>();
+        PriorityQueue<Integer> q = new PriorityQueue<>();
         q.add(start);
 
         while (!q.isEmpty()) {
