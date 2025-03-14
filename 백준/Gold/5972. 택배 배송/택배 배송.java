@@ -43,11 +43,6 @@ public class Main {
             graph[end].add(new CowNode(start, cost));
         }
 
-        // 비용이 적은 순으로 오름차순 정렬
-        for (ArrayList<CowNode> cowNodes : graph) {
-            Collections.sort(cowNodes, (o1, o2) -> o1.cost - o2.cost);
-        }
-
         diff[1] = 0;
         dijkstra(1);
 
@@ -60,18 +55,18 @@ public class Main {
 
 
     private static void dijkstra(int start) {
-        PriorityQueue<Integer> q = new PriorityQueue<>();
-        q.add(start);
+        PriorityQueue<CowNode> q = new PriorityQueue<>((o1, o2) -> o1.cost - o2.cost);
+        q.add(new CowNode(start, 0));
 
         while (!q.isEmpty()) {
-            int currentPos = q.poll();
+            CowNode currentPos = q.poll();
 
-            ArrayList<CowNode> cowList = graph[currentPos];
+            ArrayList<CowNode> cowList = graph[currentPos.next];
             for (CowNode cowNode : cowList) {
-                if (diff[cowNode.next] > cowNode.cost + diff[currentPos]) {
-                    diff[cowNode.next] = cowNode.cost + diff[currentPos];
-                    q.add(cowNode.next);
-
+                // 다음 노드 총 비용 > 다음 노드로 가는 비용 + 현재 위치까지 총 비용
+                if (diff[cowNode.next] > cowNode.cost + diff[currentPos.next]) {
+                    diff[cowNode.next] = cowNode.cost + diff[currentPos.next];
+                    q.add(new CowNode(cowNode.next, cowNode.cost)); 
 
                 }
             }
