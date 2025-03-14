@@ -39,47 +39,51 @@ public class Main {
             }
 
             // 2. 빙고 체크
-            boolean xBingoCnt = false;
-            boolean oBingoCnt = false;
+            boolean xBingoCheck = false;
+            boolean oBingoCheck = false;
 
             for (int i = 0; i < 3; i++) {
                 // 가로
                 if (map[i][0] == map[i][1] && map[i][1] == map[i][2]) {
 
                     if (map[i][0] == 'X') {
-                        xBingoCnt = true;
+                        xBingoCheck = true;
                     } else if (map[i][0] == 'O') {
-                        oBingoCnt = true;
+                        oBingoCheck = true;
                     }
 
                 }
                 // 세로
                 if (map[0][i] == map[1][i] && map[1][i] == map[2][i]) {
                     if (map[0][i] == 'X') {
-                        xBingoCnt = true;
+                        xBingoCheck = true;
                     } else if (map[0][i] == 'O') {
-                        oBingoCnt = true;
+                        oBingoCheck = true;
                     }
                 }
             }
 
             // 대각선
-            if (map[0][0] == map[1][1] && map[1][1] == map[2][2] || map[0][2] == map[1][1] && map[1][1] == map[2][0]) {
+            if (map[0][0] == map[1][1] && map[1][1] == map[2][2]
+                    || map[0][2] == map[1][1] && map[1][1] == map[2][0]) {
                 if (map[1][1] == 'X') {
-                    xBingoCnt = true;
+                    xBingoCheck = true;
                 } else if (map[1][1] == 'O') {
-                    oBingoCnt = true;
+                    oBingoCheck = true;
                 }
             }
 
             // x또는 o 둘중 하나가 빙고해야하며 x가 빙고 했고, x -1 == O 이거나 o가 빙고했고 x == O면
-            if (xBingoCnt != oBingoCnt
-                    && (xBingoCnt && countO == countX - 1
-                    || oBingoCnt && countO == countX)) {
+            if (xBingoCheck != oBingoCheck
+                    && (xBingoCheck && countO == countX - 1
+                    || oBingoCheck && countO == countX)) {
                 sb.append("valid\n");
                 continue;
+
             }
 
+            // 게임이 끝날때 둘다 빙고일 경우를 따로 처리해줘야함
+            // testcase
             // XXO
             // OXO
             // XXO
@@ -89,8 +93,12 @@ public class Main {
             //XOX
 
             // true true만 피하면됨
+            // 위에서 x O 둘다 빙고가 아니면서 로 처리했기에
+            // 여기서도 xo 둘다 빙고가 아닐때를 생각해야한다.
+            // 위에서 빙고 처리를 했기에 여기서는 둘다 빙고인 경우만 처리하면 됨
             // 3. 게임이 안전하게 끝났다면
-            if (!xBingoCnt && !oBingoCnt && countX + countO == 9) {
+            if (!xBingoCheck && !oBingoCheck
+                    && countX + countO == 9) {
                 sb.append("valid\n");
                 continue;
             }
