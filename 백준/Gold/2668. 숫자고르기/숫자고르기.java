@@ -17,37 +17,40 @@ public class Main {
         for (int i = 1; i <= n; i++) {
             graph[i] = Integer.parseInt(br.readLine());
         }
-
-
+        
         // 사이클이 있다면 가능
         for (int i = 1; i <= n; i++) {
             if (ts.contains(i)) continue;
             visited = new boolean[n + 1];
             visited[i] = true;
 
-            // i, i가 가리키는 것
+            // graph , i, i가 가리키는 것
             dfs(graph, i, graph[i]);
         }
+        
         sb.append(ts.size()).append("\n");
         ts.forEach(x -> sb.append(x).append("\n"));
 
         System.out.print(sb.toString());
     }
 
-    private static void dfs(int[] arr, int origin, int idx) {
+    private static void dfs(int[] graph, int origin, int idx) {
         // 사이클이면 저장
         if (origin == idx) {
-            ts.add(origin);
+            int next = origin;
+
+            do {
+                ts.add(next);
+                next = graph[next];
+            } while (next != origin);
+
             return;
         }
 
-        if (visited[idx]) {
-            return;
+        if (!visited[idx]) {
+            visited[idx] = true;
+            dfs(graph, origin, graph[idx]);
         }
-
-        visited[idx] = true;
-        dfs(arr, origin, arr[idx]);
-
     }
 
 
