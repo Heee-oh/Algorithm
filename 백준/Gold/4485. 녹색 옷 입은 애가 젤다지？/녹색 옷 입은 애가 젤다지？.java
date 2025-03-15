@@ -24,14 +24,10 @@ public class Main {
             diff = new int[n][n];
 
             for (int i = 0; i < n; i++) {
-                Arrays.fill(diff[i], Integer.MAX_VALUE);
-            }
-
-
-            for (int i = 0; i < n; i++) {
                 StringTokenizer st = new StringTokenizer(br.readLine());
                 for (int j = 0; j < n; j++) {
                     map[i][j] = Integer.parseInt(st.nextToken());
+                    diff[i][j] = Integer.MAX_VALUE;
                 }
             }
 
@@ -44,7 +40,7 @@ public class Main {
     }
 
     private static void bfs() {
-        Queue<int[]> q = new LinkedList<>();
+        PriorityQueue<int[]> q = new PriorityQueue<>((o1, o2) -> o1[2] - o2[2]);
         q.add(new int[]{0, 0, map[0][0]});
         diff[0][0] = map[0][0];
 
