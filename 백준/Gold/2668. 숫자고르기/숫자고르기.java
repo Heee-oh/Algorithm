@@ -17,7 +17,7 @@ public class Main {
         for (int i = 1; i <= n; i++) {
             graph[i] = Integer.parseInt(br.readLine());
         }
-        
+
         // 사이클이 있다면 가능
         for (int i = 1; i <= n; i++) {
             if (ts.contains(i)) continue;
@@ -27,7 +27,7 @@ public class Main {
             // graph , i, i가 가리키는 것
             dfs(graph, i, graph[i]);
         }
-        
+
         sb.append(ts.size()).append("\n");
         ts.forEach(x -> sb.append(x).append("\n"));
 
@@ -35,7 +35,7 @@ public class Main {
     }
 
     private static void dfs(int[] graph, int origin, int idx) {
-        // 사이클이면 저장
+        // 사이클이면 사이클 노드들 저장
         if (origin == idx) {
             int next = origin;
 
@@ -43,8 +43,6 @@ public class Main {
                 ts.add(next);
                 next = graph[next];
             } while (next != origin);
-
-            return;
         }
 
         if (!visited[idx]) {
