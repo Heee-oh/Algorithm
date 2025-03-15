@@ -9,34 +9,21 @@ public class Main {
 
         String str = br.readLine();
         String boomStr = br.readLine();
-        Stack<Character> stack = new Stack<>();
 
         for (int i = 0; i < str.length(); i++) {
-            stack.push(str.charAt(i));
+            sb.append(str.charAt(i));
 
-            if(stack.size() >= boomStr.length()
+            if(sb.length() >= boomStr.length()
                     && str.charAt(i) == boomStr.charAt(boomStr.length() - 1)) {
-                int tmp = boomStr.length();
-                while (tmp-->0) {
-                    sb.append(stack.pop());
-                }
 
-                // 폭발 문자열이 아니면 다시 스택에 넣음
-                if (!sb.reverse().toString().equals(boomStr)) {
-                    for (int j = 0; j < sb.length(); j++) {
-                        stack.push(sb.charAt(j));
-                    }
+                int range = sb.length() - boomStr.length();
+                if (sb.substring(range).equals(boomStr)) {
+                    sb.delete(range, sb.length());
                 }
-
-                sb.delete(0, sb.length());
             }
         }
 
-        while (!stack.isEmpty()) {
-            sb.append(stack.pop());
-        }
-
-        bw.write(sb.length() == 0 ? "FRULA" : sb.reverse().toString());
+        bw.write(sb.length() == 0 ? "FRULA" : sb.toString());
         bw.flush();
         bw.close();
     }
