@@ -16,9 +16,10 @@ public class Main {
         int[][] minDp = new int[n][3];
 
         for (int i = 0; i < n; i++) {
-            arr[i] = Arrays.stream(br.readLine().split(" "))
-                    .mapToInt(Integer::parseInt)
-                    .toArray();
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            for (int j = 0; j < 3; j++) {
+                arr[i][j] = Integer.parseInt(st.nextToken());
+            }
         }
 
         for (int i = 0; i < n; i++) {
