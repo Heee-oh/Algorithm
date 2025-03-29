@@ -34,9 +34,12 @@ public class Main {
             for (int j = 0; j < 3; j++) {
                 for (int k = 0; k < 3; k++) {
                     if (j + dx[k] < 0 || j + dx[k] >= 3) continue;
-                    maxDp[i][j] = Math.max(maxDp[i][j], maxDp[i - 1][j + dx[k]] + arr[i][j]);
-                    minDp[i][j] = Math.min(minDp[i][j], minDp[i - 1][j + dx[k]] + arr[i][j]);
+                    maxDp[i][j] = Math.max(maxDp[i][j], maxDp[i - 1][j + dx[k]]);
+                    minDp[i][j] = Math.min(minDp[i][j], minDp[i - 1][j + dx[k]]);
                 }
+
+                maxDp[i][j] += arr[i][j];
+                minDp[i][j] += arr[i][j];
 
             }
         }
