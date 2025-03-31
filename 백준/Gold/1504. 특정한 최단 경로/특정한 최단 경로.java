@@ -19,8 +19,9 @@ public class Main {
             return this.cost - o.cost;
         }
     }
+    static int INF = Integer.MAX_VALUE;
     static List<Node>[] graph;
-    static int[] diff;
+//    static int[] diff;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -54,40 +55,35 @@ public class Main {
         int v1 = Integer.parseInt(st.nextToken());
         int v2 = Integer.parseInt(st.nextToken());
 
+        int v1ToV2Min = 0;
+        int v2ToV1Min = 0;
 
-
-        int v1Tov2Min = 0;
-        int v2Tov1Min = 0;
-        dijkstra(1); // 1 -> v1, v2
+        // 1로 시작
+        int[] startDiff = dijkstra(1);// 1 -> v1, v2
+        int[] v1Diff = dijkstra(v1);// 1 -> v1, v2
+        int[] v2Diff = dijkstra(v2);// 1 -> v1, v2
 
         // 1에서 v1 나 v2, n으로 가는 경로가 없다면 -1 출력
-        if (diff[v1] >= INF || diff[v2] >= INF || diff[n] >= INF) {
+        if (impossibleCheck(startDiff, v1, v2, n)) {
             System.out.println(-1);
             return;
         }
 
+        v1ToV2Min = startDiff[v1] + v1Diff[v2] + v2Diff[n];
+        v2ToV1Min = startDiff[v2] + v2Diff[v1] + v1Diff[n];
 
-        // 1로 시작
-        v1Tov2Min += diff[v1]; // 1 -> v1
-        v2Tov1Min += diff[v2]; // 1 -> v2
 
-        dijkstra(v1); // v1 - v2  두 정점의 길이를 구하는 것이므로
-        v1Tov2Min += diff[v2];
-        v2Tov1Min += diff[v2]; // 같은 값을 가짐
-
-        dijkstra(v2); // v2 -> N
-        v1Tov2Min += diff[n];
-
-        dijkstra(v1); // v1 -> N
-        v2Tov1Min += diff[n];
-
-        System.out.println(Math.min(v1Tov2Min, v2Tov1Min));
+        System.out.println(Math.min(v1ToV2Min, v2ToV1Min));
     }
 
-    static int INF = Integer.MAX_VALUE;
-    private static void dijkstra(int start) {
+    private static boolean impossibleCheck(int[] diff, int v1, int v2, int n) {
+        return diff[v1] >= INF || diff[v2] >= INF || diff[n] >= INF;
+    }
+
+
+    private static int[] dijkstra(int start) {
         PriorityQueue<Node> pq = new PriorityQueue<>();
-        diff = new int[graph.length];
+        int[] diff = new int[graph.length];
         Arrays.fill(diff, INF);
         diff[start] = 0;
         pq.add(new Node(start, 0));
@@ -103,6 +99,8 @@ public class Main {
                 }
             }
         }
+
+        return diff;
     }
 
 }
