@@ -21,7 +21,6 @@ public class Main {
     }
     static int INF = Integer.MAX_VALUE;
     static List<Node>[] graph;
-//    static int[] diff;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -59,17 +58,18 @@ public class Main {
         int v2ToV1Min = 0;
 
         // 1로 시작
-        int[] startDiff = dijkstra(1);// 1 -> v1, v2
-        int[] v1Diff = dijkstra(v1);// 1 -> v1, v2
-        int[] v2Diff = dijkstra(v2);// 1 -> v1, v2
+        int[] startDiff = dijkstra(1);// 1 -> v1, v2,N까지 
+        int[] v1Diff = dijkstra(v1);// v1 -> N까지
+        int[] v2Diff = dijkstra(v2);// v2 -> N까지
 
         // 1에서 v1 나 v2, n으로 가는 경로가 없다면 -1 출력
         if (impossibleCheck(startDiff, v1, v2, n)) {
             System.out.println(-1);
             return;
         }
-
+        // 1 -> v1 -> v2 -> n
         v1ToV2Min = startDiff[v1] + v1Diff[v2] + v2Diff[n];
+        // 1 -> v2 -> v1 -> n
         v2ToV1Min = startDiff[v2] + v2Diff[v1] + v1Diff[n];
 
 
@@ -81,13 +81,15 @@ public class Main {
     }
 
 
+    // 다익스트라로 start 정점부터 N까지 최단경로를 구함
     private static int[] dijkstra(int start) {
         PriorityQueue<Node> pq = new PriorityQueue<>();
         int[] diff = new int[graph.length];
         Arrays.fill(diff, INF);
         diff[start] = 0;
+        
         pq.add(new Node(start, 0));
-
+        
         while (!pq.isEmpty()) {
             Node current = pq.poll();
 
