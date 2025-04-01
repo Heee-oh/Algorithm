@@ -31,7 +31,8 @@ public class Main {
             }
 
             int node = Integer.parseInt(inputNode);
-            root = shiftDown(node, root); // 아래로 내려가면서 자식 생성
+//            root = shiftDown(node, root); // 아래로 내려가면서 자식 생성
+            shiftDownWhile(node);
         }
 
         postFix(root);
@@ -40,8 +41,34 @@ public class Main {
 
     }
 
+    private static void shiftDownWhile(int nodeValue) {
 
+        if (root == null) {
+            root = new Node(nodeValue, null, null);
+            return;
+        }
 
+        Node next = root;
+        while (true) {
+            if (next.value > nodeValue) {
+                if (next.leftNode == null) {
+                    next.leftNode = new Node(nodeValue, null, null);
+                    return;
+                } else {
+                    next = next.leftNode;
+                }
+
+            } else {
+                if (next.rightNode == null) {
+                    next.rightNode = new Node(nodeValue, null, null);
+                    return;
+                } else {
+                    next = next.rightNode;
+                }
+            }
+        }
+
+    }
 
     private static Node shiftDown(int nodeValue, Node nextNode) {
 
@@ -61,8 +88,8 @@ public class Main {
         return nextNode;
     }
 
+    // 후위 연산
     private static void postFix(Node node) {
-
         if (node == null) {
             return;
         }
