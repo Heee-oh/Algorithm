@@ -13,8 +13,8 @@ public class Main {
         }
     }
     static List<Node>[] tree;
-    static int[] diff;
     static boolean[] visited;
+    static int[] diff;
 
 
     public static void main(String[] args) throws IOException {
@@ -45,26 +45,35 @@ public class Main {
             tree[child].add(new Node(parent, cost));
         }
 
-        dijkstra(1, n);
+        // 루트 노드에서 가장 먼 것을 찾는다.
+        bfs(1, n);
 
-        int maxIdx = 0;
-        int max = 0;
-        for (int i = 1; i < diff.length; i++) {
-            if (max < diff[i]) {
-                maxIdx = i;
-                max = diff[i];
-            }
-        }
-        dijkstra(maxIdx, n);
+        // 가장 먼 노드 찾기
+        int maxIdx = getMaxIdx();
 
+        // 루트에서 가장 먼 노드에서 다익스트라 최장 거리 탐색을 하여
+        // 가장 먼 곳을 찾는다.
+        bfs(maxIdx, n);
+
+        // 가장 먼 곳을 출력
         System.out.println(Arrays.stream(diff).max().getAsInt());
 
     }
 
+    private static int getMaxIdx() {
+        int idx = 0;
+        int max = 0;
+        for (int i = 1; i < diff.length; i++) {
+            if (max < diff[i]) {
+                idx = i;
+                max = diff[i]; // 또 실수
+            }
+        }
+        return idx;
+    }
 
 
-
-    private static void dijkstra(int start, int n) {
+    private static void bfs(int start, int n) {
         Queue<Node> q = new LinkedList<>();
         visited = new boolean[n + 1];
         diff = new int[n + 1];
