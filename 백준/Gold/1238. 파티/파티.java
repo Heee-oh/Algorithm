@@ -13,22 +13,26 @@ public class Main {
         }
     }
     static List<Node>[] graph;
+    static List<Node>[] reverseGraph;
 
+    static int n;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        int n = Integer.parseInt(st.nextToken());
+        n = Integer.parseInt(st.nextToken());
         int m = Integer.parseInt(st.nextToken());
         int x = Integer.parseInt(st.nextToken());
         int[] xToAllDiff = new int[n + 1];
         int[] AllToXDiff = new int[n + 1];
 
         graph = new List[n + 1];
+        reverseGraph = new List[n + 1];
         for (int i = 1; i <= n; i++) {
             graph[i] = new ArrayList<>();
+            reverseGraph[i] = new ArrayList<>();
 
         }
 
@@ -40,39 +44,40 @@ public class Main {
             int T = Integer.parseInt(st.nextToken());
 
             graph[A].add(new Node(B, T));
+            reverseGraph[B].add(new Node(A, T));
         }
 
-        //x -> 모든 정점으로의 최단거리
+        //x -> 모든 정점으로 가는 최단거리
         Arrays.fill(xToAllDiff, Integer.MAX_VALUE);
-        xToAllDiff[x] = 0;
-        bfs(x, xToAllDiff);
+        bfs(x, xToAllDiff, graph);
 
+        // 모든 정점->x로 오는 최단거리 
+        Arrays.fill(AllToXDiff, Integer.MAX_VALUE);
+        bfs(x, AllToXDiff, reverseGraph);
 
         // 오고 가는데 가장 오래걸리는 소요시간 구하기
         // 모든 정점 -> x 까지 최단거리
         int max = 0;
         for (int i = 1; i <= n; i++) {
-            Arrays.fill(AllToXDiff, Integer.MAX_VALUE);
-            AllToXDiff[i] = 0;
-            bfs(i, AllToXDiff);
-
             // i -> x + x -> i 까지 가는데 최단거리의 합중 최댓값을 갱신
-            if (AllToXDiff[x] + xToAllDiff[i] > max) {
-                max = AllToXDiff[x] + xToAllDiff[i];
+            if (AllToXDiff[i] + xToAllDiff[i] > max) {
+                max = AllToXDiff[i] + xToAllDiff[i];
             }
         }
 
         System.out.println(max);
     }
 
-    private static void bfs(int start, int[] diff) {
+    private static void bfs(int start, int[] diff, List<Node>[] graph) {
         PriorityQueue<Node> pq = new PriorityQueue<>((o1, o2) -> o1.cost - o2.cost);
+        boolean[] visited = new boolean[n + 1];
         pq.add(new Node(start, 0));
-
+        diff[start] = 0;
 
         while (!pq.isEmpty()) {
             Node current = pq.poll();
-
+            if (visited[current.idx]) continue;
+            visited[current.idx] = true;
 
             List<Node> list = graph[current.idx];
             for (Node node : list) {
@@ -86,5 +91,4 @@ public class Main {
         }
 
     }
-
 }
