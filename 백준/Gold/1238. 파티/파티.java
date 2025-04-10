@@ -12,8 +12,6 @@ public class Main {
             this.cost = cost;
         }
     }
-    static List<Node>[] graph;
-    static List<Node>[] reverseGraph;
 
     static int n;
 
@@ -27,9 +25,10 @@ public class Main {
         int x = Integer.parseInt(st.nextToken());
         int[] xToAllDiff = new int[n + 1];
         int[] AllToXDiff = new int[n + 1];
-
-        graph = new List[n + 1];
-        reverseGraph = new List[n + 1];
+        
+        List<Node>[] graph = new List[n + 1];
+        List<Node>[] reverseGraph = new List[n + 1];
+        
         for (int i = 1; i <= n; i++) {
             graph[i] = new ArrayList<>();
             reverseGraph[i] = new ArrayList<>();
@@ -51,7 +50,7 @@ public class Main {
         Arrays.fill(xToAllDiff, Integer.MAX_VALUE);
         bfs(x, xToAllDiff, graph);
 
-        // 모든 정점->x로 오는 최단거리 
+        // 모든 정점->x로 오는 최단거리
         Arrays.fill(AllToXDiff, Integer.MAX_VALUE);
         bfs(x, AllToXDiff, reverseGraph);
 
