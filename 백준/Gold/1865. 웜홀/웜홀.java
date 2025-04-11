@@ -49,6 +49,7 @@ public class Main {
                 graph[s][e] = -t; // 웜홀은 시간 역행 즉, 음수임
             }
 
+            //플로이드 워샬 알고리즘 
             for (int k = 1; k <= n; k++) {
                 for (int a = 1; a <= n; a++) {
                     for (int b = 1; b <= n; b++) {
@@ -57,6 +58,7 @@ public class Main {
                 }
             }
 
+            // i,i 즉, 시작정점의 최단거리가 - 이면 시간역행
             boolean flag = false;
             for (int i = 1; i <= n; i++) {
                 if (graph[i][i] < 0) {
@@ -75,6 +77,4 @@ public class Main {
         bw.flush();
         bw.close();
     }
-
-
 }
