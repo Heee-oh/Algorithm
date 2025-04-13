@@ -5,7 +5,8 @@ public class Main {
 
     static class Node {
         int idx, cost;
-        String path;
+        String path; // 지나온 정점을 기록
+        StringBuilder sb;
 
         public Node(int idx, int cost, String path) {
             this.idx = idx;
@@ -71,11 +72,12 @@ public class Main {
             List<Node> list = graph[current.idx];
 
             for (Node node : list) {
+                StringBuilder sb = new StringBuilder();
                 if (dist[node.idx] > dist[current.idx] + node.cost) {
                     dist[node.idx] = dist[current.idx] + node.cost;
 
                     // 다음 노드의 값과 패스 추가
-                    pq.add(new Node(node.idx, dist[node.idx], current.path + " " + node.idx));
+                    pq.add(new Node(node.idx, dist[node.idx], sb.append(current.path).append(" ").append(node.idx).toString()));
                 }
             }
         }
@@ -86,10 +88,10 @@ public class Main {
 
     private static String getAnswer(int end,Node current) {
         StringBuilder sb = new StringBuilder();
-        sb.append(dist[end]).append("\n");
+        sb.append(dist[end]).append("\n"); // 최단경로
         String[] split = current.path.split(" ");
-        sb.append(split.length).append("\n");
-        Arrays.stream(split).forEach(x -> sb.append(x).append(" "));
+        sb.append(split.length).append("\n"); // 길이
+        Arrays.stream(split).forEach(x -> sb.append(x).append(" ")); // 지나온 정점들 문자열에 저장
 
         return sb.toString();
     }
