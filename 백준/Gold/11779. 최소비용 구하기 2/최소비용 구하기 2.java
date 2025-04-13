@@ -5,19 +5,16 @@ public class Main {
 
     static class Node {
         int idx, cost;
-        String path; // 지나온 정점을 기록
-        StringBuilder sb;
 
-        public Node(int idx, int cost, String path) {
+        public Node(int idx, int cost) {
             this.idx = idx;
             this.cost = cost;
-            this.path = path;
         }
     }
     static List<Node>[] graph;
     static int[] dist;
     static boolean[] visited;
-
+    static int[] prev;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
@@ -27,6 +24,7 @@ public class Main {
         visited = new boolean[n + 1];
         graph = new List[n + 1];
         dist = new int[n + 1];
+        prev = new int[n + 1];
 
         for (int i = 1; i <= n; i++) {
             graph[i] = new ArrayList<>();
@@ -40,24 +38,38 @@ public class Main {
             int v2 = Integer.parseInt(st.nextToken());
             int c = Integer.parseInt(st.nextToken());
 
-            graph[v1].add(new Node(v2, c, String.valueOf(v1)));
+            graph[v1].add(new Node(v2, c));
         }
 
         StringTokenizer st = new StringTokenizer(br.readLine());
         int start = Integer.parseInt(st.nextToken());
         int end = Integer.parseInt(st.nextToken());
 
-        bw.write(dijkstra(start, end));
+        dijkstra(start, end);
+        StringBuilder sb = new StringBuilder();
+        sb.append(dist[end]).append("\n");
+
+        Stack<Integer> stack = new Stack<>();
+        while (end != -1) {
+            stack.push(end);
+            end = prev[end];
+        }
+        sb.append(stack.size()).append("\n");
+        while (!stack.isEmpty()) sb.append(stack.pop()).append(" ");
+        
+        bw.write(sb.toString());
         bw.flush();
         bw.close();
     }
 
 
 
-    private static String dijkstra(int start, int end) {
+    private static void dijkstra(int start, int end) {
         // [idx, cost, List<>]
         PriorityQueue<Node> pq = new PriorityQueue<>((o1, o2) -> o1.cost - o2.cost);
-        pq.add(new Node(start, 0, String.valueOf(start)));
+        pq.add(new Node(start, 0));
+
+        Arrays.fill(prev, -1);
         dist[start] = 0;
 
         while (!pq.isEmpty()) {
@@ -65,8 +77,9 @@ public class Main {
             if (visited[current.idx]) continue;
             visited[current.idx] = true;
 
+            // 도착지점에 도달했으면 멈춤
             if (current.idx == end) {
-                return getAnswer(end, current);
+                return;
             }
 
             List<Node> list = graph[current.idx];
@@ -77,23 +90,12 @@ public class Main {
                     dist[node.idx] = dist[current.idx] + node.cost;
 
                     // 다음 노드의 값과 패스 추가
-                    pq.add(new Node(node.idx, dist[node.idx], sb.append(current.path).append(" ").append(node.idx).toString()));
+                    pq.add(new Node(node.idx, dist[node.idx]));
+                    prev[node.idx] = current.idx;
                 }
             }
         }
-
-
-        return "";
     }
 
-    private static String getAnswer(int end,Node current) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(dist[end]).append("\n"); // 최단경로
-        String[] split = current.path.split(" ");
-        sb.append(split.length).append("\n"); // 길이
-        Arrays.stream(split).forEach(x -> sb.append(x).append(" ")); // 지나온 정점들 문자열에 저장
-
-        return sb.toString();
-    }
 
 }
