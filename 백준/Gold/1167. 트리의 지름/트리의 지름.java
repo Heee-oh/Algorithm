@@ -55,8 +55,9 @@ public class Main {
     }
 
 
+    // O(V+E + log(V))
     private static void dijkstra(int n, int start) {
-        PriorityQueue<Node> pq = new PriorityQueue<>((o1, o2) -> o1.cost - o2.cost);
+        PriorityQueue<Node> pq = new PriorityQueue<>((o1, o2) -> o1.cost - o2.cost); // log(V)
         pq.add(new Node(start, 0));
 
         boolean[] visited = new boolean[n + 1];
@@ -64,6 +65,8 @@ public class Main {
         Arrays.fill(dist, Integer.MAX_VALUE);
         dist[start] = 0;
 
+
+        // O(V+E)
         while (!pq.isEmpty()) {
             Node current = pq.poll();
 
