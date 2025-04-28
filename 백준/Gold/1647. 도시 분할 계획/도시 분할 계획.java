@@ -27,12 +27,15 @@ public class Main {
 
         int cost = 0;
         int max = 0;
-        while (!pq.isEmpty()) {
+
+        int edgesUsed = 0;
+        while (!pq.isEmpty() && edgesUsed < v - 1) {
             int[] node = pq.poll();
             if (find(node[0]) != find(node[1])) {
                 union(node[0], node[1]);
                 cost += node[2];
                 max = Math.max(max, node[2]);
+                edgesUsed++;
             }
 
 
