@@ -24,11 +24,12 @@ public class Main {
 
         int min = Integer.MAX_VALUE;
 
+        // 1번 집에 빨강, 초록, 파랑 중 하나를 칠했다고 가정했을때 최소비용을 구한다.  
         for (int k = 0; k < 3; k++) {
-
+            // 처음 집에  k 번 색을 칠하기로 결정하고, k번 색을 칠했을때 최소비용이 나오게 하기 위해 나머지 색들은 비용을 무한으로 변경
             for (int i = 0; i < 3; i++) {
                 if (i == k) dp[1][i] = houses[1][i]; // i번 색으로 칠한다면
-                else dp[1][i] = INF;
+                else dp[1][i] = INF; // 나머지 집들은 k번 색이 아니므로 무한으로 변경
             }
 
             for (int i = 2; i <= n; i++) {
