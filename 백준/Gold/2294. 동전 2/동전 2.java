@@ -20,15 +20,18 @@ public class Main {
         for (int i = 0; i < n; i++) {
             int value = Integer.parseInt(br.readLine());
 
+            // 코인 값이 최대 10만까지이기 때문에 목푯값 K 는 1만 이하 수이므로 넘어가면 굳이 저장하지 않는다. 
             if (value <= 10000) {
                 coins[i] = value;
                 dp[coins[i]] = 1; // 동전 가치 값 자체는 1개
             }
         }
 
+        // 오름차순 정렬
         Arrays.sort(coins);
 
 
+        // target 즉, 1~k까지 각 값에 필요한 코인 개수를 구한다. 
         for (int target = 1; target <= k; target++) {
             // 각 코인들을 돌면서
             for (int coin : coins) {
@@ -37,6 +40,7 @@ public class Main {
                     break;
                 }
 
+                // 현재 target의 코인 개수는 현재 target 코인 개수 , (target - coin)한 값의 코인 개수 + 1(-coin 했으므로) 중 최소개수를 구한다. 
                 dp[target] = Math.min(dp[target], dp[target - coin] + 1);
             }
         }
