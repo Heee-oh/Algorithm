@@ -2,8 +2,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -25,7 +23,7 @@ public class Main {
 
 
         for (int i = 0; i < n; i++) {
-            Arrays.fill(dp[i], -1);
+            Arrays.fill(dp[i], -1); // -1로 초기화하는 이유는 0으로 초기화되면 갈 수 없는 곳과 아직 방문하지 않는 곳의 값이 같기때문
             StringTokenizer st = new StringTokenizer(br.readLine());
 
             for (int j = 0; j < n; j++) {
