@@ -34,7 +34,7 @@ public class Main {
         }
 
         for (int a = 1; a <= n; a++) {
-            for (int b = 1; b <= n; b++) {
+            for (int b = a + 1; b <= n; b++) {
                 if (arr[a][b] == 0) continue;
 
                 // a 도시를 j번 째 지났다면 j번째의 기내식 최대값 + a->b로 가는 비행기의 기내식 값
@@ -50,4 +50,5 @@ public class Main {
         System.out.println(Arrays.stream(dp[n]).max().orElse(0));
 
     }
+
 }
