@@ -31,12 +31,33 @@ public class Main {
         X = coordinates[0][0];
         Y = coordinates[0][1];
 
+//        for (int i = 0; i <= n; i++) {
+//            Arrays.fill(dp[i], -1);
+//        }
+
         for (int i = 0; i <= n; i++) {
-            Arrays.fill(dp[i], -1);
+            Arrays.fill(dp[i], Long.MAX_VALUE);
+        }
+        for (int i = 0; i < 5; i++) {
+            dp[1][i] = Math.abs(coordinates[1][0] - X + dx[i])
+                    + Math.abs(coordinates[1][1] - Y + dy[i]);
+        }
+
+        for (int i = 2; i <= n; i++) {
+            for (int j = 0; j < 5; j++) { // 현재 오프셋
+                for (int k = 0; k < 5; k++) { // 이전 오프셋
+                    dp[i][j] = Math.min(dp[i][j], dp[i-1][k] +
+                            Math.abs((coordinates[i][0]+ dx[j])
+                                    - (coordinates[i-1][0] + dx[k]) )
+                                    + Math.abs((coordinates[i][1]+ dy[j])
+                                    - (coordinates[i-1][1]+dy[k])));
+                }
+            }
         }
 
 //        System.out.println(dfs(0, 0, new int[] {coordinates[0][0], coordinates[0][1]}));
-        System.out.println(dfs(0, 0));
+//        System.out.println(dfs(0, 0));
+        System.out.println(Arrays.stream(dp[n]).min().orElse(0));
     }
 
     // 0 : x, 1 : y
