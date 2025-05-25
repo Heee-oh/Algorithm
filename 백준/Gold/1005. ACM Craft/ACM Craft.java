@@ -52,8 +52,10 @@ public class Main {
                 List<Integer> list = graph[current];
 
                 for (int next : list) {
-                    if (cost[next] < cost[current] + buildCost[next]) {
-                        cost[next] = cost[current] + buildCost[next];
+                    cost[next] = Math.max(cost[next], cost[current] + buildCost[next]);
+                    topologyCheck[next]--;
+
+                    if (topologyCheck[next] == 0) {
                         q.add(next);
                     }
                 }
