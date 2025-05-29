@@ -38,10 +38,6 @@ public class Main {
                     min = Math.abs(sum);
                 }
 
-                if (sum == 0) {
-                    break;
-                }
-                
                 if (sum < 0) left++;
                 else right--;
             }
