@@ -4,10 +4,10 @@ import java.util.*;
 public class Main {
 
     static StringBuilder sb = new StringBuilder();
-    static int[] topology;
+    static int[] indegree;
     static List<Integer>[] graph;
     static boolean[] visited;
-
+    static int orderCount = 0;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -16,7 +16,7 @@ public class Main {
         int n = Integer.parseInt(st.nextToken());
         int m = Integer.parseInt(st.nextToken());
 
-        topology = new int[n + 1];
+        indegree = new int[n + 1];
         graph = new List[n + 1];
         visited = new boolean[n + 1];
         for (int i = 1; i <= n; i++) {
@@ -29,20 +29,20 @@ public class Main {
 
             int pre = Integer.parseInt(st.nextToken());
 
-            // 순서 초기화
+            // cnt 개의 노드가 주어진 순서대로 연결되므로 간선과 진입 차수 설정
             for (int j = 1; j < cnt; j++) {
                 int next = Integer.parseInt(st.nextToken());
                 graph[pre].add(next);
 
                 // 위상정렬
-                topology[next]++;
+                indegree[next]++;
                 pre = next;
             }
 
         }
 
         for (int i = 1; i <= n; i++) {
-            if (topology[i] == 0 && !visited[i]) {
+            if (indegree[i] == 0 && !visited[i]) {
                 bfs(i);
             }
         }
@@ -51,8 +51,6 @@ public class Main {
 
     }
 
-    static int orderCount = 0;
-
     private static void bfs(int start) {
         Queue<Integer> q = new LinkedList<>();
         q.add(start);
@@ -60,18 +58,20 @@ public class Main {
         while (!q.isEmpty()) {
             int current = q.poll();
             visited[current] = true;
-            orderCount++;
+
             sb.append(current).append("\n");
+            orderCount++;
 
             List<Integer> list = graph[current];
             for (int next : list) {
-                topology[next]--;
+                indegree[next]--; // current에서 next로 가는 간선을 제거하므로 next의 진입 차수 감소
 
-                if (topology[next] == 0) {
+                if (indegree[next] == 0) {
                     q.add(next);
                 }
             }
         }
     }
+
 
 }
