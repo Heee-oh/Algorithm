@@ -37,44 +37,28 @@ public class Main {
             union(a, b);
         }
 
-        Set<Integer> set = new HashSet<>();
         // 각 집합의 캔디 합을 저장
         for (int i = 1; i <= N; i++) {
-            int area = find(i);
+            int area = find(i); // 최상위 부모를 찾을때는 항상 find로 찾자
             candySum[area] += candies[i];
             childCnt[area]++;
-            set.add(area);
-
         }
 
-        int[][] dp = new int[set.size() + 1][K];
-        int[] arr = new int[set.size() + 1];
+        int[] dp = new int[K];
 
-        int cnt = 1;
-        for (int value : set) {
-            arr[cnt++] = value;
-        }
+        for (int i = 1; i <= N; i++) {
+            int w = childCnt[i];
+            if (w == 0 || w >= K) continue;
+            int v = candySum[i];
 
-        for (int k = 1; k < K; k++) {
-            for (int i = 1; i < arr.length; i++) {
-                int idx = arr[i];
-
-                // 현 k명보다 적다면 이전 값의 최대값을 가짐
-                if (k < childCnt[idx]) {
-                    dp[i][k] = Math.max(dp[i - 1][k], dp[i][k - 1]);
-
-                    // 이전 최댓값 + 현재 캔디 개수 비교
-                } else {
-                    dp[i][k] = Math.max(dp[i][k], candySum[idx] + dp[i - 1][k - childCnt[idx]]);
-                }
-
-                // 이전값과 비교해서 최댓값 갱신
-                dp[i][k] = Math.max(dp[i][k], Math.max(dp[i - 1][k], dp[i][k - 1]));
+            for (int c = K - 1 ; c >= w; c--) {
+                dp[c] = Math.max(dp[c], dp[c - w] + v);
             }
-
         }
 
-        System.out.println(dp[arr.length - 1][K-1]);
+        int answer = Arrays.stream(dp).max().getAsInt();
+        System.out.println(answer);
+
 
     }
 
