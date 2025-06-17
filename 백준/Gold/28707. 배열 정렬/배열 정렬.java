@@ -5,16 +5,16 @@ public class Main {
     // 28707번 배열 정렬
 
     static class Arr {
-        int[] arr;
+        int arr;
         int cost;
-        public Arr(int[] arr, int cost) {
+        public Arr(int arr, int cost) {
             this.arr = arr;
             this.cost = cost;
         }
     }
 
     static int N, M;
-    static String answer;
+    static int answer;
     static List<int[]> sortOperations = new ArrayList<>();
 
 
@@ -24,13 +24,13 @@ public class Main {
         int[] arr = new int[N + 1];
         StringTokenizer st = new StringTokenizer(br.readLine());
         for (int i = 1; i <= N; i++) {
-            arr[i] = Integer.parseInt(st.nextToken());
+            arr[i] = Integer.parseInt(st.nextToken()) - 1;
         }
 
         int[] sorted = arr.clone();
         Arrays.sort(sorted);
 
-        answer = Arrays.toString(sorted);
+        answer = getNumber(sorted);
 
         M = Integer.parseInt(br.readLine());
         for (int i = 0; i < M; i++) {
@@ -44,17 +44,16 @@ public class Main {
         System.out.println(bfs(arr));
     }
 
-    static Map<String, Integer> map = new HashMap<>();
+    static Map<Integer, Integer> map = new HashMap<>();
 
     private static int bfs(int[] arr) {
         PriorityQueue<Arr> pq = new PriorityQueue<>((o1, o2) -> o1.cost - o2.cost);
-        pq.add(new Arr(arr, 0));
+        pq.add(new Arr(getNumber(arr), 0));
 
         while (!pq.isEmpty()) {
             Arr current = pq.poll();
-            String curKey = Arrays.toString(current.arr);
-            
-            if (curKey.equals(answer)) {
+
+            if (answer == current.arr) {
                 return current.cost;
             }
 
@@ -63,21 +62,42 @@ public class Main {
                 int r = operation[1];
                 int c = operation[2];
 
-                int[] nArr = current.arr.clone();
-                int tmp = nArr[l];
-                nArr[l] = nArr[r];
-                nArr[r] = tmp;
+                int num = swap(current.arr, l, r);
 
-                String key = Arrays.toString(nArr);
 
-                if (!map.containsKey(key) || map.get(key) > current.cost + c) {
-                    map.put(key, current.cost + c);
-                    pq.add(new Arr(nArr, current.cost + c));
+                if (!map.containsKey(num) || map.get(num) > current.cost + c) {
+                    map.put(num, current.cost + c);
+                    pq.add(new Arr(num, current.cost + c));
                 }
             }
         }
 
         return -1;
+    }
+    private static int getNumber(int[] arr) {
+        int n = 0;
+        for (int i = 1; i < N; i++) {
+            n = (n + arr[i]) * 10;
+        }
+
+        return n + arr[N];
+    }
+
+    private static int swap(int num, int l, int r) {
+        int leftMult = (int) Math.pow(10, N - l);
+        int rightMult = (int) Math.pow(10, N - r);
+
+        // left 인덱스의 수를 가져온 다음 * leftMult (자릿수 맞추기)
+        int leftNum = num / leftMult % 10;
+        int rightNum = num / rightMult % 10;
+
+        int left = leftNum * leftMult;
+        int right = rightNum * rightMult;
+
+        int newNum = num - (left + right);
+
+        newNum += (rightNum * leftMult + leftNum * rightMult);
+        return newNum;
     }
 
 }
