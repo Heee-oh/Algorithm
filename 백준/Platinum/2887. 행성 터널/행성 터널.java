@@ -89,18 +89,11 @@ public class Main {
     }
 
     private static void createEdge(int n, Point[] point) {
-        for (int i = 0; i < n; i++) {
-            Point p = point[i];
+        for (int i = 1; i < n; i++) {
+            Point p1 = point[i];
+            Point p2 = point[i - 1];
 
-            if (i > 0) {
-                Point target = point[i - 1];
-                pq.add(new long[]{Math.abs(p.v - target.v), p.idx, target.idx});
-            }
-
-            if (i < n - 1) {
-                Point target = point[i + 1];
-                pq.add(new long[]{Math.abs(p.v - target.v), p.idx, target.idx});
-            }
+            pq.add(new long[]{Math.abs(p1.v - p2.v), p1.idx, p2.idx});
 
         }
     }
