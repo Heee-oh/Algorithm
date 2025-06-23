@@ -49,20 +49,14 @@ public class Main {
             sb.append(cards[current]).append("\n"); // 카드 사용
 
             if (current + 1 < m) {
-                union(current, current + 1); // 사용 후 다음 사용하지 않은 카드를 가리키게 병합
+                int a = find(current);
+                int b = find(current + 1);
+                parent[a] = b;
             }
         }
         System.out.print(sb.toString());
     }
-
-    // a 는 현재 선택된 카드, b는 그 다음 카드
-    private static void union(int a, int b) {
-        a = find(a);
-        b = find(b);
-
-        parent[a] = b;
-    }
-
+    
     // 경로 압축
     private static int find(int x) {
         if (x == parent[x]) return x;
