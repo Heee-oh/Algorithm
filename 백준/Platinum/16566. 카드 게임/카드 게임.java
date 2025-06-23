@@ -3,7 +3,6 @@ import java.util.*;
 import java.util.stream.IntStream;
 
 public class Main {
-
     static int[] parent;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -14,14 +13,21 @@ public class Main {
         int k = Integer.parseInt(st.nextToken());
 
         int[] cards = new int[m];
-        parent = IntStream.range(0, m).toArray();
-
+        boolean[] arr = new boolean[n + 1];
+        parent = IntStream.range(0, n + 1).toArray();
 
         st = new StringTokenizer(br.readLine());
+
         for (int i = 0; i < m; i++) {
-            cards[i] = Integer.parseInt(st.nextToken());
+            int num = Integer.parseInt(st.nextToken());
+            arr[num] = true;
         }
-        Arrays.sort(cards);
+
+        int idx = 0;
+        for (int i = 1; i <= n; i++) {
+            if (idx == m) break;
+            if (arr[i]) cards[idx++] = i;
+        }
 
 
         st = new StringTokenizer(br.readLine());
@@ -56,7 +62,7 @@ public class Main {
         }
         System.out.print(sb.toString());
     }
-    
+
     // 경로 압축
     private static int find(int x) {
         if (x == parent[x]) return x;
