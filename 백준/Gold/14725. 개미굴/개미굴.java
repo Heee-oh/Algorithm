@@ -2,16 +2,16 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-
+    static final int MAX_LEVEL = 15;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
 
         String[] input = new String[n];
-        Set<String>[] levels = new Set[16];
+        Set<String>[] levels = new Set[MAX_LEVEL];
 
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i < MAX_LEVEL; i++) {
             levels[i] = new HashSet<>();
         }
 
@@ -46,8 +46,5 @@ public class Main {
         }
 
         System.out.print(sb.toString());
-
-
     }
-
 }
