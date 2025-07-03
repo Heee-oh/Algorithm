@@ -1,10 +1,7 @@
 import java.io.*;
-import java.sql.SQLOutput;
 import java.util.*;
 
 public class Main {
-
-
     // 계산은 long
 
     public static void main(String[] args) throws IOException {
@@ -12,53 +9,49 @@ public class Main {
         int n = Integer.parseInt(br.readLine());
 
         StringTokenizer st = new StringTokenizer(br.readLine());
-        List<int[]> seller = new ArrayList<>();
-        List<int[]> customer = new ArrayList<>();
+        List<int[]> sellers = new ArrayList<>();
+        List<int[]> customers = new ArrayList<>();
 
         for (int i = 0; i < n; i++) {
             int l = Integer.parseInt(st.nextToken());
 
             if (l > 0) {
-                seller.add(new int[] {i, l});
+                sellers.add(new int[] {i, l});
             } else {
-                customer.add(new int[]{i, l});
+                customers.add(new int[]{i, l});
             }
         }
 
 
-        // 같은 거리라면 더 큰 곳에 다 투자
-        int p1 = 0, p2 = 0;
+        // 가장 가까운 곳에 전부 다 파는게 이득
+        int p1 = 0, p2 = 0; // 판매자, 고객 포인터
         long sum = 0;
-        while (p1 < seller.size() && p2 < customer.size()) {
+        while (p1 < sellers.size()
+                && p2 < customers.size()) {
 
-            int[] sell = seller.get(p1);
-            int[] custom = customer.get(p2);
+            int[] seller = sellers.get(p1);
+            int[] customer = customers.get(p2);
 
-            int dist = Math.abs(sell[0] - custom[0]);
-            int result = sell[1] + custom[1];
+            int dist = Math.abs(seller[0] - customer[0]); // 판매자와 구매자의 거리
+            int result = seller[1] + customer[1]; // 거래 후 나머지
 
+            // 판매자가 고객보다 더 많이 갖고 있을 경우
             if (result > 0) {
-                sum = sum + (long) dist * -1 * custom[1];
-                seller.get(p1)[1] = result;
+                sum = sum + (long) dist * -1 * customer[1];
+                seller[1] = result;
                 p2++;
 
-            } else if (result < 0){
-                sum = sum + (long) dist * sell[1];
-                customer.get(p2)[1] = result;
-                p1++;
-
+                // 고객이 더 많이 필요하거나 딱 맞는 경우
             } else {
-                sum = sum + (long) dist * sell[1];
+                sum = sum + (long) dist * seller[1];
+                customer[1] = result;
+                p2 += (result == 0 ? 1 : 0); // 딱 맞을 경우는 p1 p2 둘다 올려줘야함
                 p1++;
-                p2++;
+
             }
         }
 
         System.out.println(sum);
 
     }
-
-
-
-
 }
