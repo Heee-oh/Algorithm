@@ -29,25 +29,21 @@ public class Main {
             visited[R-1][C-1][i] = true;
         }
 
-
         System.out.println(bfs() ? "Yes" : "No");
-
-
-
     }
 
     private static boolean bfs() {
         Queue<int[]> q = new LinkedList<>();
-        q.add(new int[]{R - 1, C - 1, 0});
+        q.add(new int[]{R - 1, C - 1, 0}); // R, C, bitmask
 
         while (!q.isEmpty()) {
             int[] current = q.poll();
-
 
             // 입구로 도달했다면 주어진 스크롤로 충분하다.
             if (current[0] == 0 
                     && current[1] == 0) return true;
             
+            // 4방향 탐색
             for (int i = 0; i < 4; i++) {
                 int nextR = current[0] + dr[i];
                 int nextC = current[1] + dc[i];
@@ -62,31 +58,19 @@ public class Main {
                 if (map[nextR][nextC] != ch) {
                     if (K == 0) continue; // 주문서가 없으면 방향을 못바꿈
 
-                    int direction = getDirection(map[nextR][nextC]);
-                    char counterclockwise = dir[(direction - 1 + 4) % 4];
-                    char clockwise = dir[(direction + 1) % 4];
+                    int curDir = getDirection(map[nextR][nextC]);
+                    char counterclockwise = dir[(curDir - 1 + 4) % 4]; // 반시계방향
+                    char clockwise = dir[(curDir + 1) % 4]; // 시계방향
 
-                    if (current[2] == 0) {
-                        if (clockwise == ch) {
-                            q.add(new int[]{nextR, nextC, 1});
-                            visited[nextR][nextC][1] = true;
+                    for (int j = 0; j < 2; j++) {
+                        int bit = current[2] | (1 << j);
 
-                        } else if (counterclockwise == ch) {
-                            q.add(new int[]{nextR, nextC, 2});
-                            visited[nextR][nextC][2] = true;
-                        }
-
-                    } else if (current[2] == 1) {
-                        if (counterclockwise == ch) {
-                            q.add(new int[]{nextR, nextC, 3});
-                            visited[nextR][nextC][3] = true;
-
-                        }
-                    } else if (current[2] == 2) {
-                        if (clockwise == ch) {
-                            q.add(new int[]{nextR, nextC, 3});
-                            visited[nextR][nextC][3] = true;
-
+                        if (current[2] != bit) {
+                            if (j == 0 && clockwise == ch
+                                    || j == 1 && counterclockwise == ch) {
+                                q.add(new int[]{nextR, nextC, bit});
+                                visited[nextR][nextC][bit] = true;
+                            }
                         }
                     }
 
