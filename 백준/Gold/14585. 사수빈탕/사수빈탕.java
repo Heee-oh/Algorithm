@@ -15,7 +15,7 @@ public class Main {
         m = Integer.parseInt(st.nextToken());
 
         arr = new int[n][2];
-        dp = new int[n][300 * 300 + 1];
+        dp = new int[n][300 * 2 + 1];
 
         for (int i = 0; i < n; i++) {
             Arrays.fill(dp[i], -1);
