@@ -3,138 +3,152 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
 public class Main {
+	private static final int INF = Integer.MAX_VALUE;
+	
+	private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	private static final StringBuilder sb = new StringBuilder();
+	private static StringTokenizer st;
+	
+	private static int N;	//	건물 최대 층수
+	private static int M;	//	엘리베이터 개수
+	
+	//	elevators[e] : e번째 엘리베이터가 멈추는 층 리스트
+	private static List<Integer>[] elevators;
+	//	floors[f] : f번째 층에 멈추는 엘리베이터 리스트
+	private static List<Integer>[] floors;
+	
+	//	isEnd[e] : e번째 엘리베이터가 목적 층에 도달하면 true
+	private static boolean[] isEnd;
+	
+	private static int A;	//	출발 층수
+	private static int B;	//	도착 층수
+	
+	//	{현재 엘리베이터 번호, 지금까지 엘리베이터 탄 최소 횟수} 
+	private static final PriorityQueue<Node> pq = new PriorityQueue<>();
+	
+	//	dist[e] : e번째 엘리베이터까지 엘리베이터를 탄 최소 횟수
+	private static int[] dist;
+	
+	//	prevs[e] : A에서 B까지 엘리베이터를 최소로 갈아탔을때 e번째 엘리베이터 이전에 탄 엘리베이터
+	private static int[] prevs;
+	
+	public static void main(String[] args) throws IOException {
+		st = new StringTokenizer(br.readLine());
+		N = Integer.parseInt(st.nextToken());
+		M = Integer.parseInt(st.nextToken());
+		
+		elevators = new ArrayList[M + 1];
+		floors = new ArrayList[N + 1];
+		
+		for(int e = 0; e <= M; e++)
+			elevators[e] = new ArrayList<>();
+		for(int f = 0; f <= N; f++)
+			floors[f] = new ArrayList<>();
+		
+		isEnd = new boolean[M + 1];
+		dist = new int[M + 1];
+		Arrays.fill(dist, INF);
+		prevs = new int[M + 1];
+		
+		for(int e = 1; e <= M; e++) {
+			st = new StringTokenizer(br.readLine());
+			int start = Integer.parseInt(st.nextToken());
+			int inc = Integer.parseInt(st.nextToken());
+			
+			//	e번째 엘리베이터가 갈 수 있는 층 목록
+			for(int floor = start; floor <= N; floor += inc) {
+				elevators[e].add(floor);
+				floors[floor].add(e);
+			}
+		}
+		
+		st = new StringTokenizer(br.readLine());
+		A = Integer.parseInt(st.nextToken());
+		B = Integer.parseInt(st.nextToken());
+		
+		//	A층에 서는 엘리베이터 목록
+		for(int e : floors[A]) {
+			dist[e] = 1;
+			pq.offer(new Node(e, 1));
+		}
+		
+		//	B층에 서는 엘리베이터 목록
+		for(int e : floors[B])
+			isEnd[e] = true;
+		
+		dijkstra();
+	}	//	main-end
+	
+	private static void dijkstra() {
+		while (!pq.isEmpty()) {
+			Node cur = pq.poll();
+			int ce = cur.e;
+			int cdist = cur.dist;
 
-    static final int MAX_VALUE = 1000000000;
-    static int min = MAX_VALUE;
+			if (dist[ce] < cdist)
+				continue;
 
-    public static void main(String[] args) throws IOException {
+			for(int floor : elevators[ce]) {
+				for (int j = 0; j < floors[floor].size(); j++) {
+					int ne = floors[floor].get(j);
 
-        // input
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
+					if (dist[ne] > cur.dist + 1) {
+						dist[ne] = cur.dist + 1;
+						prevs[ne] = cur.e;
 
-        int N = Integer.parseInt(st.nextToken());
-        int M = Integer.parseInt(st.nextToken());
+						pq.offer(new Node(ne, dist[ne]));
+					}
+				}
+			}
+		}
+		
+		int minDist = INF;	//	B층에 도착할 수 있는 최소 엘리베이터 탑승 횟수
+		int minE = INF;		//	그때 도착한 엘리베이터
+		
+		for(int e = 1; e <= M; e++) {
+			if(isEnd[e] && dist[e] < minDist) {
+				minDist = dist[e];
+				minE = e;
+			}
+		}
+		
+		if(minDist == INF)
+			sb.append("-1\n");
+		else {
+			sb.append(minDist).append("\n");
+			
+			int curE = minE;
+			List<Integer> path = new ArrayList<>();
+			
+			while(curE != 0) {
+				path.add(curE);
+				curE = prevs[curE];
+			}
+			
+			for(int i = path.size() - 1; i >= 0; i--)
+				sb.append(path.get(i)).append("\n");
+		}
+		
+		System.out.print(sb);
+	}
+	
+	private static class Node implements Comparable<Node> {
+		public int e;
+		public int dist;
 
-        // Graph Modeling
-        ArrayList<ArrayList<Integer>> floor = new ArrayList<>();
-        ArrayList<ArrayList<Integer>> elevator = new ArrayList<>();
+		public Node(int e, int dist) {
+			this.e = e;
+			this.dist = dist;
+		}
 
-        for (int i = 0; i < N + 1; i++) {
-
-            floor.add(new ArrayList<>());
-        }
-
-        for (int i = 0; i < M + 1; i++) {
-
-            elevator.add(new ArrayList<>());
-        }
-
-        for (int i = 1; i <= M; i++) {
-
-            st = new StringTokenizer(br.readLine());
-
-            int X = Integer.parseInt(st.nextToken());
-            int Y = Integer.parseInt(st.nextToken());
-
-            while (X <= N) {
-
-                floor.get(X).add(i); // 층 정보 : 각 층마다 탈 수 있는 엘레베이터
-                elevator.get(i).add(X); // 엘레베이터 정보 : 엘레베이터마다 갈 수 있는 각 층
-
-                X += Y;
-            }
-        }
-
-        st = new StringTokenizer(br.readLine());
-
-        int A = Integer.parseInt(st.nextToken());
-        int B = Integer.parseInt(st.nextToken());
-
-        // solve
-        PriorityQueue<Node> pq = new PriorityQueue<>();
-
-        int[] dist = new int[M + 1];
-        int[] prev = new int[M + 1];
-        Arrays.fill(dist, MAX_VALUE);
-
-        for (int i = 0; i < floor.get(A).size(); i++) {
-
-            pq.add(new Node(floor.get(A).get(i), 1));
-            dist[floor.get(A).get(i)] = 1;
-        }
-
-        while (!pq.isEmpty()) {
-
-            Node u = pq.poll();
-
-            if (dist[u.elevator] < u.dist) continue;
-
-            for (int i = 0; i < elevator.get(u.elevator).size(); i++) {
-
-                int level = elevator.get(u.elevator).get(i);
-
-                for (int j = 0; j < floor.get(level).size(); j++) {
-
-                    int nextElevator = floor.get(level).get(j);
-
-                    if (dist[nextElevator] > u.dist + 1) {
-
-                        dist[nextElevator] = u.dist + 1;
-                        prev[nextElevator] = u.elevator;
-
-                        pq.add(new Node(nextElevator, dist[nextElevator]));
-                    }
-                }
-            }
-        }
-
-        int lastElevator = 0;
-        for (int i = 0; i < floor.get(B).size(); i++) {
-
-            if (min > dist[floor.get(B).get(i)]) {
-
-                min = dist[floor.get(B).get(i)];
-                lastElevator = floor.get(B).get(i);
-            }
-        }
-
-        if (min == MAX_VALUE) {
-
-            System.out.println(-1);
-        } else {
-
-            System.out.println(min);
-            print(prev, lastElevator);
-        }
-    } // ~main
-
-    static void print(int[] prev, int elevator) {
-
-        if (elevator == 0) return;
-        print(prev, prev[elevator]);
-        System.out.println(elevator);
-    }
-}
-
-class Node implements Comparable<Node> {
-
-    int elevator;
-    int dist;
-
-    Node(int elevator, int dist) {
-
-        this.elevator = elevator;
-        this.dist = dist;
-    }
-
-    @Override
-    public int compareTo(Node o) {
-
-        return this.dist < o.dist ? -1 : 1;
-    }
-}
+		@Override
+		public int compareTo(Node other) {
+			return Integer.compare(this.dist, other.dist);
+		}
+	}
+}	//	Main-class-end
