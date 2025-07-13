@@ -18,7 +18,7 @@ public class Main {
         }
 
         // 두 심판과의 거리 탐색
-        int start = 0, end = N;
+        int start = 0, end = arr[K-1] - arr[0];
         while (start <= end) {
 
             int dist = (start + end) >>> 1;
@@ -55,7 +55,7 @@ public class Main {
             }
 
 
-            if (cnt == M) {
+            if (cnt >= M) {
                 start = dist + 1;
                 answer = tmp;
             } else {
