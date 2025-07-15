@@ -4,7 +4,7 @@ import java.util.*;
 public class Main {
     static int N, M, X, Y;
     static List<Integer>[] graph;
-    static boolean[][] visited;
+    static boolean[][] visited; // [섞은 횟수][현재 노드(컵)]
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -16,7 +16,7 @@ public class Main {
         X = Integer.parseInt(st.nextToken());
         Y = Integer.parseInt(st.nextToken());
 
-        visited = new boolean[Y + 1][N + 1];
+        visited = new boolean[N + 1][2];
 
         // 그래프 초기화
         graph = new List[N + 1];
@@ -33,9 +33,11 @@ public class Main {
         }
 
         bfs();
-        for (int i = 1; i < visited[Y].length; i++) {
-            if (visited[Y][i]) {
-                sb.append(i + " ");
+
+        int flag = Y % 2;// 홀, 짝 중 하나로 선택됨
+        for (int i = 1; i <= N; i++) {
+            if (visited[i][flag]) {
+                sb.append(i).append(" ");
             }
         }
 
@@ -43,10 +45,22 @@ public class Main {
         System.out.print(sb.length() == 0 ? "-1" : sb.toString().trim());
     }
 
+    private static void dfs(int cnt, int curCup) {
+        if (cnt > Y || visited[cnt][curCup]) {
+            return;
+        }
+
+        visited[cnt][curCup] = true;
+
+        for (int i = 0; i < graph[curCup].size(); i++) {
+            int nextCup = graph[curCup].get(i);
+            dfs(cnt+1, nextCup);
+        }
+
+    }
     private static void bfs() {
         Queue<int[]> q = new LinkedList<>();
         q.add(new int[]{X, 0});
-        visited[0][X] = true;
 
         while (!q.isEmpty()) {
             int[] cur = q.poll();
@@ -55,12 +69,15 @@ public class Main {
 
             if (cnt >= Y) continue;
 
+            int nextDepth = cnt + 1;
+            int flag = nextDepth % 2;
+
             for (int i = 0; i < graph[num].size(); i++) {
                 int nextCup = graph[num].get(i);
 
-                if (!visited[cnt + 1][nextCup]) {
-                    q.add(new int[]{nextCup, cnt + 1});
-                    visited[cnt + 1][nextCup] = true;
+                if (!visited[nextCup][flag]) {
+                    q.add(new int[]{nextCup, nextDepth});
+                    visited[nextCup][flag] = true;
                 }
 
             }
