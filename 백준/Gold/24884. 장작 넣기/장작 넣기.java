@@ -40,11 +40,11 @@ public class Main {
 
         while (!q.isEmpty()) {
             Node fire = q.poll();
-            int[] fireArr = fire.arr;
+
             fire.time++;
 
             // 화력 감소
-            int[] old = fireArr.clone();
+            int[] old = fire.arr.clone();
             int[] next = new int[old.length];
             for (int i = 1; i <= N; i++) {
                 if (fire.time > 1 && fire.SKH == i) {
@@ -54,14 +54,14 @@ public class Main {
                     next[i] = old[i] - (3 - cnt);
                 }
             }
-            fireArr = next;
+
 
             // T시각에는 이동하지 않고 장작도 안넣음, 화력감소는 됨
             if (fire.time == T) {
                 int cnt = 0;
 
-                for (int i = 1; i < fireArr.length - 1; i++) {
-                    if (fireArr[i] > 0) {
+                for (int i = 1; i < next.length - 1; i++) {
+                    if (next[i] > 0) {
                         cnt++;
                     }
                 }
@@ -77,7 +77,7 @@ public class Main {
             for (int i = fire.SKH - 1; i <= fire.SKH + 1; i++) {
                 if (i < 1 || i > N ) continue;
 
-                q.offer(new Node(i, fireArr.clone(), fire.time));
+                q.offer(new Node(i, next, fire.time));
             }
         }
 
