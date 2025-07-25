@@ -63,7 +63,7 @@ public class Main {
         int cctvN = cctvInfo[2];
 
         if (cctvN == 2) {
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 2; i++) {
 
                 int cnt = 0;
                 boolean[][] nextVisited = new boolean[N][M];
@@ -102,8 +102,8 @@ public class Main {
             }
 
         } else {
+            for (int i = 0; i < (cctvN == 5 ? 1 : 4); i++) {
 
-            for (int i = 0; i < 4; i++) {
                 int cctvType = (cctvN - 1) == 0 ? 1 : cctvN - 1;
 
                 int cnt = 0;
