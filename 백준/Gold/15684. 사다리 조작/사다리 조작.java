@@ -24,16 +24,8 @@ public class Main {
 
             ladderMap[a][b] = true;
         }
-
-
-
-
-        // 같은 위치로 연속된 가로선 불가
-        // 3개 이상 설치해야 i -> i 라면 -1
-        // 불가능하면 -1
-
+        
         dfs(1, 1, 0);
-
         System.out.println(answer == Integer.MAX_VALUE ? -1 : answer);
 
 
@@ -42,7 +34,10 @@ public class Main {
     static int answer = Integer.MAX_VALUE;
 
     private static void dfs(int ladder, int r, int depth) {
-
+        if (answer <= depth) {
+            return;
+        }
+        
         if (validLadder()) {
             answer = Math.min(answer, depth);
             return; // 더 깊어지면 결국 depth가 늘어나기에 의미없음
