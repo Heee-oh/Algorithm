@@ -71,7 +71,6 @@ public class Main {
     private static int bfs(boolean[][] visited) {
         Queue<int[]> q = new LinkedList<>();
         int emptySpace = size;
-        int time = 0;
 
         for (int i = 0; i < selectVirus.size(); i++) {
             int[] virusInfo = selectVirus.get(i);
@@ -81,9 +80,6 @@ public class Main {
 
         while (!q.isEmpty()) {
             int[] cur = q.poll();
-
-
-            time = Math.max(time, cur[2]);
 
             for (int i = 0; i < 4; i++) {
                 int nextR = cur[0] + dr[i];
@@ -111,10 +107,6 @@ public class Main {
             }
         }
 
-
-        if (emptySpace != 0) {
-            return -1;
-        }
-        return time;
+        return -1;
     }
 }
