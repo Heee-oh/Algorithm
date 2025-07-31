@@ -56,8 +56,7 @@ public class Main {
             boolean[][] visited = new boolean[N][N];
             for (int i = 0; i < N; i++) visited[i] = baseVisited[i].clone();
 
-            int result = bfs(visited);
-            answer = Math.min(answer, (result == -1 ? Integer.MAX_VALUE : result));
+            answer = Math.min(answer, bfs(visited));
             return;
         }
 
@@ -91,22 +90,19 @@ public class Main {
                     continue;
                 }
 
-
-                if (map[nextR][nextC] == 2) {
-                    visited[nextR][nextC] = true;
-                    q.offer(new int[]{nextR, nextC , cur[2] + 1});
-                    continue;
-                }
-
                 visited[nextR][nextC] = true;
                 q.offer(new int[]{nextR, nextC , cur[2] + 1});
-                emptySpace--;
-                if (emptySpace == 0) {
-                    return cur[2] + 1;
+                
+                // 빈공간을 바로 줄여주고 0이된다면 바로 현 시간을 반환
+                if (map[nextR][nextC] == 0) {
+                    emptySpace--;
+                    if (emptySpace == 0) {
+                        return cur[2] + 1;
+                    }
                 }
             }
         }
 
-        return -1;
+        return Integer.MAX_VALUE;
     }
 }
