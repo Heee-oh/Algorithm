@@ -28,10 +28,7 @@ public class Main {
             moveBlueArea(t, x, y);
             moveRedArea(t, x, y);
 
-
-
             // 2. 행이나 열이 가득 찬 경우 없을때까지 점수획득
-
             for (int j = 4; j < 10; j++) {
                 boolean isColFullLine = map[0][j] & map[1][j] & map[2][j] & map[3][j];
                 if (isColFullLine) {
@@ -100,19 +97,13 @@ public class Main {
             }
         }
 
-        int cnt = 0;
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
-                if (map[i][j]) {
-                    cnt++;
-                }
-            }
-        }
+
+        int sum = Arrays.stream(map).flatMapToInt(row ->
+                IntStream.range(0, row.length)
+                        .map(idx -> row[idx] ? 1 : 0)).sum();
 
         System.out.println(score);
-        System.out.println(cnt);
-
-
+        System.out.println(sum);
     }
 
     private static void moveBlueArea(int t,int x, int y) {
