@@ -12,9 +12,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         N = Integer.parseInt(br.readLine());
-
         map = new int[N][N];
-
 
         for (int i = 0; i < N; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
@@ -24,16 +22,10 @@ public class Main {
         }
 
         int r = N/2, c = N/2;
-
         int answer = 0;
-        int dist = 1;
-        int dir = -1;
-        int cnt = 0;
-
+        int dist = 1, dir = -1, cnt = 0;
         while (r != 0 || c != 0) {
-
             // 돌리기
-
             // 거리 , 방향 증가
             if (cnt != 0 && cnt % 2 == 0) {
                 dist++;
@@ -50,16 +42,16 @@ public class Main {
                     return;
                 }
 
-
                 int[] tmp = new int[10];
-
                 tmp[1] = (int) (map[r][c] * 0.05);
-
                 tmp[2] = tmp[4] = (int) (map[r][c] * 0.07);
                 tmp[3] = tmp[5] = (int) (map[r][c] * 0.02);
                 tmp[6] = tmp[8] = (int) (map[r][c] * 0.1);
                 tmp[7] = tmp[9] = (int) (map[r][c] * 0.01);
 
+                // a로 이동하는 양은 이동하지 않은 남은 모래양
+                // 다른 비율이 있는 칸은 해당 비율만큼 소수점 제거하고 가져가고
+                // 소수점 제거한 뒤 가져간 것을 제외한 나머지가 a로 이동
                 tmp[0] = map[r][c];
                 for (int j = 1; j < 10; j++) {
                     tmp[0] -= tmp[j];
@@ -91,8 +83,6 @@ public class Main {
 
                     if (isBoundary(nextR, nextC)) {
                         answer += tmp[idx];
-
-
                     } else {
                         map[nextR][nextC] += tmp[idx];
                     }
@@ -150,7 +140,6 @@ public class Main {
             cnt++;
 
         }
-
 
         System.out.println(answer);
     }
