@@ -126,42 +126,23 @@ public class Main {
     }
 
     private static void rotate(int dist, int r, int c) {
-        if (dist <= 0) {
-            return;
+        // 회전시킬 부분 격자를 저장할 임시 배열 생성
+        int[][] temp = new int[dist][dist];
+
+        // 1. 기존 map의 부분 격자를 temp 배열에 복사
+        for (int i = 0; i < dist; i++) {
+            for (int j = 0; j < dist; j++) {
+                temp[i][j] = map[r + i][c + j];
+            }
         }
 
-        int endC = c + dist - 1;
-        int endR = r + dist - 1;
-
-        // 윗줄 복사
-        int[] tmp = new int[dist];
-        for (int col = c, idx = 0; col <= endC; col++, idx++) {
-            tmp[idx] = map[r][col];
+        // 2. temp 배열을 90도 회전시켜 원래 map에 덮어쓰기
+        // (회전 공식: map[i][j] -> temp[dist-1-j][i])
+        for (int i = 0; i < dist; i++) {
+            for (int j = 0; j < dist; j++) {
+                map[r + i][c + j] = temp[dist - 1 - j][i];
+            }
         }
-
-        // 왼쪽을 위로
-        for (int i = r, col = endC; i <= endR; i++, col--) {
-            map[r][col] = map[i][c];
-        }
-
-        // 아래를 왼쪽으로
-        for (int i = r, col = c; i <= endR; i++, col++) {
-            map[i][c] = map[endR][col];
-        }
-
-        // 오른쪽을 아래로
-        for (int i = endR, col = c; i >= r; i--, col++) {
-            map[endR][col] = map[i][endC];
-        }
-
-        // 위를 오른쪽으로
-        for (int i = endR, idx = dist - 1; i >= r; i--, idx--) {
-            map[i][endC] = tmp[idx];
-        }
-
-        // 다음 안쪽 사각형
-        rotate(dist - 2, r + 1, c + 1);
-
     }
 
     private static boolean isBoundary(int nr, int nc) {
