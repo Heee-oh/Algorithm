@@ -144,48 +144,49 @@ public class Main {
         }
 
         // 찾은 그룹이 기존 최대 그룹보다 우선순위가 높은지 확인
-        if (total > maxCnt) {
-            // 1. 크기가 더 큰 그룹을 찾았을 때
-            maxCnt = total;
-            maxRainbowCnt = rainbow;
-            pos[0] = r;
-            pos[1] = c;
-        } else if (total == maxCnt) {
-            // 2. 크기는 같지만, 무지개 블록이 더 많은 그룹을 찾았을 때
-            if (rainbow > maxRainbowCnt) {
-                maxRainbowCnt = rainbow;
-                pos[0] = r;
-                pos[1] = c;
-            } else if (rainbow == maxRainbowCnt) {
-                // 3. 크기와 무지개 블록 수가 모두 같을 때, 기준 블록의 행/열 비교
-                if (r > pos[0]) {
-                    pos[0] = r;
-                    pos[1] = c;
-                } else if (r == pos[0]) {
-                    if (c > pos[1]) {
-                        pos[1] = c;
-                    }
-                }
-            }
-        }
-        
-//
-//        if (maxCnt == total) {
-//            if (maxRainbowCnt == rainbow) {
-//                pos[0] = r;
-//                pos[1] = c;
-//
-//            } else if (maxRainbowCnt < rainbow) {
-//                pos[0] = r;
-//                pos[1] = c;
-//
-//                maxRainbowCnt = rainbow;
-//            }
-//        } else if (maxCnt < total) {
+//        if (total > maxCnt) {
+//            // 1. 크기가 더 큰 그룹을 찾았을 때
+//            maxCnt = total;
+//            maxRainbowCnt = rainbow;
 //            pos[0] = r;
 //            pos[1] = c;
-//            maxCnt = total;
+//        } else if (total == maxCnt) {
+//            // 2. 크기는 같지만, 무지개 블록이 더 많은 그룹을 찾았을 때
+//            if (rainbow > maxRainbowCnt) {
+//                maxRainbowCnt = rainbow;
+//                pos[0] = r;
+//                pos[1] = c;
+//            } else if (rainbow == maxRainbowCnt) {
+//                // 3. 크기와 무지개 블록 수가 모두 같을 때, 기준 블록의 행/열 비교
+//                if (r > pos[0]) {
+//                    pos[0] = r;
+//                    pos[1] = c;
+//                } else if (r == pos[0]) {
+//                    if (c > pos[1]) {
+//                        pos[1] = c;
+//                    }
+//                }
+//            }
 //        }
+
+
+        if (maxCnt == total) {
+            if (maxRainbowCnt == rainbow) {
+                pos[0] = r;
+                pos[1] = c;
+
+            } else if (maxRainbowCnt < rainbow) {
+                pos[0] = r;
+                pos[1] = c;
+
+                maxRainbowCnt = rainbow;
+            }
+        } else if (maxCnt < total) {
+            pos[0] = r;
+            pos[1] = c;
+            maxCnt = total;
+            maxRainbowCnt = rainbow;
+        }
 
     }
 
