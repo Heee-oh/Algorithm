@@ -4,9 +4,6 @@ import java.util.*;
 public class Main {
     static int N, M, K;
     static long[][] dp;
-
-    static int[] dr = {-1, 0, 1, 0};
-    static int[] dc = {0, 1, 0, -1};
     static boolean[][][] block;
 
     public static void main(String[] args) throws Exception {
