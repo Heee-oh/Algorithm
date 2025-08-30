@@ -3,72 +3,81 @@ import java.util.*;
 
 public class Main {
     static int N, M;
-    static int[][] dist;          // dist[pos][lastJump] = 최소 점프 횟수
-    static boolean[] small;       // 작은 돌 여부
-    static int MAXJ;              // lastJump 상한
+    static int[][] dp;
+    static boolean[] smallRock;
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
+        dp = new int[N + 1][150];
+        smallRock = new boolean[N + 1];
 
-        small = new boolean[N + 1];
         for (int i = 0; i < M; i++) {
             int idx = Integer.parseInt(br.readLine());
-            if (idx >= 1 && idx <= N) small[idx] = true;
+            smallRock[idx] = true;
         }
 
-        // 즉시 판정 가능한 예외
-        if (N == 1) { System.out.println(0); return; }
-        if (small[2]) { System.out.println(-1); return; }  // 첫 착지 불가능
+        if (smallRock[2]) {
+            System.out.println(-1);
+            return;
+        }
 
-        // lastJump 상한: √(2N) + 여유
-        MAXJ = (int) Math.sqrt(2 * N) + 2;
-
-        dist = new int[N + 1][MAXJ + 1];
-        for (int i = 0; i <= N; i++) Arrays.fill(dist[i], -1);
-
+        for (int i = 0; i <= N; i++) {
+            Arrays.fill(dp[i], -1);
+        }
         bfs();
 
-        int ans = Integer.MAX_VALUE;
-        for (int j = 1; j <= MAXJ; j++) {
-            if (dist[N][j] != -1) ans = Math.min(ans, dist[N][j]);
+        int answer = Integer.MAX_VALUE;
+
+        for (int i = 0; i < dp[N].length; i++) {
+            if (dp[N][i] == -1) continue;
+
+            answer = Math.min(answer, dp[N][i]);
         }
-        System.out.println(ans == Integer.MAX_VALUE ? -1 : ans);
+
+        System.out.println(answer == Integer.MAX_VALUE ? -1 : answer);
+
     }
 
-    static void bfs() {
-        ArrayDeque<int[]> q = new ArrayDeque<>();
-        dist[2][1] = 1;                  // 1→2로 첫 점프
-        q.add(new int[]{2, 1});
+    private static void bfs() {
+        Queue<int[]> q = new LinkedList<>();
+        q.add(new int[] {2, 1}); // 현재 돌 번호, 점프해온 거리 x
+        dp[2][1] = 1;
 
         while (!q.isEmpty()) {
             int[] cur = q.poll();
-            int pos = cur[0];
-            int k = cur[1];
+            int curN = cur[0];
+            int x = cur[1];
 
-            if (pos == N) return;        // BFS 특성상 최초 도달이 최소
-
-            // k-1
-            int nk = k - 1, np = pos + nk;
-            if (nk >= 1 && nk <= MAXJ && np <= N && !small[np] && dist[np][nk] == -1) {
-                dist[np][nk] = dist[pos][k] + 1;
-                q.add(new int[]{np, nk});
+            if (curN == N) {
+                return;
             }
 
-            // k
-            nk = k; np = pos + nk;
-            if (nk >= 1 && nk <= MAXJ && np <= N && !small[np] && dist[np][nk] == -1) {
-                dist[np][nk] = dist[pos][k] + 1;
-                q.add(new int[]{np, nk});
+            int op1 = curN + (x - 1);
+            if (x - 1 > 0 && op1 <= N) {
+                if (dp[op1][x-1] == -1 && !smallRock[op1]) {
+                    dp[op1][x-1] = dp[curN][x] + 1;
+
+                    q.add(new int[]{op1, x - 1});
+                }
             }
 
-            // k+1
-            nk = k + 1; np = pos + nk;
-            if (nk >= 1 && nk <= MAXJ && np <= N && !small[np] && dist[np][nk] == -1) {
-                dist[np][nk] = dist[pos][k] + 1;
-                q.add(new int[]{np, nk});
+            int op2 = curN + x;
+            if (op2 <= N) {
+                if (dp[op2][x] == -1 && !smallRock[op2]) {
+                    dp[op2][x] = dp[curN][x] + 1;
+                    q.add(new int[]{op2, x});
+                }
+            }
+
+            int op3 = curN + x + 1;
+            if (op3 <= N) {
+                if (dp[op3][x+1] == -1 && !smallRock[op3]) {
+                    dp[op3][x+1] = dp[curN][x] + 1;
+                    q.add(new int[]{op3, x + 1});
+                }
             }
         }
     }
