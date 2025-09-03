@@ -35,7 +35,7 @@ public class Main {
         }
 
         int dist = right[0] - left[0];
-        dp[0][0] = left[0] + dist;
+        dp[0][0] = left[0] + dist; // dp[0][0]은 왼쪽에서 시작해서 dist만큼 이동후 현재 오른쪽에 위치함
         dp[0][1] = right[0] + dist;
 
 
@@ -49,7 +49,7 @@ public class Main {
             dist = curR - curL;
 
             dp[i][0] = Math.min(
-                    dp[i - 1][0] + Math.abs(curL - prevR),
+                    dp[i - 1][0] + Math.abs(curL - prevR), // 이전에 왼쪽에서 시작했다면 이전 위치는 오른쪽
                     dp[i - 1][1] + Math.abs(curL - prevL)
             ) + dist;
 
