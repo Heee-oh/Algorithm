@@ -28,7 +28,7 @@ class Solution {
             q2.offer((long)queue2[i]);
         }
             
-        int limit = q1.size() * 4;
+        int limit = q1.size() * 3;
             
         for (int i = 1; i <= limit; i++) {
             
