@@ -1,53 +1,72 @@
+import java.util.*;
+
 class Solution {
-    static int n;
-    
     public int solution(int coin, int[] cards) {
-        int answer = 1;
-        n = cards.length;
+        int answer = 0;
+        int n = cards.length;
+        int target = n + 1;
+        int draw = n / 3;
         
-        boolean[] free = new boolean[n + 1];
-        boolean[] myCard = new boolean[n + 1];
+        boolean[] drawCard = new boolean[n + 1];
+        boolean[] baseCard = new boolean[n + 1];
+        List<Integer> cardList = new ArrayList<>();
         
-        for (int i = 0; i < n/3; i++) {
-            myCard[cards[i]] = true;
-            free[cards[i]] = true;
+        for (int i = 0; i < draw; i++) {
+            drawCard[cards[i]] = true;
+            cardList.add(cards[i]);
+            baseCard[cards[i]] = true; 
         }
         
-        for (int i = n/3; i < n; i += 2) {
-            myCard[cards[i]] = true;
-            myCard[cards[i+1]] = true;
+        
+        int turn = 1;
+        
+        for (int i = n/3; i < n; i+= 2) {
+            cardList.add(cards[i]);
+            cardList.add(cards[i+1]);
             
-            boolean pass = false;
-            int minCost = 3;
-            int removeCard = -1;
+            drawCard[cards[i]] = drawCard[cards[i+1]] = true;
+            if (coin < 0) return turn;
+            boolean flag = false;
             
-            for (int j = 1; j <= n; j++) {
-                
-                if (!myCard[j]) continue;
-                
-                if (myCard[n+1 - j]) {
-                    int cost = (free[j] ? 0 : 1) + (free[n + 1 -j] ? 0 : 1);
-                    if (coin < cost || minCost <= cost) continue;
+            for (int card : cardList) {
+                // 이미뽑혔으면 넘어감
+                if (!drawCard[card]) continue;
+
+                if (drawCard[target - card]) {
                     
-                    pass = true;
-                    minCost = cost;
-                    removeCard = j;
+                    if (!baseCard[card] && !baseCard[target-card]) {
+                        if (coin - 2 >= 0) {
+                            flag = true;  // 뽑힘 표식
+
+                            coin -= 2;
+                        } else {
+                          continue;
+                        }
+                        
+                    } else if (!baseCard[card] || !baseCard[target-card]) {
+                        if (coin - 1 >= 0) {
+                            flag = true;  // 뽑힘 표식
+                            coin--;
+                        } else {
+                            continue;
+                        }
+                    } 
+                    flag = true;  // 뽑힘 표식
+                    drawCard[card] = false;
+                    drawCard[target-card] = false;
+                    break;
                 }
             }
             
-            if (!pass) {
-                break;
+            // 2개를 못냈다면 종료
+            if (!flag) {
+                return turn;
             }
             
-            myCard[removeCard] = false;
-            myCard[n + 1 - removeCard] = false;
-            coin -= minCost;
-            answer++;
+            turn++;
         }
         
         
-        return answer;
+        return turn;
     }
 }
-
-
