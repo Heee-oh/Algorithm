@@ -15,13 +15,6 @@ class Solution {
         return dfs(aloc[0], aloc[1], bloc[0], bloc[1]);
     }
 
-    /**
-     * @param ax A의 현재 x좌표
-     * @param ay A의 현재 y좌표
-     * @param bx B의 현재 x좌표
-     * @param by B의 현재 y좌표
-     * @return 현재 턴 플레이어가 이길 때 최소 턴, 질 때 최대 턴
-     */
     private int dfs(int ax, int ay, int bx, int by) {
         // 현재 턴 플레이어 위치
         int x = ax, y = ay;
@@ -40,16 +33,18 @@ class Solution {
             int next = dfs(bx, by, nx, ny) + 1; // 턴 교체 후 진행
             board[x][y] = 1; // 원상 복구
 
-            if (next % 2 == 1) { 
+            if (next % 2 == 1) {  // 상대가 짐
                 // 내가 이길 수 있는 경우
                 if (result % 2 == 0) result = next; // 첫 번째 승리 갱신
                 else result = Math.min(result, next); // 더 빨리 이기는 쪽 선택
-            } else {
+                
+            } else { // 상대가 이김
                 // 내가 질 수밖에 없는 경우
                 if (result % 2 == 0) result = Math.max(result, next); // 최대한 버팀
             }
         }
 
+        // result는 승패 결과에 대한 판수를 가짐, 따라서 result가 짝수인것은 여태까지 패배했다느 것, 홀수라면 여태까지 이긴적이 있다는 것
         return result;
     }
 
