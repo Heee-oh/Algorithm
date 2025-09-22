@@ -14,7 +14,7 @@ class Solution {
             int end = parseTime(log[1]);
             
             timeLine[start]++;
-            timeLine[end]--;
+            timeLine[end]--; // 시간이므로 start~end까지, end에 딱 시청이 끝남
         }
         
         // 타임라인 누적합 생성 
@@ -34,7 +34,7 @@ class Solution {
         for (int i = 0; i < pSum.length - advTime; i++) {
             // 0인 부분은 최댓값이 나올 수 없음
             if (i == 0) {
-                if (max < pSum[i + advTime - 1]) {
+                if (max < pSum[i + advTime - 1]) { // 1초, 광고 3초라 했을떄 1, 2, 3 초타임에 광고 재생, 4초가 아님 
                     max = pSum[i + advTime - 1];
                     maxTimeLine = i;
                 }
