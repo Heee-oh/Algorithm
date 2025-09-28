@@ -4,27 +4,24 @@ class Solution {
     // a = b일 경우는 어피치가 k점
     // k 점을 여러발 맞춰도 k점만 가져감
     //  최종 점수가 같을 경우 어피치를 우승
-    
     //라이언이 가장 큰 점수 차이로 우승이 목표 
     
     static int apeach = 0;
     static int[] arr = new int[11];
     static List<int[]> list = new ArrayList<>();
     static int max = 0;
-    static int restArrow = 0;
     
     public int[] solution(int n, int[] info) {
         
+        // 어피치의 총 점수 합을 구함
         for (int i = 0; i < 11; i++) {
             apeach += info[i];
         }
         
+        // 최대값으로 이기는 모든 경우를 탐색 
         dfs(info, 0, 0, n);
         
-        if (list.isEmpty()) {
-            return new int[] {-1};
-        }
-        
+        // 같은 점수가 여러개인 경우 가장 낮은 점수를 더 많이 맞힌 경우를 구함 
         int[] answer = list.get(0); 
         for (int i = 1; i < list.size(); i++) {
             int[] tmp = list.get(i);
@@ -39,6 +36,8 @@ class Solution {
             }
         }
         
+        // 총 화살의 개수를 세어 안쏜 화살을 구함
+        // 정답 후보의 어피치 총합과 라이언 총합을 구해서 어피치 >= 라이언 일 경우 답이 없으므로 -1 리턴 
         int cnt = 0;
         int sum = 0, apeachSum = 0;
         for (int i = 0; i < answer.length; i++) {
@@ -50,14 +49,9 @@ class Solution {
             }
         }
         
-        if (sum <= apeachSum) {
-            return new int[] {-1};
-        }
-        
-        if (cnt < n) {
-            answer[10] += n - cnt;
-        }
-        
+        if (sum <= apeachSum) return new int[] {-1};
+        // 가장 낮은 점수에 모두 더함
+        if (cnt < n) answer[10] += n - cnt;
         
         return answer;
         // 라이언이 가장 큰 점수 차이로 우승할 수 있는 방법이 여러 가지 일 경우, 가장 낮은 점수를 더 많이 맞힌 경우
