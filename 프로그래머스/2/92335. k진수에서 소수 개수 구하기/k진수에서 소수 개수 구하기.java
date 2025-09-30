@@ -28,25 +28,8 @@ class Solution {
         }
         
         String[] split = str.split("0+");
-         
-        long first = Long.parseLong(split[0]);
-        if (split.length == 1) {
-            if (isPrime(first)) {
-                return answer + 1;
-            }
-        }
-        
-        if (isPrime(first)) {
-                answer++;
-        }
-        
-        if (isPrime(Long.parseLong(split[split.length - 1]))) {
-            answer++;
-        }            
-
-            
        
-        for (int i = 1; i < split.length - 1; i++) {
+        for (int i = 0; i < split.length; i++) {
             long num = Long.parseLong(split[i]);
             if (isPrime(num)) {
                 answer++;
