@@ -1,122 +1,124 @@
 import java.util.*;
 
 class Solution {
-
     static int n;
-    static int[][] dice1;
-    static List<int[]> A;
-
+    static List<int[]> alist = new ArrayList<>();
+    static List<int[]> blist = new ArrayList<>();
     
+    static Map<Integer, Integer> aSum;
+    static Map<Integer, Integer> bSum;
+    
+    static int[][] odice;
     
     public int[] solution(int[][] dice) {
         n = dice.length;
-        dice1 = dice;
-        A = new ArrayList<>();
+        odice = dice;
+        
+        makeCombine(1, 0, new int[n/2]);
         
         int max = 0;
+        int[] maxDice = null;
         
-        int[] answer = new int[n/2];
-        // 우선 n/2가지를 뽑는다.
-        makeCombine(0, 0, new int[n/2]);
-        
-        
-        for (int[] aDice : A) {
+        for (int i = 0; i < alist.size(); i++) {
+            boolean[] inAdice = new boolean[n + 1];
+            int[] aDice = alist.get(i);
+            int[] bDice = new int[n/2];
             
-            // 반대 쪽도 생성
-            int[] bDice = makeBConbine(aDice);
-        
-            // 뽑은 주사위로 모든 합의 조합을 생성
-            List<Integer> sumA = new ArrayList<>();
-            List<Integer> sumB = new ArrayList<>();
+            // a다이스 체크
+            for (int j = 0; j < n/2; j++) {
+                inAdice[aDice[j]] = true;
+            }
             
-            sumDice(aDice, 0,0, sumA);
-            sumDice(bDice, 0,0, sumB);
+            // bdice 생성
+            int idx = 0;
+            for (int j = 1; j <= n; j++) {
+                if (inAdice[j]) continue;
+                bDice[idx] = j;
+                idx++;
+            }
             
-            Collections.sort(sumB);
+            aSum = new HashMap<>();
+            bSum = new HashMap<>();
             
-            // 이분 탐색으로 개수 구하기
+            sumDice(0, 0, 0, aDice, true);
+            sumDice(0, 0, 0, bDice, false);
             
+            
+            int[] aSumArr = new int[aSum.size()]; 
+            idx = 0;
+            
+            for (int num : aSum.keySet()) {
+                aSumArr[idx++] = num;
+            }
+            
+            Arrays.sort(aSumArr);
+            
+            
+            // 이분탐색으로 승리 개수 구하기 
             int cnt = 0;
-            
-            for (int i = 0; i < sumA.size(); i++) {
-                int target = sumA.get(i);
+            for (int bNum : bSum.keySet()) {
                 
-                int tmpCnt = 0;
-                int left = 0, right = sumB.size();
+                int l = 0, r = aSumArr.length;
                 
-                while(left < right) {
-                    int mid = (left + right) >>> 1;
-                    
-                    if (sumB.get(mid) < target) {
-                        left = mid + 1;
+                while (l < r) {
+                    int mid = (l + r) >>> 1;
+                    if (aSumArr[mid] <= bNum) {
+                        l = mid + 1;
                     } else {
-                        right = mid;
+                        r = mid;
                     }
                 }
                 
+                int bcnt = bSum.get(bNum);
 
-                cnt += left;
-                
-            }
-            
-            
-            // 최대면 값 생성
-            if (max < cnt) {
-                
-                max = cnt;
-                
-                for (int i = 0; i < aDice.length; i++) {
-                    answer[i] = aDice[i] + 1;
+                for (int j = l; j < aSumArr.length; j++) {
+                    cnt += aSum.get(aSumArr[j]) * bcnt;
                 }
+
+                
             }
             
+            if (max < cnt) {
+                max = cnt;
+                maxDice = aDice;
+            }
         }
         
-        
-        return answer;
+        return maxDice;
     }
     
-    private static void makeCombine(int idx, int depth, int[] tmp) {    
+    private void makeCombine(int idx, int depth, int[] tmp) {
         if (depth == n/2) {
-            A.add(tmp.clone());
+            alist.add(tmp.clone());
             return;
         }
-        for (int i = idx; i < n; i++) {
+        
+        for (int i = idx; i <= n; i++) {
             tmp[depth] = i;
             makeCombine(i + 1, depth + 1, tmp);
         }
     }
     
-    private static int[] makeBConbine(int[] aDice) {
-        int[] b = new int[n/2];
-        
-        boolean[] isAdice = new boolean[n];
-        
-        for (int i = 0; i < aDice.length; i++) {
-            isAdice[aDice[i]] = true;
-        }
-        
-        int idx = 0;
-        for (int i = 0; i < n; i++) {
-            if (!isAdice[i] ) {
-                b[idx++] = i;
+    private void sumDice(int idx, int depth, int sum, int[] tmp, boolean isA) {
+        if (depth == n/2) {
+            if (isA) {
+                int value = aSum.getOrDefault(sum, 0) + 1;
+                aSum.put(sum, value);
+            } else {
+                int value = bSum.getOrDefault(sum, 0) + 1;
+                bSum.put(sum, value);
             }
-        }
-        
-        return b;
-        
-    }
-    
-    // 뽑은 주사위 배열, 주사위 idx, 합, 깊이, 합을 저장할 리스트
-    private static void sumDice(int[] dice, int idx, int sum, List<Integer> list) {
-        if (idx == n/2) {
-            list.add(sum);
             return;
         }
         
-        for (int i = 0; i < 6; i++) {
-            sumDice(dice, idx + 1, sum + dice1[dice[idx]][i], list);
+        for (int i = idx; i < n/2; i++) {
+            int select = tmp[i];
+            int[] score = odice[select - 1];
+            
+            for (int j = 0; j < score.length; j++) {
+                sumDice(i + 1, depth + 1, sum + score[j], tmp, isA);
+            }
+            
         }
     }
-    
 }
