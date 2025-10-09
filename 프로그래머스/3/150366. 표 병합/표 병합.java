@@ -1,130 +1,112 @@
 import java.util.*;
 
 class Solution {
-
-    static class Point {
-        int r, c;
-
-        Point(int r, int c) {
-            this.r = r;
-            this.c = c;
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (!(obj instanceof Point)) return false;
-            Point other = (Point) obj;
-            return this.r == other.r && this.c == other.c;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(r, c);
-        }
-    }
-
+    static int[] parent = new int[51 * 51];
+    static String[] value = new String[51 * 51];
+    
     public String[] solution(String[] commands) {
         List<String> answer = new ArrayList<>();
-
-        Point[][] parent = new Point[51][51];
-        Map<Point, String> valueMap = new HashMap<>();
-
-        for (int i = 1; i <= 50; i++) {
-            for (int j = 1; j <= 50; j++) {
-                parent[i][j] = new Point(i, j);
+        
+        for (int i = 0; i < 51 * 51; i++) {
+            parent[i] = i;
+            value[i] = "EMPTY";
+        }
+        
+        for (String command : commands) {
+            String[] cmd = command.split(" ");
+            
+            switch (cmd[0]) {
+                case "UPDATE":
+                    if (cmd.length == 4) {
+                        int r = Integer.parseInt(cmd[1]);
+                        int c = Integer.parseInt(cmd[2]);
+                        String val = cmd[3];
+                        int idx = find(getIndex(r, c));
+                        value[idx] = val;
+                    } else {
+                        String val1 = cmd[1];
+                        String val2 = cmd[2];
+                        for (int i = 0; i < 51 * 51; i++) {
+                            if (value[find(i)].equals(val1)) {
+                                value[find(i)] = val2;
+                            }
+                        }
+                    }
+                    break;
+                    
+                case "MERGE":
+                    int r1 = Integer.parseInt(cmd[1]);
+                    int c1 = Integer.parseInt(cmd[2]);
+                    int r2 = Integer.parseInt(cmd[3]);
+                    int c2 = Integer.parseInt(cmd[4]);
+                    merge(r1, c1, r2, c2);
+                    break;
+                    
+                case "UNMERGE":
+                    int r = Integer.parseInt(cmd[1]);
+                    int c = Integer.parseInt(cmd[2]);
+                    unmerge(r, c);
+                    break;
+                    
+                case "PRINT":
+                    int pr = Integer.parseInt(cmd[1]);
+                    int pc = Integer.parseInt(cmd[2]);
+                    String v = value[find(getIndex(pr, pc))];
+                    answer.add(v.equals("EMPTY") ? "EMPTY" : v);
+                    break;
             }
         }
-
-        for (String cmd : commands) {
-            String[] parts = cmd.split(" ");
-
-            if (parts[0].equals("UPDATE")) {
-                if (parts.length == 4) {
-                    int r = Integer.parseInt(parts[1]);
-                    int c = Integer.parseInt(parts[2]);
-                    String val = parts[3];
-                    Point root = find(parent, r, c);
-                    valueMap.put(root, val);
-                } else {
-                    String val1 = parts[1];
-                    String val2 = parts[2];
-                    for (Point key : valueMap.keySet()) {
-                        if (valueMap.get(key).equals(val1)) {
-                            valueMap.put(key, val2);
-                        }
-                    }
-                }
-
-            } else if (parts[0].equals("MERGE")) {
-                int r1 = Integer.parseInt(parts[1]);
-                int c1 = Integer.parseInt(parts[2]);
-                int r2 = Integer.parseInt(parts[3]);
-                int c2 = Integer.parseInt(parts[4]);
-
-                Point p1 = find(parent, r1, c1);
-                Point p2 = find(parent, r2, c2);
-
-                if (p1.equals(p2)) continue;
-
-                String val1 = valueMap.getOrDefault(p1, null);
-                String val2 = valueMap.getOrDefault(p2, null);
-
-                for (int i = 1; i <= 50; i++) {
-                    for (int j = 1; j <= 50; j++) {
-                        if (find(parent, i, j).equals(p2)) {
-                            parent[i][j] = p1;
-                        }
-                    }
-                }
-
-                if (val1 == null && val2 != null) {
-                    valueMap.put(p1, val2);
-                } else if (val1 != null) {
-                    valueMap.put(p1, val1);
-                }
-
-                valueMap.remove(p2);
-
-            } else if (parts[0].equals("UNMERGE")) {
-                int r = Integer.parseInt(parts[1]);
-                int c = Integer.parseInt(parts[2]);
-                Point root = find(parent, r, c);
-                String val = valueMap.get(root);
-
-                List<Point> group = new ArrayList<>();
-                for (int i = 1; i <= 50; i++) {
-                    for (int j = 1; j <= 50; j++) {
-                        if (find(parent, i, j).equals(root)) {
-                            group.add(new Point(i, j));
-                        }
-                    }
-                }
-
-                for (Point p : group) {
-                    parent[p.r][p.c] = new Point(p.r, p.c);
-                }
-
-                valueMap.remove(root);
-                if (val != null) {
-                    valueMap.put(new Point(r, c), val);
-                }
-
-            } else if (parts[0].equals("PRINT")) {
-                int r = Integer.parseInt(parts[1]);
-                int c = Integer.parseInt(parts[2]);
-                Point root = find(parent, r, c);
-                answer.add(valueMap.getOrDefault(root, "EMPTY"));
-            }
-        }
-
+        
         return answer.toArray(new String[0]);
     }
-
-    private Point find(Point[][] parent, int r, int c) {
-        Point p = parent[r][c];
-        if (p.r == r && p.c == c) return p;
-        Point root = find(parent, p.r, p.c);
-        parent[r][c] = root; // path compression
-        return root;
+    
+    private int getIndex(int r, int c) {
+        return (r - 1) * 50 + c;
+    }
+    
+    private int find(int x) {
+        if (x == parent[x]) return x;
+        return parent[x] = find(parent[x]);
+    }
+    
+    private void union(int a, int b) {
+        a = find(a);
+        b = find(b);
+        if (a == b) return;
+        parent[b] = a;
+    }
+    
+    private void merge(int r1, int c1, int r2, int c2) {
+        int idx1 = getIndex(r1, c1);
+        int idx2 = getIndex(r2, c2);
+        int root1 = find(idx1);
+        int root2 = find(idx2);
+        if (root1 == root2) return;
+        
+        // 값 선택 규칙
+        String val = "EMPTY";
+        if (!value[root1].equals("EMPTY")) val = value[root1];
+        else if (!value[root2].equals("EMPTY")) val = value[root2];
+        
+        union(root1, root2);
+        value[find(root1)] = val;
+    }
+    
+    private void unmerge(int r, int c) {
+        int idx = getIndex(r, c);
+        int root = find(idx);
+        String val = value[root];
+        
+        // 같은 root인 모든 셀 분리
+        List<Integer> group = new ArrayList<>();
+        for (int i = 1; i <= 2500; i++) {
+            if (find(i) == root) group.add(i);
+        }
+        
+        for (int i : group) {
+            parent[i] = i;
+            value[i] = "EMPTY";
+        }
+        value[idx] = val;
     }
 }
