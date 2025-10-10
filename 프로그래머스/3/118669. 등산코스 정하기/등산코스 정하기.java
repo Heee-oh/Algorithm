@@ -1,74 +1,100 @@
 import java.util.*;
 
 class Solution {
-
-    static class Node {
-        int to, cost;
-
-        public Node(int to, int cost) {
-            this.to = to;
-            this.cost = cost;
+    
+    static int[] ogates;
+    static int[] osummits;
+    static List<Node>[] graph;
+    static int[] dist;
+    class Node {
+        int u, w;
+        
+        public Node(int u, int w) {
+            this.u = u;
+            this.w = w;
         }
     }
-
+    
     public int[] solution(int n, int[][] paths, int[] gates, int[] summits) {
-        List<Node>[] graph = new ArrayList[n + 1];
-        for (int i = 0; i <= n; i++) graph[i] = new ArrayList<>();
-
+        ogates = gates;
+        osummits = summits;
+        int[] answer = new int[2];
+        
+        graph = new ArrayList[n + 1];
+        
+        for (int i = 1; i <= n; i++) {
+            graph[i] = new ArrayList<>();
+        }
+        
+        // 그래프 초기화
         for (int[] path : paths) {
-            int a = path[0];
-            int b = path[1];
+            int i = path[0];
+            int j = path[1];
             int w = path[2];
-            graph[a].add(new Node(b, w));
-            graph[b].add(new Node(a, w));
+            
+            graph[i].add(new Node(j, w));
+            graph[j].add(new Node(i, w));
         }
-
-        Set<Integer> gateSet = new HashSet<>();
-        for (int g : gates) gateSet.add(g);
-
-        Set<Integer> summitSet = new HashSet<>();
-        for (int s : summits) summitSet.add(s);
-
-        int[] intensity = new int[n + 1];
-        Arrays.fill(intensity, Integer.MAX_VALUE);
-
-        PriorityQueue<Node> pq = new PriorityQueue<>(Comparator.comparingInt(n1 -> n1.cost));
-
-        for (int g : gates) {
-            intensity[g] = 0;
-            pq.offer(new Node(g, 0));
+        
+        dijkstra(n, summits);
+        
+        int min = Integer.MAX_VALUE;
+        for (int i = 0; i < summits.length; i++) {
+            int summit = summits[i];
+            if (min > dist[summit]) {
+                answer[0] = summit;
+                answer[1] = dist[summit];
+                
+                min = dist[summit];
+                
+            } else if (min == dist[summit]) {
+                answer[0] = Math.min(summit, answer[0]);
+            }
         }
-
+        
+        return answer;
+    }
+    
+    private void dijkstra(int n, int[] summits) {
+        // next, w, cnt
+        PriorityQueue<Node> pq = new PriorityQueue<>((o1, o2) -> o1.w - o2.w);
+        dist = new int[n+1]; // intensity가 최소가 되게 방문처리 
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        
+        boolean[] isGate = new boolean[n+1];
+        boolean[] isSummit = new boolean[n+1];
+        boolean[] visited = new boolean[n+1];
+        
+        for (int i = 0; i < ogates.length; i++) {
+            pq.add(new Node(ogates[i], 0));
+            isGate[ogates[i]] = true;
+            dist[ogates[i]] = 0;
+        }
+        
+        for (int summit : summits) {
+            isSummit[summit] = true;
+        }
+        
         while (!pq.isEmpty()) {
-            Node curr = pq.poll();
+            Node cur = pq.poll();
+            
+            if (visited[cur.u] ) {
+                continue;
+            }
 
-            if (intensity[curr.to] < curr.cost) continue; // 이미 더 나은 경로로 방문했음
-            if (summitSet.contains(curr.to)) continue; // 산봉우리에 도달했으면 더 안 감
+            visited[cur.u] = true;
 
-            for (Node next : graph[curr.to]) {
-                if (gateSet.contains(next.to)) continue; // 다른 게이트로 가면 안 됨
-
-                int newIntensity = Math.max(intensity[curr.to], next.cost);
-
-                if (newIntensity < intensity[next.to]) {
-                    intensity[next.to] = newIntensity;
-                    pq.offer(new Node(next.to, newIntensity));
+            if (isSummit[cur.u]) {
+                continue;
+            }
+            for (Node next : graph[cur.u]) {
+                int newIntensity = Math.max(dist[cur.u], next.w);
+                if (!isGate[next.u] && dist[next.u] > newIntensity) {
+                    dist[next.u] = newIntensity;
+                    pq.add(new Node(next.u, newIntensity));
                 }
             }
+            
         }
-
-        int minSummit = 0;
-        int minIntensity = Integer.MAX_VALUE;
-
-        Arrays.sort(summits); // 번호 낮은 산봉우리를 우선하기 위해 정렬
-
-        for (int summit : summits) {
-            if (intensity[summit] < minIntensity) {
-                minSummit = summit;
-                minIntensity = intensity[summit];
-            }
-        }
-
-        return new int[]{minSummit, minIntensity};
     }
 }
