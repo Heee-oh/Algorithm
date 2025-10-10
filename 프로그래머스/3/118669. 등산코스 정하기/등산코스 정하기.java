@@ -6,6 +6,7 @@ class Solution {
     static int[] osummits;
     static List<Node>[] graph;
     static int[] dist;
+    
     class Node {
         int u, w;
         
