@@ -88,10 +88,10 @@ class Solution {
                 continue;
             }
             for (Node next : graph[cur.u]) {
-                int newIntensity = Math.max(dist[cur.u], next.w);
-                if (!isGate[next.u] && dist[next.u] > newIntensity) {
+                int newIntensity = Math.max(cur.w, next.w);
+                if (!isGate[next.u] && dist[next.u] >  newIntensity) {
                     dist[next.u] = newIntensity;
-                    pq.add(new Node(next.u, newIntensity));
+                    pq.add(new Node(next.u, dist[next.u]));
                 }
             }
             
