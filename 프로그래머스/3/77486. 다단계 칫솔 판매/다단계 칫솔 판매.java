@@ -19,13 +19,11 @@ class Solution {
             if (parent.equals("-")) {
                 parents[i] = -1;
             } else {
-                int parentIdx = nameIdx.get(parent);
-                parents[i] = parentIdx;
+                parents[i] = nameIdx.get(parent);
             }
         }
         
         for (int i = 0; i < seller.length; i++) {
-
             int idx = nameIdx.get(seller[i]); // 판매자의 인덱스 찾기 
             int cost = amount[i] * 100;
             
@@ -35,11 +33,9 @@ class Solution {
                 int mine = cost - benefit;
                 answer[idx] += mine;
 
-                if (benefit < 1) break; // 더 이상 분배 불가
                 idx = parents[idx];
                 cost = benefit;
             }
-            
         }
         
         
