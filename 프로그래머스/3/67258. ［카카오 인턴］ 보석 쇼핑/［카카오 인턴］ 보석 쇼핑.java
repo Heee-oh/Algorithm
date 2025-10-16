@@ -41,12 +41,7 @@ class Solution {
             }
         }
         
-        if (answer[0] == 0 && answer[1] == gems.length) {
-            answer[0] = 1;
-        } else {
-            answer[0]++;
-        }
-        
+        answer[0]++;
         return answer;
     }
 }
