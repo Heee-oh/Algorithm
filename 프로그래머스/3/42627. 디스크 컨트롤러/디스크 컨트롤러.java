@@ -12,7 +12,6 @@ class Solution {
         }
     }
     
-    
     public int solution(int[][] jobs) {
         int n = jobs.length;
         int answer = 0;
@@ -35,12 +34,13 @@ class Solution {
         });
         
         int time = 0;
+        int finish = 0;
         int i = 0; 
         //각 작업물을 순서대로 저장
-        while (i < n) {
+        while (true) {
+            if (finish == n) break;
             while (i < n && arr[i].req <= time) {
-                pq.add(arr[i]);
-                i++;
+                pq.add(arr[i++]);
             }
             
             // 작업 꺼내기 
@@ -53,24 +53,11 @@ class Solution {
                 // 작업 끝낸 시간으로 이동
                 time += cur.cost;
                 answer += (time - cur.req);
+                finish++;
             } else {
                 time = arr[i].req;
             }
         }
-        
-        
-        // 아직 못끝낸 작업들 처리
-        while(!pq.isEmpty()) {
-            Job cur = pq.poll();
-                
-            // 요청 시간이 남았다면 이때까지 기다리기 
-            if (time < cur.req) time = cur.req;
-                
-            // 작업 끝낸 시간으로 이동
-            time += cur.cost;
-            answer += (time - cur.req);
-        }
-        
         
         return answer / n;
     }
