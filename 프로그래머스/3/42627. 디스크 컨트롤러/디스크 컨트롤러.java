@@ -26,17 +26,12 @@ class Solution {
         Arrays.sort(arr,(o1, o2) -> o1.req - o2.req);
         
         
-        // 소요시간, 요청시간, 낮은 번호순
+        // 소요시간, 요청시간
         PriorityQueue<Job> pq = new PriorityQueue<>((o1, o2) -> {
             if (o1.cost != o2.cost) {
                 return o1.cost - o2.cost;
             }
-            
-            if (o1.req != o2.req) {
-                return o1.req - o2.req;
-            }
-            
-            return o1.num - o2.num;
+            return o1.req - o2.req;
         });
         
         int time = 0;
@@ -47,7 +42,6 @@ class Solution {
                 pq.add(arr[i]);
                 i++;
             }
-            
             
             // 작업 꺼내기 
             if (!pq.isEmpty()) {
