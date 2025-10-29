@@ -54,22 +54,17 @@ class Solution {
             return;
         }
         answer[0][preOrderIdx++] = cur.n;
-        if (cur.left != null) {
-            preOrder(cur.left);
-        }
-        if (cur.right != null) {
-            preOrder(cur.right);
-        }
+        preOrder(cur.left);
+        preOrder(cur.right);
     }
     
     
     private void postOrder(Node cur) {
-        if (cur.left != null) {
-            postOrder(cur.left);
+        if (cur == null) {
+            return;
         }
-        if (cur.right != null) {
-            postOrder(cur.right);
-        }
+        postOrder(cur.left);
+        postOrder(cur.right);
         answer[1][postOrderIdx++] = cur.n;
     }
     
@@ -79,8 +74,9 @@ class Solution {
             Node tmp = list.get(i);
             if (visited[tmp.n] // 이미 사용한 노드
                 || cur.y == tmp.y  // 같은 level의 노드 
-                || tmp.x < l || tmp.x > r) continue; // 자식노드 추가 가능한 범위를 벗어남
+                ) continue; // 자식노드 추가 가능한 범위를 벗어남
          
+            if(tmp.x < l || tmp.x > r) break;
             
             if (cur.left == null && tmp.x < cur.x) {
                 cur.left = tmp;
