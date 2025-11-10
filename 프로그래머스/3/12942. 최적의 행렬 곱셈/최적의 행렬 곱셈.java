@@ -1,4 +1,4 @@
-import java.util.*;
+import java.util.Arrays;
 
 class Solution {
     public int solution(int[][] matrix_sizes) {
@@ -12,13 +12,11 @@ class Solution {
             Arrays.fill(dp[i], Integer.MAX_VALUE);
         }
         
-        // 자기 자신은 1로 초기화
+        // 자기 자신은 0으로 초기화
         for (int i = 0; i < n; i++) {
             matrix[i][i] = matrix_sizes[i];
             dp[i][i] = 0;
         }
-        
-        
         
         for (int r = n-1; r >= 0; r--) {
             for (int c = r + 1; c < n; c++) {
@@ -26,19 +24,18 @@ class Solution {
                 
                 // 중간 부분을 나눠서 모든 조합을 구함
                 for (int mid = r; mid < c; mid++) {
-                    // dp[r][c] = dp[s][e-1] + [s~e-1, e ~ c] 구간
+                    // dp[r][c] = dp[s][e-1] dp[mid+1][e] + [s~e-1, e ~ c] 행렬 곱
                     int newSize = dp[s][mid] + dp[mid + 1][e] + matrix_multiple(matrix[s][mid], matrix[mid + 1][e]);
 
                     if (dp[r][c] > newSize) {
                         dp[r][c] = newSize;
+                        // 계산된 행렬로 갱신
                         matrix[r][c][0] = matrix[s][mid][0];
                         matrix[r][c][1] = matrix[mid + 1][e][1];
                     }
                 }
             }
         }
-        
-        
         
         return dp[0][n-1];
     }
