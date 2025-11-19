@@ -10,6 +10,7 @@ class Solution {
         count[0] = 1;
         int pos = 0;
         
+        // 26^1 ~26^11 까지 미리 구하기
         for (int i = 1; i < 12; i++) {
             count[i] = count[i-1] * 26L;
             if (count[i] < n) {
@@ -31,15 +32,9 @@ class Solution {
         }
         
         // 밴하지 않았을때 n번째 주문서 찾기 
-        int[] arr = new int[pos+2];
+        int[] arr = new int[pos+1];
         long target = n;
         int idx = 0;
-
-        for (int i = pos; i >= 0; i--, idx++) {
-            long next = target % count[i];
-            arr[idx] = (int)(target / count[i]);
-            target = next;
-        }
         
         // 밴없이 n번째 문자 추출
         // 현재 만들어진 문자를 기준으로 우선순위 큐에서 하나씩 꺼내서 
@@ -51,8 +46,8 @@ class Solution {
         while (true) {
             long[] tmp = new long[2];
             int len = getLengthAndReduce(count, newN, tmp);
-            long k = tmp[1];
-            String str = buildString(count, len, k);
+            long k = tmp[1]; // 순번
+            String str = createStr(count, len, k);
             
             int cnt = 0;
             
@@ -75,23 +70,8 @@ class Solution {
                 break;
             }
             
-            
             newN += cnt;
             target = newN;
-            for (int i = 1; i < 12; i++) {
-                if (count[i] < newN) {
-                    pos = i;
-                }
-            }
-            
-            arr = new int[pos + 1];
-            idx = 0;
-            
-            for (int i = pos; i >= 0; i--, idx++) {
-                long next = target % count[i];
-                arr[idx] = (int)(target / count[i]);
-                target = next;
-            }
         }
         
         return answer;
@@ -101,21 +81,14 @@ class Solution {
         return (char)('a' + cnt);
     }
     
-    private String createStr(int[] arr, int pos) {
-        String str = "";
-        for (int i = 0; i <= pos; i++) {
-            str = str + changeIdxToChar(arr[i]);
-        }
-        
-        return str;
-    }
-    
-    private String buildString(long[] pow26, int len, long k) {
+    // 현재 len은 ...len -2, len -1자리 길이로 만든 모든 주문서를 통과하고 3자리 주문서중 k번째를 찾는중
+    // 각 자리수의 시작은 aaaa.. 
+    private String createStr(long[] count, int len, long k) {
         StringBuilder sb = new StringBuilder();
-        long idx = k - 1;
+        long idx = k - 1; // 0-based 를 위해 -1
 
         for (int i = len - 1; i >= 0; i--) {
-            long block = pow26[i];
+            long block = count[i];
             int digit = (int)(idx / block);   // 0~25
             sb.append((char)('a' + digit));
             idx %= block;
@@ -123,13 +96,13 @@ class Solution {
 
         return sb.toString();
     }
-    
-    private int getLengthAndReduce(long[] pow26, long target, long[] out) {
+    // 문자열 길이와 그 길이중 순번 구하기 
+    private int getLengthAndReduce(long[] count, long target, long[] out) {
         int len = 1;
         long remain = target;
 
-        while (remain > pow26[len]) {
-            remain -= pow26[len];
+        while (remain > count[len]) {
+            remain -= count[len];
             len++;
         }
 
