@@ -2,12 +2,13 @@ import java.util.*;
 
 class Solution {
     static List<Integer>[] trees;
+    static boolean[] visited;
     static long cnt = 0;
     static int[] oa;
-    static boolean[] visited;
     
     public long solution(int[] a, int[][] edges) {
         oa = a;
+        
         // 트리 생성
         trees = new ArrayList[a.length];
         for (int i = 0; i < trees.length; i++) {
