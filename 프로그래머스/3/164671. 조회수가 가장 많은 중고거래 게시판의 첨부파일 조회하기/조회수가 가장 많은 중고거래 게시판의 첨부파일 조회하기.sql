@@ -8,4 +8,3 @@ WHERE UGB.VIEWS = (SELECT MAX(VIEWS)
                 FROM USED_GOODS_BOARD
               )
 ORDER BY UGF.FILE_ID DESC
-
