@@ -1,0 +1,8 @@
+-- 가장 큰 물고기 10마리의 ID 출력
+-- 길이 기준 DESC, ID ASC
+-- 10CM 이하인 경우 없음
+SELECT ID, LENGTH
+FROM FISH_INFO
+ORDER BY LENGTH DESC, ID ASC
+LIMIT 10
+
