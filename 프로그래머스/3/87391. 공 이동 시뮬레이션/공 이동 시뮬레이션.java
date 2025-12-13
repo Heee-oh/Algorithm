@@ -1,12 +1,6 @@
-import java.util.Arrays;
-
 class Solution {
     public long solution(int n, int m, int x, int y, int[][] queries) {
         long answer = -1;
-        
-        int[] dr = {0, 0, -1, 1};
-        int[] dc = {-1, 1, 0, 0};
-        
         
         // 정답 범위 설정
         // r1 c1 r2 c2
