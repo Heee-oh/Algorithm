@@ -1,0 +1,14 @@
+-- 각 분기별 대장균의 개체 수 
+-- 각 분기에 Q 붙이고 분기 오름차순 
+
+SELECT (CASE 
+            WHEN MONTH(DIFFERENTIATION_DATE) < 4 THEN '1Q'
+            WHEN MONTH(DIFFERENTIATION_DATE) < 7 THEN '2Q'
+            WHEN MONTH(DIFFERENTIATION_DATE) < 10 THEN '3Q'
+            ELSE '4Q'
+        END
+       ) AS QUARTER,
+       COUNT(*) AS ECOLI_COUNT
+FROM ECOLI_DATA
+GROUP BY QUARTER
+ORDER BY QUARTER ASC
