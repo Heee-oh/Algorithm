@@ -98,11 +98,7 @@ class Solution {
                 sb.append(result);
                 answer[i] = sb.toString();
             }
-
-
         }
-
-        
         return answer;
     }
 }
