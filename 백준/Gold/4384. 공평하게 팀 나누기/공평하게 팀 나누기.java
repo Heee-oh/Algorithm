@@ -39,9 +39,7 @@ public class Main {
                 min = diff;
                 minW = i;
                 
-            } else if (min == diff) {
-                minW = Math.min(minW, i);
-            }
+            } 
         }
         
         System.out.println(Math.min(minW, sum - minW) +  " " + Math.max(minW, sum - minW));
