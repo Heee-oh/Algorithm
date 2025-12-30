@@ -11,30 +11,28 @@ class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
-        int N = Integer.parseInt(br.readLine());
 
-        int[] weight = new int[N];
+        int N = Integer.parseInt(br.readLine());
         boolean[] dp = new boolean[MAX + 1];
-        StringTokenizer st = new StringTokenizer(br.readLine());
         dp[0] = true;
 
+        StringTokenizer st = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; i++) {
-            weight[i] = Integer.parseInt(st.nextToken());
+            int weight = Integer.parseInt(st.nextToken());
 
-            for (int j = MAX; j >= weight[i]; j--) {
-                dp[j] |= dp[j - weight[i]];
+            for (int j = MAX; j >= weight; j--) {
+                dp[j] |= dp[j - weight];
             }
         }
 
         int B = Integer.parseInt(br.readLine());
         st = new StringTokenizer(br.readLine());
-        int[] beads = new int[B];
         for (int i = 0; i < B; i++) {
             boolean isEquals = false;
-            beads[i] = Integer.parseInt(st.nextToken());
+            int bead = Integer.parseInt(st.nextToken());
 
-            for (int j = MAX; j >= beads[i]; j--) {
-                if (dp[j] && dp[j - beads[i]]) {
+            for (int j = MAX; j >= bead; j--) {
+                if (dp[j] && dp[j - bead]) {
                     sb.append("Y ");
                     isEquals = true;
                     break;
