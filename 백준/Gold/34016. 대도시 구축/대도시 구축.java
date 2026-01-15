@@ -53,7 +53,7 @@ public class Main {
                 : ts.stream().mapToLong(Long::valueOf).sum(); // 1과 연결되지 못한 2개의 마을의 합을 구하고 가장 작은 마을과 연결
         int min = 0;
 
-        for (int i = 2; i <= 10; i++) {
+        for (int i = 2; i <= 4; i++) {
             boolean flag = false;
 
             // block 조건 확인, 현재 탐색하는 1번마을과 연결된 가장 작은 마을 i -> 연결되지 못한 마을 이 있는지 확인
@@ -75,6 +75,4 @@ public class Main {
         answer = Math.min(answer + case1, answer + case2);
         System.out.println(answer);
     }
-
-
 }
