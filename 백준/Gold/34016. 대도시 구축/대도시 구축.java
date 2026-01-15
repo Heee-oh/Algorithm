@@ -21,7 +21,6 @@ public class Main {
         }
 
         int[][] block = new int[M][2];
-        boolean[] visited = new boolean[M];
         for (int i = 0; i < M; i++) {
             st = new StringTokenizer(br.readLine());
             block[i][0] = Integer.parseInt(st.nextToken());
@@ -34,18 +33,16 @@ public class Main {
         for (int i = 0; i < M; i++) {
             if (block[i][0] == ts.first()) {
                 ts.add(block[i][1]);
-                visited[i] = true;
 
             } else if (block[i][1] == ts.first()) {
                 ts.add(block[i][0]);
-                visited[i] = true;
             }
         }
 
         long sum = ts.stream().mapToLong(Long::valueOf).sum();
         long answer = (N * (N + 1) / 2) - sum + (N - ts.size());
-
         ts.pollFirst(); // 1버리기
+
         if (ts.isEmpty()) {
             System.out.println(answer);
             return;
@@ -54,15 +51,13 @@ public class Main {
         long sum1 = ts.size() == 1 ?
                 0  // 1개일 시 1과 연결된 집합중 가장 작은 마을과 연결하면됨
                 : ts.stream().mapToLong(Long::valueOf).sum(); // 1과 연결되지 못한 2개의 마을의 합을 구하고 가장 작은 마을과 연결
-
         int min = 0;
 
-
-
         for (int i = 2; i <= 10; i++) {
-
             boolean flag = false;
 
+            // block 조건 확인, 현재 탐색하는 1번마을과 연결된 가장 작은 마을 i -> 연결되지 못한 마을 이 있는지 확인
+            // 있다면 해당 i번 마을은 불가능
             for (int j = 0; j < M; j++) {
                 if (block[j][0] == i && ts.contains(block[j][1])
                         || block[j][1] == i && ts.contains(block[j][0])) {
@@ -71,19 +66,13 @@ public class Main {
             }
 
             if (flag || ts.contains(i)) continue;
-            min = i;
-            break;
+            min = i; break;
         }
 
         long case1 = sum1 + ts.first() + min; // 1집합에 못들어간 나머지끼리를 연결한다음 1집합의 가장 작은 마을과 연결
-        long case2 = 0; // 1집합의 가장 작은 마을과 각각 연결
-
-        for (Integer t : ts) {
-            case2 += (long)t + min;
-        }
+        long case2 = ts.stream().mapToLong(Long::valueOf).sum() + (long) ts.size() * min; // 1집합의 가장 작은 마을과 각각 연결
 
         answer = Math.min(answer + case1, answer + case2);
-
         System.out.println(answer);
     }
 
