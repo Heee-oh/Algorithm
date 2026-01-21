@@ -18,7 +18,7 @@ public class Main {
             dp = new int[N];
             Arrays.fill(dp, Integer.MAX_VALUE);
 
-            // 거꾸로 누적합 1 2 3 이면 A[2] = A[3] + 3 A[1] = A[2] + 2
+            // 거꾸로 누적합 1 2 3 이면 A[2] = A[3] + 1 A[1] = A[2] + 2 A[0] = A[1] + 3
             // 6 3 1
             for (int j = 0; j < N; j++) {
                 A[N - j - 1] = A[N - j] + Integer.parseInt(st.nextToken());
