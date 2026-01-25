@@ -1,25 +1,70 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        int n = Integer.parseInt(br.readLine());
-        int[] dp = new int[1001];
 
-        dp[1] = 1; //2x1 로 하나 채우기
-        dp[2] = 2; // 2x1로 || 1x2로 2가지 방법
+    static final int MOD = 10_007;
+    public static void main(String[] args) throws Exception {
+        FastReader fr = new FastReader();
+        int N = fr.nextInt();
 
-        for(int i = 3; i <= n; i++) {
-            dp[i] = (dp[i-2] + dp[i-1]) % 10007;
+        int[] dp = new int[N + 1];
+        dp[0] = dp[1] = 1;
+
+        for (int i = 2; i <= N; i++) {
+            dp[i] = (dp[i - 1] + dp[i - 2]) % MOD;
         }
 
+        System.out.println(dp[N]);
 
-
-        bw.write(dp[n] + "\n"); // 문자열 or 변수명+""
-        // 백준은 값도 줄바꿈 처리되어있으면 해줘야함
-        bw.flush();  //버퍼 비우기  이것을 계속 호출하면 시간초과 뜸 한번만 아니면 필요할때만 호
-        bw.close(); // 종료
     }
+
+
+
+    // 메모리 효율을 극대화한 입력 클래스
+    private static class FastReader {
+        private final InputStream in = System.in;
+        private final byte[] buffer = new byte[1024 * 16];
+        private int ptr = 0;
+        private int len = 0;
+
+        private int read() throws IOException {
+            if (ptr < len) return buffer[ptr++];
+            len = in.read(buffer);
+            ptr = 0;
+            if (len <= 0) return -1;
+            return buffer[ptr++];
+        }
+
+        public String next() throws IOException {
+            int b = read();
+            while (b != -1 && b <= 32) b = read();
+            if (b == -1) return null;
+            StringBuilder sb = new StringBuilder();
+            while (b > 32) {
+                sb.append((char) b);
+                b = read();
+            }
+            return sb.toString();
+        }
+
+        public int nextInt() throws IOException {
+            int n = 0;
+            int b = read();
+            while (b != -1 && b <= 32) b = read();
+
+            // -도 처리
+            int sign = 1;
+            if (b =='-') {
+                sign = -1;
+                b = read();
+            }
+            while (b > 32) {
+                n = n * 10 + (b - '0');
+                b = read();
+            }
+            return n * sign;
+        }
+    }
+
 }
