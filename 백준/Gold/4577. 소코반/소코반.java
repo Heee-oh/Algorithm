@@ -13,7 +13,6 @@ public class Main {
         int game = 0;
         while (true) {
             game++;
-
             StringTokenizer st = new StringTokenizer(br.readLine());
 
             R = Integer.parseInt(st.nextToken());
@@ -43,8 +42,7 @@ public class Main {
                 }
 
                 for (int j = 0; j < C; j++) {
-                    cnt += (map[i][j] == '+' || map[i][j] == 'B') ? 1 : 0;
-                    box += (map[i][j] == 'B') ? 1 : 0;
+                    cnt += (map[i][j] == '+' ) ? 1 : 0;
                 }
             }
 
@@ -54,7 +52,6 @@ public class Main {
             char[] commands = br.readLine().toCharArray();
 
             if (canCompleted(map, commands, wr, wc, cnt, box)) {
-
                 sb.append("Game ").append(game).append(": complete\n");
                 for (int i = 0; i < R; i++) {
                     sb.append(map[i]).append("\n");
@@ -66,9 +63,7 @@ public class Main {
                     sb.append(map[i]).append("\n");
                 }
             }
-
         }
-
 
         System.out.print(sb.toString().trim());
 
@@ -138,7 +133,7 @@ public class Main {
                         cnt--;
                     }
                 }
-                
+
                 if (cnt == target) return true;
             }
 
@@ -158,54 +153,6 @@ public class Main {
                 return 1;
             default:
                 return 3;
-        }
-    }
-
-
-
-    // 메모리 효율을 극대화한 입력 클래스
-    private static class FastReader {
-        private final InputStream in = System.in;
-        private final byte[] buffer = new byte[1024 * 16];
-        private int ptr = 0;
-        private int len = 0;
-
-        private int read() throws IOException {
-            if (ptr < len) return buffer[ptr++];
-            len = in.read(buffer);
-            ptr = 0;
-            if (len <= 0) return -1;
-            return buffer[ptr++];
-        }
-
-        public String next() throws IOException {
-            int b = read();
-            while (b != -1 && b <= 32) b = read();
-            if (b == -1) return null;
-            StringBuilder sb = new StringBuilder();
-            while (b > 32) {
-                sb.append((char) b);
-                b = read();
-            }
-            return sb.toString();
-        }
-
-        public int nextInt() throws IOException {
-            int n = 0;
-            int b = read();
-            while (b != -1 && b <= 32) b = read();
-
-            // -도 처리
-            int sign = 1;
-            if (b =='-') {
-                sign = -1;
-                b = read();
-            }
-            while (b > 32) {
-                n = n * 10 + (b - '0');
-                b = read();
-            }
-            return n * sign;
         }
     }
 
