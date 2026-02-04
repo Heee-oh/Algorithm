@@ -35,6 +35,7 @@ public class Main {
                 map[i][j] = Integer.parseInt(st.nextToken());
             }
         }
+
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < N; j++) {
                 Arrays.fill(dist[i][j], Long.MAX_VALUE);
@@ -42,15 +43,18 @@ public class Main {
             }
         }
 
+        dijkstra(dist, N, T, map);
 
+    }
+
+    private static void dijkstra(long[][][] dist, int N, long T, int[][] map) {
         PriorityQueue<Road> pq = new PriorityQueue<>((o1, o2) -> Long.compare(o1.time,o2.time));
-
         pq.add(new Road(0, 0, 0, 0));
         dist[0][0][0] = 0;
 
         while (!pq.isEmpty()) {
             Road cur = pq.poll();
-            int cnt = cur.cnt;
+            int cnt = cur.cnt + 1; // 다음 길로 이동하므로 + 1
 
 
             if (cur.r == N - 1 && cur.c == N - 1) {
@@ -63,18 +67,22 @@ public class Main {
                 int nc = cur.c + dc[i];
 
                 if (nr < 0 || nr >= N || nc < 0 || nc >= N) continue;
-                long nTime = cur.time + T;
+                long nTime = cur.time + T; 
 
 
-                if ((cnt + 1) == 3) {
+                // 풀을 먹어야한다면 풀 먹는 시간 추가  
+                if (cnt == 3) {
                     nTime += map[nr][nc];
                 }
 
-                if (dist[cnt + 1][nr][nc] > nTime) {
-                    dist[cnt + 1][nr][nc] = nTime;
-                    pq.offer(new Road(nr, nc, (cnt + 1) == 3 ? 0 : cnt + 1, nTime));
+                // 현재 이동 횟수에 대하여 nr, nc까지 오는 시간이 현재 경로가 더 시간이 덜 든다면 교체
+                if (dist[cnt][nr][nc] > nTime) {
+                    dist[cnt][nr][nc] = nTime;
+                    pq.offer(new Road(nr, nc, cnt == 3 ? 0 : cnt, nTime));
                 }
             }
         }
     }
+
+
 }
