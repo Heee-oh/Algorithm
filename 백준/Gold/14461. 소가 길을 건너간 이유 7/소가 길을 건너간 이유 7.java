@@ -26,7 +26,7 @@ public class Main {
         int N = Integer.parseInt(st.nextToken());
         long T = Long.parseLong(st.nextToken());
 
-        long[][][] dist = new long[N][N][N];
+        long[][][] dist = new long[4][N][N]; // 풀을 먹은 횟수, r, c
         int[][] map = new int[N][N];
 
         for (int i = 0; i < N; i++) {
@@ -35,7 +35,7 @@ public class Main {
                 map[i][j] = Integer.parseInt(st.nextToken());
             }
         }
-        for (int i = 0; i < N; i++) {
+        for (int i = 0; i < 4; i++) {
             for (int j = 0; j < N; j++) {
                 Arrays.fill(dist[i][j], Long.MAX_VALUE);
 
@@ -74,15 +74,7 @@ public class Main {
                     dist[cnt + 1][nr][nc] = nTime;
                     pq.offer(new Road(nr, nc, (cnt + 1) == 3 ? 0 : cnt + 1, nTime));
                 }
-
-
             }
         }
-
     }
-
-
-
-
-
 }
