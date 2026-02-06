@@ -11,38 +11,58 @@ public class Main {
         int K = fr.nextInt();
 
         long cnt = 0;
-        int[][] pSum = new int[N + 1][M + 1];
-        for (int i = 1; i <= N; i++) {
-            for (int j = 1; j <= M; j++) {
+        int[][] arr = new int[N][M ];
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
                 int e = fr.nextInt();
-                pSum[i][j] = pSum[i-1][j] + pSum[i][j-1] - pSum[i-1][j-1] + e;
-                if (e % K == 0) {
-                    cnt++;
-                }
+                arr[i][j] = e;
+
             }
         }
 
-        for (int dr = 0; dr <= N; dr++) {
-            for (int dc = dr == 0 ? 1 : 0; dc <= M; dc++) {
+        int[] freq = new int[K]; // K가 최대 100만이므로 매번 초기화하거나 생성할 수 없음
+        int[] col = new int[M + 1];
+        int[] used = new int[M + 1]; // freq에 사용한 나머지 값을을 기록
+        int usedIdx;
 
-                for (int r = 1; r + dr <= N; r++) {
-                    for (int c = 1; c + dc <= M; c++) {
-                        int value = pSum[r + dr][c + dc] - (pSum[r + dr][c - 1] + pSum[r - 1][c + dc]) + pSum[r-1][c-1];
-                        if (value % K == 0) {
-                            cnt++;
-                        }
+        for (int top = 0; top < N; top++) {
+            Arrays.fill(col, 0);
 
+            for (int bottom = top; bottom < N; bottom++) {
+
+                // 각 열대대한 누적합
+                for (int c = 0; c < M; c++) {
+                    col[c] += arr[bottom][c];
+                }
+
+
+                usedIdx = 0;
+                int prefix = 0;
+                freq[0] = 1;
+                // 해당 열 구간 L..R 에 대하여 누적합은
+                // pSum[R] - pSum[L-1] % K == 0
+                // -> pSum[R] % K == pSum[L-1] % K
+                // 따라서 매 구간의 나머지의 개수를 기록한다.
+
+                for (int c = 0; c < M; c++) {
+                    prefix = (prefix + col[c]) % K;
+                    cnt += freq[prefix]; // 현재 prefix를 R로 보고 pSum[L-1] % K 개 만큼 더함
+                    if (freq[prefix] == 0) {
+                        used[usedIdx++] = prefix;
                     }
+                    freq[prefix]++; // 현재 열의 나머지도 L이 되므로 +1
+                }
+
+                // 매 바텀이 확장될때마다 초기화
+                for (int i = 0; i < usedIdx; i++) {
+                    freq[used[i]] = 0;
                 }
             }
-        }
 
+
+        }
 
         System.out.println(cnt);
-
-
-
-
     }
 
     static class FastReader {
