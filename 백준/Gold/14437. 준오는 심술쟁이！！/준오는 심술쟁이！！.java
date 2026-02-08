@@ -1,47 +1,97 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.PriorityQueue;
 
 public class Main {
 
-    // 문자는 k= 0(안바뀜) 부터 k= 25까지 변경 가능함
-    // 이를 각각 고려했을때 각 합(j = 0~S)을 만들 수 있는 경우의 수를 구함
-    // i번 문자에서 k를 사용하면 나머지 i-1개에서 (j-k)를 만듦
-    // k가 0~25까지 변경 가능하니 pSum(j) = dp[i][j - 0] + dp[i][j-1] + dp[i][j-2]... + dp[i][j-25(kMax)]
-    // 이를 3중 for문으로 처리시 시간초과발생
-
-    // pSum(j+1) = dp[i][j+1] + dp[i][j] + dp[i][j-1]...dp[i][j-24]
-    // 두 식의 차이가 dp[i][j+1]이 더해지고 dp[i][j-25]가 빠짐
-
-    // 따라서 슬아이딩 윈도우로 현재 dp[i-1][j]를 더하고 dp[i-1][j-26]을 뺌
-    static final int MOD = 1_000_000_007;
+    static final long MOD = (long) (1e9 + 7);
     public static void main(String[] args) throws Exception {
+        StringBuilder sb = new StringBuilder();
+        FastReader fr = new FastReader();
+        int s = fr.nextInt();
+        int N = fr.next().length();
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int s = Integer.parseInt(br.readLine().trim());
-        String str = br.readLine().trim();
-        int n = str.length();
+        int[] dp = new int[s + 1];
+        dp[0] = 1; // 아무것도 변경하지 않는 경우
 
-        int[] prevDp = new int[s + 1];
-        prevDp[0] = 1;
+        // 각각의 문자에 대하여
+        for (int i = 0; i < N; i++) {
+            int[] nDp = new int[s + 1];
 
-        for (int i = 0; i < n; i++) {
-            int[] dp = new int[s + 1];
+            long window = 0;
+            for (int k = 0; k <= s; k++) {
+                window += dp[k];
+                if (k > 25) window -= dp[k - 26];
 
-            long pSum = 0; // prevDp[j] +  ~ +  prevDp[j-25]
-            for (int j = 0; j <= s; j++) {
-                pSum += prevDp[j];
-                if (j - 26 >= 0) pSum -= prevDp[j - 26];
+                window = (window + MOD) % MOD;
 
-                pSum = pSum % MOD;
-                if (pSum < 0) pSum += MOD;
+                nDp[k] = (int)window;
 
-                dp[j] = (int)pSum;
             }
-            prevDp = dp;
+            dp = nDp;
         }
 
-        System.out.println(prevDp[s]);
+        System.out.println(dp[s]);
 
 
+
+
+
+    }
+
+
+
+    static class FastReader {
+        private final StringBuilder sb = new StringBuilder();
+        private final InputStream in = System.in;
+        private final byte[] buffer = new byte[1 << 16];
+        private int ptr = 0, len = 0;
+
+        private int read() throws IOException {
+            if (ptr >= len) {
+                len = in.read(buffer);
+                ptr = 0;
+                if (len <= 0) return -1;
+            }
+            return buffer[ptr++];
+        }
+
+        String next() throws IOException {
+            sb.delete(0, sb.length());
+
+            int c = read();
+            while (c != '\n') {
+                sb.append((char)c);
+                c = read();
+            }
+            return sb.toString();
+        }
+        int nextInt() throws IOException {
+            int c = read();
+            while (c <= 32) c = read();
+            int sign = 1;
+            if (c == '-') { sign = -1; c = read(); }
+            int val = 0;
+            while (c > 32) {
+                val = val * 10 + (c - '0');
+                c = read();
+            }
+            return val * sign;
+        }
+        long nextLong() throws IOException {
+            int c = read();
+            while (c <= 32) c = read();
+            int sign = 1;
+            if (c == '-') { sign = -1; c = read(); }
+            long val = 0;
+            while (c > 32) {
+                val = val * 10 + (c - '0');
+                c = read();
+            }
+            return val * sign;
+        }
     }
 }
