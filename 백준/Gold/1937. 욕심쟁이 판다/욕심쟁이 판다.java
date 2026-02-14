@@ -4,7 +4,7 @@ import java.util.*;
 public class Main {
 
     static int N;
-    static int[][][] dp;
+    static int[][] dp;
     static int[][] arr;
 
     static int[] dr = {1, -1, 0, 0};
@@ -14,25 +14,22 @@ public class Main {
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         N = Integer.parseInt(br.readLine());
-        dp = new int[N][N][4];
+        dp = new int[N][N];
 
         arr = new int[N][N];
 
         for (int i = 0; i < N; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
+            Arrays.fill(dp[i], -1);
             for (int j = 0; j < N; j++) {
                 arr[i][j] = Integer.parseInt(st.nextToken());
-                Arrays.fill(dp[i][j], -1);
             }
         }
 
 
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                for (int k = 0; k < 4; k++) {
-                    dfs(i, j, k);
-
-                }
+                dfs(i, j);
             }
         }
 
@@ -41,7 +38,7 @@ public class Main {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 for (int k = 0; k < 4; k++) {
-                    max = Math.max(max, dp[i][j][k]);
+                    max = Math.max(max, dp[i][j]);
                 }
             }
         }
@@ -51,12 +48,12 @@ public class Main {
 
     }
 
-    private static int dfs(int r, int c, int d) {
-        if (dp[r][c][d] != -1) {
-            return dp[r][c][d];
+    private static int dfs(int r, int c) {
+        if (dp[r][c] != -1) {
+            return dp[r][c];
         }
 
-        dp[r][c][d] = 1;
+        dp[r][c] = 1;
         for (int i = 0; i < 4; i++) {
             int nr = r + dr[i];
             int nc = c + dc[i];
@@ -66,10 +63,10 @@ public class Main {
                 continue;
             }
 
-            dp[r][c][d] = Math.max(dp[r][c][d], dfs(nr, nc, i) + 1);
+            dp[r][c] = Math.max(dp[r][c], dfs(nr, nc) + 1);
         }
 
-        return dp[r][c][d];
+        return dp[r][c];
 
     }
 }
