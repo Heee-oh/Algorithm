@@ -3,54 +3,105 @@ import java.util.*;
 import java.util.stream.IntStream;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(st.nextToken());
-        int M = Integer.parseInt(st.nextToken());
 
-        List<Integer>[] graph = new List[N + 1];
+    public static void main(String[] args) throws Exception {
+        FastReader fr = new FastReader();
+        StringBuilder sb = new StringBuilder();
+        int N = fr.nextInt();
+        int M = fr.nextInt();
 
+
+        List<Integer>[] out = new ArrayList[N + 1];
+        TreeSet<Integer> ts = new TreeSet<>();
+        int[] in = new int[N + 1];
         for (int i = 1; i <= N; i++) {
-            graph[i] = new ArrayList<>();
+            out[i] = new ArrayList<>();
         }
 
-        int[] topology = new int[N + 1];
-
         for (int i = 0; i < M; i++) {
-            st = new StringTokenizer(br.readLine());
-            int a = Integer.parseInt(st.nextToken());
-            int b = Integer.parseInt(st.nextToken());
+            int A = fr.nextInt();
+            int B = fr.nextInt();
 
-            graph[a].add(b);
-            topology[b]++; // 진입차수 증가
+            out[A].add(B);
+            in[B]++;
         }
 
         PriorityQueue<Integer> pq = new PriorityQueue<>();
-        StringBuilder sb = new StringBuilder();
-        // 진입차수가 0인 먼저 풀거나, 그냥 풀어도되는 문제들 저장
+
         for (int i = 1; i <= N; i++) {
-            if (topology[i] == 0) {
-                pq.add(i);
+            if (in[i] == 0) {
+                pq.offer(i);
             }
         }
 
         while (!pq.isEmpty()) {
-            int num = pq.poll();
-            sb.append(num).append(" ");
-            for (int problem : graph[num]) {
-                topology[problem]--;
+            int cur = pq.poll();
 
-                if (topology[problem] == 0) {
-                    pq.add(problem);
-                }
+            sb.append(cur).append(" ");
+
+            for (int next : out[cur]) {
+                in[next]--; // 위상정렬에서 선 작업 처리
+                if (in[next] != 0) continue;
+                pq.offer(next);
             }
         }
 
+        System.out.println(sb.toString().trim());
 
-        System.out.println(sb.toString());
+
+
+
+
+
+
     }
 
+
+
+
+    static class FastReader {
+        private final StringBuilder sb = new StringBuilder();
+        private final InputStream in = System.in;
+        private final byte[] buffer = new byte[1 << 16];
+        private int ptr = 0, len = 0;
+
+        private int read() throws IOException {
+            if (ptr >= len) {
+                len = in.read(buffer);
+                ptr = 0;
+                if (len <= 0) return -1;
+            }
+
+            return buffer[ptr++];
+        }
+
+
+        String next() throws IOException {
+            sb.delete(0, sb.length());
+            int c = read();
+            while (c != '\n') {
+                sb.append((char) c);
+                c = read();
+            }
+
+            return sb.toString();
+        }
+
+        int nextInt() throws IOException {
+            int c = read();
+            while (c <= 32) c = read(); // 특수문자 공백등 무시
+            int sign = 1;
+            if (c == '-') {sign = -1; c = read();}
+            int val = 0;
+
+            while (c > 32) { // 숫자면 계속 읽음
+                val = val * 10 + (c - '0');
+                c = read();
+            }
+
+            return val * sign;
+        }
+    }
 
 
 }
