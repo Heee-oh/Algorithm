@@ -3,28 +3,29 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-
-
     static int[] w;
-    static List<Integer>[] trees;
-    static int[] parents;
     static int[][] dp;
 
-    static Set<Integer> set = new TreeSet<>();
+    static List<Integer>[] trees;
+    static Set<Integer> ts = new TreeSet<>();
+
 
     public static void main(String[] args) throws Exception {
         FastReader fr = new FastReader();
         int N = fr.nextInt();
-        trees = new List[N + 1];
-        w = new  int[N + 1];
 
-        parents = new int[N + 1];
+        w = new int[N + 1];
+        dp = new int[N + 1][2];
+        trees = new List[N + 1];
+
         for (int i = 1; i <= N; i++) {
             w[i] = fr.nextInt();
-            trees[i] = new ArrayList<>();
         }
 
-        dp = new int[N + 1][2];
+        for (int i = 0; i <= N; i++) {
+            Arrays.fill(dp[i], -1);
+            trees[i] = new ArrayList<>();
+        }
 
         for (int i = 0; i < N - 1; i++) {
             int u = fr.nextInt();
@@ -34,67 +35,61 @@ public class Main {
             trees[v].add(u);
         }
 
-        trees[0] = new ArrayList<>();
-        trees[0].add(1);
-
-        for (int i = 0; i <= N; i++) {
-            dp[i][0] = dp[i][1] = -1;
-        }
-
-
-        System.out.println(dfs(1, 0));
-
-        trace(1, 0, false);
+        dfs(0, 1);
+        trace(0, 1, false);
+        System.out.println(Math.max(dp[1][0], dp[1][1]));
 
         StringBuffer sb = new StringBuffer();
-        for (Integer i : set) {
-            sb.append(i).append(" ");
+        for (Integer t : ts) {
+            sb.append(t).append(" ");
         }
 
         System.out.println(sb.toString().trim());
 
 
-
     }
 
-    private static void trace(int cur, int parent, boolean parentSelect) {
+    private static void trace(int parent, int cur, boolean parentSelect) {
 
-        if (parentSelect) {
-            for (Integer next : trees[cur]) {
-                if (next == parent) continue;
-
-                trace(next, cur, false);
-            }
-        } else {
+        // 부모가 선택하지 않았다면
+        if (!parentSelect) {
             boolean select = dp[cur][1] >= dp[cur][0];
             if (select) {
-                set.add(cur);
+                ts.add(cur);
             }
 
             for (Integer next : trees[cur]) {
-                if (next == parent) continue;
-                trace(next, cur, select);
+                if (parent == next) continue;
+                trace(cur, next, select);
+            }
+        } else {
+            for (Integer next : trees[cur]) {
+                if (parent == next) continue;
 
+                // 부모가 선택했으므로 현재 노드는 무조건 선택 불가
+                trace(cur, next, false);
             }
         }
     }
 
-    private static int dfs(int n, int parent) {
-        dp[n][0] = 0;
-        dp[n][1] = w[n];
+    private static void dfs(int parent, int cur) {
+        dp[cur][0] = 0;
+        dp[cur][1] = w[cur];
 
 
-        for (int i = 0; i < trees[n].size(); i++) {
-            int nextNode = trees[n].get(i);
-            if (nextNode == parent) continue;
-            dfs(nextNode, n);
+        for (int i = 0; i < trees[cur].size(); i++) {
+            int next = trees[cur].get(i);
+            if (next == parent) continue;
 
-            dp[n][0] += Math.max(dp[nextNode][0], dp[nextNode][1]);
-            dp[n][1] += dp[nextNode][0];
+            dfs(cur, next);
+
+            // 현재 노드를 S에 미 포함시
+            dp[cur][0] += Math.max(dp[next][0], dp[next][1]);
+            // 현재 노드a를 S에 포함시
+            dp[cur][1] += dp[next][0];
         }
-
-        return Math.max(dp[n][0], dp[n][1]);
     }
+
 
     static class FastReader {
         private final InputStream in = System.in;
