@@ -3,32 +3,66 @@ import java.util.*;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+    public static void main(String[] args) throws Exception {
+        FastReader fr = new FastReader();
+        int N = fr.nextInt();
+        int[] dp = new int[N + 1];
 
-        int n = Integer.parseInt(br.readLine());
-        int[] dp = new int[n + 1];
-        Arrays.fill(dp, Integer.MAX_VALUE);
+        Arrays.fill(dp, (int) (1e6+1));
         dp[1] = 0;
 
-        for (int i = 2; i < dp.length; i++) {
-            int j = i;
-            if (j % 6 == 0) {
-                dp[i] = Math.min(Math.min(dp[j / 3] + 1, dp[j / 2] + 1), dp[i - 1] + 1);
-            } else if (j % 3 == 0) {
-                dp[i] = Math.min(dp[j / 3] + 1, dp[i - 1] + 1);
-            } else if (j % 2 == 0) {
-                dp[i] = Math.min(dp[j / 2] + 1, dp[i - 1] + 1);
+        for (int x = 2; x <= N; x++) {
+            int min = (int) (1e6 + 1);
+
+            if (x % 3 == 0) {
+                min = Math.min(min, dp[x / 3]);
             }
 
-            dp[i] = Math.min(dp[i] , dp[i - 1] + 1);
+            if (x % 2 == 0) {
+                min = Math.min(min, dp[x / 2]);
+            }
 
+            min = Math.min(min, dp[x - 1]);
+            dp[x] = min + 1;
         }
 
-        bw.write(dp[n]+"\n");
-        bw.flush();
-        bw.close();
+        System.out.println(dp[N]);
     }
 
+
+
+    static class FastReader {
+        private final InputStream in = System.in;
+        private final byte[] buffer = new byte[1 << 16];
+        private int ptr = 0, len = 0;
+
+        private int read() throws IOException {
+            if (ptr >= len) {
+                len = in.read(buffer);
+                ptr = 0;
+                if (len <= 0) return -1;
+            }
+            return buffer[ptr++];
+        }
+
+        int nextInt() throws IOException {
+            int c;
+            do {
+                c = read();
+            } while (c <= ' ');
+
+            int sign = 1;
+            if (c == '-') {
+                sign = -1;
+                c = read();
+            }
+
+            int val = 0;
+            while (c > ' ') {
+                val = val * 10 + (c - '0');
+                c = read();
+            }
+            return val * sign;
+        }
+    }
 }
