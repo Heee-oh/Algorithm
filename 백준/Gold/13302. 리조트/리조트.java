@@ -4,7 +4,7 @@ import java.util.*;
 public class Main {
 
     static boolean[] block;
-    static int[][][] dp;
+    static int[][] dp;
     static int N;
     static final int MAX = (int) (1e7 + 1);
     public static void main(String[] args) throws Exception {
@@ -12,7 +12,7 @@ public class Main {
         N = fr.nextInt();
         int M = fr.nextInt();
         block = new boolean[N + 1];
-        dp = new int[N + 1][N + 1][N + 1];
+        dp = new int[N + 1][N + 1];
 
         for (int i = 1; i <= M; i++) {
             int n = fr.nextInt();
@@ -21,33 +21,31 @@ public class Main {
 
 
         for (int i = 0; i <= N; i++) {
-            for (int j = 0; j <= N; j++) {
-                Arrays.fill(dp[i][j], MAX);
-
-            }
+            Arrays.fill(dp[i], MAX);
         }
 
-        int dfs = dfs(1, 0,0);
+        int dfs = dfs(1, 0);
         System.out.println(dfs);
 
 
     }
 
-    private static int dfs(int n, int service, int coupon) {
+    private static int dfs(int n, int coupon) {
         if (n > N) return 0;
 
-        if (dp[n][service][coupon] != MAX) {
-            return dp[n][service][coupon];
+
+        if (dp[n][coupon] != MAX) {
+            return dp[n][coupon];
         }
 
         if (!block[n]) {
             if (coupon >= 3) { // 쿠폰 사용 or 사용 X
-                dp[n][service][coupon] = Math.min(dfs(n + 1, service + 1, coupon - 3), dfs(n + 1,service, coupon) + 10000);
+                dp[n][coupon] = Math.min(dfs(n + 1, coupon - 3), dfs(n + 1, coupon) + 10000);
             } else {
-                dp[n][service][coupon] = Math.min(dp[n][service][coupon], dfs(n + 1,  service, coupon) + 10000);
+                dp[n][coupon] = Math.min(dp[n][coupon], dfs(n + 1,  coupon) + 10000);
             }
         } else {
-            dp[n][service][coupon] = Math.min(dp[n][service][coupon], dfs(n + 1, service, coupon));
+            dp[n][coupon] = Math.min(dp[n][coupon], dfs(n + 1,  coupon));
         }
 
 
@@ -59,12 +57,12 @@ public class Main {
 //        }
 
         // 3일 이용권
-        dp[n][service][coupon] = Math.min(dp[n][service][coupon], dfs(n + 3,service, coupon + 1) + 25000);
+        dp[n][coupon] = Math.min(dp[n][coupon], dfs(n + 3,coupon + 1) + 25000);
 
         // 5일 이용권
-        dp[n][service][coupon] = Math.min(dp[n][service][coupon], dfs(n + 5,service, coupon + 2) + 37000);
+        dp[n][coupon] = Math.min(dp[n][coupon], dfs(n + 5,coupon + 2) + 37000);
 
-        return dp[n][service][coupon];
+        return dp[n][coupon];
 
     }
 
