@@ -1,54 +1,102 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.*;
+import java.io.*;
+import java.util.Arrays;
 
+public class Main {
 
-class Main {
-
-    static final int MAX = 40000;
-    // 구슬은 최대 7개, 무게는 4만 이하
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    public static void main(String[] args) throws Exception {
+        FastReader fr = new FastReader();
         StringBuilder sb = new StringBuilder();
+        int N =  fr.nextInt();
 
-        int N = Integer.parseInt(br.readLine());
-        boolean[] dp = new boolean[MAX + 1];
+        boolean[] dp = new boolean[40_001];
+
+        // 무게 추
+        int[] arr = new int[N];
+        for (int i = 0; i < N; i++) {
+            arr[i] = fr.nextInt();
+        }
+
         dp[0] = true;
 
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < N; i++) {
-            int weight = Integer.parseInt(st.nextToken());
-
-            for (int j = MAX; j >= weight; j--) {
-                dp[j] |= dp[j - weight];
+        for (int j = 0; j < N; j++) {
+            for (int k = 40000; k >= arr[j]; k--) {
+                dp[k] |= dp[k - arr[j]];
             }
         }
 
-        int B = Integer.parseInt(br.readLine());
-        st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < B; i++) {
-            boolean isEquals = false;
-            int bead = Integer.parseInt(st.nextToken());
 
-            for (int j = MAX; j >= bead; j--) {
-                if (dp[j] && dp[j - bead]) {
-                    sb.append("Y ");
-                    isEquals = true;
+        int M = fr.nextInt();
+        for (int i = 0; i < M; i++) {
+            int target = fr.nextInt();
+            String ans = "N";
+
+            for (int j = 0; j <= 40000 - target; j++) {
+                if (dp[j] && dp[j + target]) {
+                    ans = "Y";
                     break;
                 }
             }
 
-            if (!isEquals) {
-                sb.append("N ");
-            }
+            sb.append(ans).append(" ");
         }
 
 
-        System.out.println(sb.toString());
+        System.out.print(sb.toString().trim());
+    }
 
 
+    static class FastReader {
+        private final InputStream in = System.in;
+        private final byte[] buffer = new byte[1 << 16];
+        private int ptr = 0, len = 0;
 
+        private int read() throws IOException {
+            if (ptr >= len) {
+                len = in.read(buffer);
+                ptr = 0;
+                if (len <= 0) return -1;
+            }
+            return buffer[ptr++];
+        }
 
+        int nextInt() throws IOException {
+            int c;
+            do {
+                c = read();
+            } while (c <= ' ');
+
+            int sign = 1;
+            if (c == '-') {
+                sign = -1;
+                c = read();
+            }
+
+            int val = 0;
+            while (c > ' ') {
+                val = val * 10 + (c - '0');
+                c = read();
+            }
+            return val * sign;
+        }
+
+        long nextLong() throws IOException {
+            int c;
+            do {
+                c = read();
+            } while (c <= ' ');
+
+            int sign = 1;
+            if (c == '-') {
+                sign = -1;
+                c = read();
+            }
+
+            long val = 0;
+            while (c > ' ') {
+                val = val * 10 + (c - '0');
+                c = read();
+            }
+            return val * sign;
+        }
     }
 }
