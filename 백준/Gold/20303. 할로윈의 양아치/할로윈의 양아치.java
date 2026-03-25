@@ -1,68 +1,76 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.IOException;
-import java.util.*;
+import java.io.*;
+import java.math.BigInteger;
+import java.util.Arrays;
+import java.util.TreeSet;
 import java.util.stream.IntStream;
 
 public class Main {
-    // k 명 이상 뺏으면 안됨
 
     static int[] parent;
-    static int[] candySum;
-    static int[] childCnt; // 소속된 집합의 아이들 수
+    static int[] cost;
+    static int[] sum;
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(st.nextToken()); // 아이들 수
-        int M = Integer.parseInt(st.nextToken()); // 친구 관계 수
-        int K = Integer.parseInt(st.nextToken()); // 울음소리가 공명하기 위한 최소 아이 수
+    public static void main(String[] args) throws Exception {
+        StringBuilder sb = new StringBuilder();
+        FastReader fr = new FastReader();
+
+
+        int N = fr.nextInt();
+        int M = fr.nextInt();
+        int K = fr.nextInt();
 
         parent = IntStream.range(0, N + 1).toArray();
-        candySum = new int[N + 1];
-        childCnt = new int[N + 1];
+        cost = new int[N + 1];
+        sum = new int[N + 1];
+        int[] dp = new int[K + 1];
 
-        st = new StringTokenizer(br.readLine());
-        int[] candies = new int[N + 1];
         for (int i = 1; i <= N; i++) {
-            candies[i] = Integer.parseInt(st.nextToken());
+            cost[i] = fr.nextInt();
         }
 
-
-        // 유니온 집합
+        // union-set 으로 집합 생성
         for (int i = 0; i < M; i++) {
-            st = new StringTokenizer(br.readLine());
-            int a = Integer.parseInt(st.nextToken());
-            int b = Integer.parseInt(st.nextToken());
+            int a = fr.nextInt();
+            int b = fr.nextInt();
+
             union(a, b);
+            
         }
 
-        // 각 집합의 캔디 합을 저장
+        int[] count = new int[N + 1]; // 각 집합의 대표가 해당 집합의 개수를 가짐
+        TreeSet<Integer> ts = new TreeSet<>(); // 집합 대표 수 저장
+
         for (int i = 1; i <= N; i++) {
-            int area = find(i); // 최상위 부모를 찾을때는 항상 find로 찾자
-            candySum[area] += candies[i];
-            childCnt[area]++;
+            int p = find(i);
+            count[p]++; // 대표 수 카운팅
+
+            sum[p] += cost[i]; // 해당 집합의 사탕 수 더하기
+            ts.add(p); // 대푯값 기록
         }
 
-        int[] dp = new int[K];
+        int[] num = new int[ts.size()]; // 각 집합의 대푯값들
 
-        for (int i = 1; i <= N; i++) {
-            int w = childCnt[i];
-            if (w == 0 || w >= K) continue;
-            int v = candySum[i];
+        int idx = 0;
+        for (Integer t : ts) {
+            num[idx++] = t;
+        }
 
-            for (int c = K - 1 ; c >= w; c--) {
-                dp[c] = Math.max(dp[c], dp[c - w] + v);
+
+        // 배낭문제 0/1로 처리
+        for (int i = 0; i < num.length; i++) {
+            int cur = num[i]; // 각 집합의 대푯값을 꺼냄
+
+            for (int k = K - 1; k >= count[cur]; k--) {
+                dp[k] = Math.max(dp[k], dp[k - count[cur]] + sum[cur]); // dp[k - 해당집합 개수] + 해당 집합의 사탕개수
             }
         }
 
-        int answer = Arrays.stream(dp).max().getAsInt();
-        System.out.println(answer);
-
-
+        System.out.println(dp[K-1]);
     }
 
+
     private static void union(int a, int b) {
+
         a = find(a);
         b = find(b);
 
@@ -71,10 +79,67 @@ public class Main {
         } else {
             parent[a] = b;
         }
+
     }
 
     private static int find(int x) {
         if (parent[x] == x) return x;
         return parent[x] = find(parent[x]);
+    }
+
+
+    static class FastReader {
+        private final InputStream in = System.in;
+        private final byte[] buffer = new byte[1 << 16];
+        private int ptr = 0, len = 0;
+
+        private int read() throws IOException {
+            if (ptr >= len) {
+                len = in.read(buffer);
+                ptr = 0;
+                if (len <= 0) return -1;
+            }
+            return buffer[ptr++];
+        }
+
+        int nextInt() throws IOException {
+            int c;
+            do {
+                c = read();
+            } while (c <= ' ');
+
+            int sign = 1;
+            if (c == '-') {
+                sign = -1;
+                c = read();
+            }
+
+            int val = 0;
+            while (c > ' ') {
+                val = val * 10 + (c - '0');
+                c = read();
+            }
+            return val * sign;
+        }
+
+        long nextLong() throws IOException {
+            int c;
+            do {
+                c = read();
+            } while (c <= ' ');
+
+            int sign = 1;
+            if (c == '-') {
+                sign = -1;
+                c = read();
+            }
+
+            long val = 0;
+            while (c > ' ') {
+                val = val * 10 + (c - '0');
+                c = read();
+            }
+            return val * sign;
+        }
     }
 }
