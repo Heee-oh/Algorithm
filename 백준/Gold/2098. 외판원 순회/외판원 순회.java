@@ -1,72 +1,113 @@
-import com.sun.security.jgss.GSSUtil;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Arrays;
-import java.util.StringTokenizer;
+
 
 public class Main {
-    static final int MOD = 1000000000;
-    static int[][] W;
+
+
     static int[][] dp;
-    static int n, fullBit, INF = 100000000;
+    static int[][] w;
+    static int N;
+    static int MAX;
+    static int MAX_VALUE = (int) (1e8 + 1);
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = null;
-        n = Integer.parseInt(br.readLine());
-        fullBit = (1 << n) - 1;
+    public static void main(String[] args) throws Exception {
+        FastReader fr = new FastReader();
 
-        W = new int[n][n];
-        dp = new int[n][fullBit];
+        N = fr.nextInt();
+        MAX = 1 << N;
+        dp = new int[N][MAX];
+        w = new int[N][N];
 
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                w[i][j] = fr.nextInt();
+            }
+        }
+
+
+        for (int i = 0; i < N; i++) {
             Arrays.fill(dp[i], -1);
         }
 
-        // W 초기화
-        for (int i = 0; i < n; i++) {
-            st = new StringTokenizer(br.readLine());
-            for (int j = 0; j < n; j++) {
-                W[i][j] = Integer.parseInt(st.nextToken());
-            }
-        }
-
-        // 0에서부터 출발
-        System.out.println(tps(0, 1));
-
-
+        System.out.println(dfs(0, 1));
     }
 
-    private static int tps(int x, int mask) {
-
-        // 모든 도시 방문했을 경우
-        if (mask == fullBit) {
-            // 마지막으로 x -> 0인 원지점으로 도착하려했으나 길이가 0인 자기 자신인 경우 경로가 없음, INF로 탐색 무효화
-            if (W[x][0] == 0) return INF;
-            else return W[x][0]; //
+    private static int dfs(int cur, int bit) {
+        if (bit == MAX - 1) {
+            if (w[cur][0] == 0) { // 0 -> 0은 외판원 순회 실패로 막음
+                return MAX_VALUE;
+            }
+            return w[cur][0];
         }
 
-        // 이미 방문했다면 저장된 값 반환
-        if (dp[x][mask] != -1) return dp[x][mask];
+        if (dp[cur][bit] != -1) {
+            return dp[cur][bit];
+        }
+        dp[cur][bit] = MAX_VALUE;
+        for (int i = 0; i < N; i++) {
+            if ((bit & (1 << i)) != 0) continue; // 방문했다면 넘어가기
+            if (w[cur][i] == 0) continue; // 자기자신으로 가기 방지
 
-        // 방문 표시 (dp를 모두 -1로 초기화해줬으므로 방문했다면 큰 값으로 초기화함)
-        dp[x][mask] = INF;
+            int nBit = bit | (1 << i);
+            dp[cur][bit] = Math.min(dp[cur][bit], dfs(i, nBit) + w[cur][i]);
+        }
 
-        for (int i = 0; i < n; i++) {
-            int newMask = mask | 1 << i;
+        return dp[cur][bit];
+    }
 
-            // 경로가 없거나 도시 이미 방문했을 경우 다른 도시 탐색
-            if ((mask & 1 << i) != 0 || W[x][i] == 0) {
-                continue;
+    static class FastReader {
+        private final InputStream in = System.in;
+        private final byte[] buffer = new byte[1 << 16];
+        private int ptr = 0, len = 0;
+
+        private int read() throws IOException {
+            if (ptr >= len) {
+                len = in.read(buffer);
+                ptr = 0;
+                if (len <= 0) return -1;
+            }
+            return buffer[ptr++];
+        }
+
+        int nextInt() throws IOException {
+            int c;
+            do {
+                c = read();
+            } while (c <= ' ');
+
+            int sign = 1;
+            if (c == '-') {
+                sign = -1;
+                c = read();
             }
 
-            dp[x][mask] = Math.min(dp[x][mask], tps(i, newMask) + W[x][i]);
-
-
+            int val = 0;
+            while (c > ' ') {
+                val = val * 10 + (c - '0');
+                c = read();
+            }
+            return val * sign;
         }
 
-        return dp[x][mask];
+        long nextLong() throws IOException {
+            int c;
+            do {
+                c = read();
+            } while (c <= ' ');
+
+            int sign = 1;
+            if (c == '-') {
+                sign = -1;
+                c = read();
+            }
+
+            long val = 0;
+            while (c > ' ') {
+                val = val * 10 + (c - '0');
+                c = read();
+            }
+            return val * sign;
+        }
     }
 }
