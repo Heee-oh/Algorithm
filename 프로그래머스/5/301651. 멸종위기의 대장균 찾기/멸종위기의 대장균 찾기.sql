@@ -1,0 +1,31 @@
+WITH RECURSIVE GEN AS (
+    -- 초기값 세팅
+    -- 1세대: 부모가 없는 개체들
+    SELECT
+        ID,
+        PARENT_ID,
+        1 AS GENERATION
+    FROM ECOLI_DATA
+    WHERE PARENT_ID IS NULL
+
+    UNION ALL
+
+    -- 재귀 부분 
+    -- 부모 세대 + 1로 자식 세대 확장
+    SELECT
+        E.ID,
+        E.PARENT_ID,
+        G.GENERATION + 1 AS GENERATION
+    FROM ECOLI_DATA E
+    JOIN GEN G
+      ON E.PARENT_ID = G.ID
+)
+
+SELECT
+    COUNT(*) AS COUNT,
+    G.GENERATION
+FROM GEN G
+LEFT JOIN ECOLI_DATA ED ON G.ID = ED.PARENT_ID 
+WHERE ED.ID IS NULL
+GROUP BY G.GENERATION
+ORDER BY G.GENERATION;
