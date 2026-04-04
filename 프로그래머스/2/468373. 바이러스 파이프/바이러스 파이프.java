@@ -6,7 +6,6 @@ class Solution {
     static int max = 0;
     static List<Integer>[][] trees;
     public int solution(int n, int infection, int[][] edges, int k) {
-        int answer = 0;
         N = n;
         K = k;
 
