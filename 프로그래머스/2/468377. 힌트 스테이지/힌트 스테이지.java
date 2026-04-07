@@ -8,9 +8,8 @@ class Solution {
     public int solution(int[][] cost, int[][] hint) {
         int answer = Integer.MAX_VALUE;
         n = cost.length;
-
         list = new ArrayList<>();
-    
+        // 모든 힌트번틀 구매 경우의 수를 구함
         dfs(0, new boolean[n]);
        
         
@@ -21,10 +20,10 @@ class Solution {
             int[] coupon = new int[n+1];
             
             for (int stage = 0; stage < n; stage++) {    
-                int used = Math.min(coupon[stage + 1], n - 1);
+                int used = Math.min(coupon[stage + 1], n - 1); // 쿠폰은 최대 n-1개 사용 가능
                 sum += cost[stage][used];
                 
-                if (stage < n - 1 && buy[stage]) {
+                if (buy[stage]) {
                     sum += hint[stage][0];
                     for (int k = 1; k < hint[stage].length; k++) {
                         int hintN = hint[stage][k];
