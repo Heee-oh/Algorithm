@@ -1,68 +1,68 @@
 import java.io.*;
 import java.util.Arrays;
 
+
 public class Main {
 
-    static class Painting {
-        int h, price;
+    static int N;
+    static int S;
+    static class Paint {
+        int h, c;
 
-        public Painting(int h, int price) {
+        public Paint(int h, int c) {
             this.h = h;
-            this.price = price;
+            this.c = c;
         }
+
     }
-    static Painting[] arr;
-    static int[] dp;
-    static int N, S;
+
+
     public static void main(String[] args) throws Exception {
         FastReader fr = new FastReader();
+        StringBuilder sb = new StringBuilder();
 
         N = fr.nextInt();
         S = fr.nextInt();
+        Paint[] paints = new Paint[N];
+        int[] dp = new int[N + 1];
 
-        arr = new Painting[N];
         for (int i = 0; i < N; i++) {
-            arr[i] = new Painting(fr.nextInt(), fr.nextInt());
+            paints[i] = new Paint(fr.nextInt(), fr.nextInt());
         }
 
-        Arrays.sort(arr, (o1, o2) -> Integer.compare(o1.h, o2.h));
 
-        dp = new int[N];
-        dp[0] = arr[0].price;
+        Arrays.sort(paints, (a, b) -> a.h - b.h);
+
+        dp[0] = paints[0].c;
 
         for (int i = 1; i < N; i++) {
-            int j = findLastIndex(i); // 이분 탐색으로 이전 놓기 가능한 그림을 찾음
 
-            int pick = arr[i].price;
-            if (j != -1) pick += dp[j]; // 존재한다면 그 값을 더함
+            int target = paints[i].h - S;
+            int l = 0, r = i - 1;
+            int ans = -1;
 
-            // 현재 그림 고르지 않기, 고르기 중 큰 값 선택
+            while (l <= r) {
+                int mid = (l + r) >>> 1;
+                if (paints[mid].h <= target) {
+                    ans = mid;
+                    l = mid + 1;
+                } else {
+                    r = mid - 1;
+                }
+            }
+            int pick = paints[i].c;
+            if (ans != -1) pick += dp[ans];
+
             dp[i] = Math.max(dp[i - 1], pick);
 
         }
 
+
         System.out.println(dp[N - 1]);
+
     }
 
 
-    static int findLastIndex(int i) {
-        int target = arr[i].h - S;
-        int left = 0, right = i - 1;
-        int ans = -1;
-
-        while (left <= right) {
-            int mid = (left + right) >>> 1;
-
-            if (arr[mid].h <= target) {
-                ans = mid;
-                left = mid + 1;
-            } else {
-                right = mid - 1;
-            }
-        }
-
-        return ans;
-    }
 
     static class FastReader {
         private final InputStream in = System.in;
