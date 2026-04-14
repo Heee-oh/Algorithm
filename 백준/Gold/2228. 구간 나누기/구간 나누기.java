@@ -1,6 +1,6 @@
-
 import java.io.*;
-import java.util.*;
+import java.util.Arrays;
+
 
 public class Main {
 
@@ -9,49 +9,50 @@ public class Main {
         FastReader fr = new FastReader();
         int N = fr.nextInt();
         int M = fr.nextInt();
-
-        int[] sum = new int[N + 1];
-
-        for (int i = 1; i <= N; i++) {
-            sum[i] = sum[i - 1] + fr.nextInt();
-        }
+        int MIN = -1000000;
 
         int[][] dp = new int[N + 1][M + 1];
+        int[] pSum = new int[N + 1];
+
+        for (int i = 1; i <= N; i++) {
+            pSum[i] = pSum[i - 1] + fr.nextInt();
+        }
+
         for (int i = 0; i <= N; i++) {
             for (int j = 1; j <= M; j++) {
-                dp[i][j] = Integer.MIN_VALUE / 2;
+                dp[i][j] = MIN;
             }
         }
 
-        dp[1][1] = sum[1];
+        dp[1][1] = pSum[1];
 
+        // 현재 숫자
         for (int n = 2; n <= N; n++) {
+            // 구간
             for (int m = 1; m <= M; m++) {
-
-                // n을 현재 구간에서 미포함하는 경우 이전 최댓값을 이어받음
+                // n번째 수를 사용하지 않는 경우, 꼭 n번을 포함한 값이 최대가 아닐 수 있기때문
                 dp[n][m] = dp[n - 1][m];
 
-                // m == 1일때 첫번째 구간 구하기
                 int min = m == 1 ? -1 : 0;
 
-                // n번째 숫자를 포함하는 경우 한칸 띄기
                 for (int k = n-2; k >= min; k--) {
+
                     if (k < 0) {
-                        dp[n][m] = Math.max(dp[n][m], sum[n]);
+                        dp[n][m] = Math.max(dp[n][m], pSum[n]);
                     } else {
-                        //  k + 1을 건너띔
-                        // (1..k)최댓값 [k+1] (k+2 ... n)
-                        int tmp = sum[n] - sum[k + 1];
-                        dp[n][m] = Math.max(dp[n][m], dp[k][m - 1] + tmp);
+                        dp[n][m] = Math.max(dp[n][m], dp[k][m - 1] + pSum[n] - pSum[k + 1]);
                     }
                 }
+
+
             }
         }
-
 
         System.out.println(dp[N][M]);
 
     }
+
+
 
     static class FastReader {
         private final InputStream in = System.in;
@@ -80,6 +81,26 @@ public class Main {
             }
 
             int val = 0;
+            while (c > ' ') {
+                val = val * 10 + (c - '0');
+                c = read();
+            }
+            return val * sign;
+        }
+
+        long nextLong() throws IOException {
+            int c;
+            do {
+                c = read();
+            } while (c <= ' ');
+
+            int sign = 1;
+            if (c == '-') {
+                sign = -1;
+                c = read();
+            }
+
+            long val = 0;
             while (c > ' ') {
                 val = val * 10 + (c - '0');
                 c = read();
