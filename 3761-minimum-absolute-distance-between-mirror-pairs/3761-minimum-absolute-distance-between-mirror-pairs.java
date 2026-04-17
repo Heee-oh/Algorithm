@@ -5,8 +5,6 @@ class Solution {
 
     public int minMirrorPairDistance(int[] nums) {
         int answer = Integer.MAX_VALUE;
-        
-
         Map<Integer, List<Integer>> map = new HashMap<>();
 
         // 각 값에 대한 idx를 저장
@@ -36,7 +34,7 @@ class Solution {
             
 
             // 현재 탐색중인 원래 숫자의 대략적 위치를 구함
-            int s = 0, e = list.size();
+            int s = 0, e = list.size() - 1;
            while (s < e) {
                 int mid = (s + e) >>> 1;
                 int idx = list.get(mid);
@@ -47,9 +45,6 @@ class Solution {
                     e = mid - 1;
                 }
             }
-            
-            // 이전이라면 이미 들렀다고 볼 수 있음
-            if (list.size() <= s) continue;
             
             if (list.get(s) < i) {
                 s++;
