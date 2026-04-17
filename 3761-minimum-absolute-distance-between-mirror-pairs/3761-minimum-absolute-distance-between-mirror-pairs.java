@@ -53,6 +53,7 @@ class Solution {
 
 
             for (int j = s; j < Math.min(s + 1, list.size()); j++) {
+                // 자기 자신 포함되는 것을 방지 
                 if (list.get(j) == i) continue;
 
                 int idx = list.get(j);
