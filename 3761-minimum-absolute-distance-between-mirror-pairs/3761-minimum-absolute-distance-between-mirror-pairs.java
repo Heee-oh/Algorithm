@@ -46,12 +46,13 @@ class Solution {
                 }
             }
             
+            // 찾은 reverse의 idx가 이전에 탐색한 거라면 +1칸 것을 탐색
             if (list.get(s) < i) {
                 s++;
             }
 
 
-            for (int j = s; j < Math.min(s + 2, list.size()); j++) {
+            for (int j = s; j < Math.min(s + 1, list.size()); j++) {
                 if (list.get(j) == i) continue;
 
                 int idx = list.get(j);
