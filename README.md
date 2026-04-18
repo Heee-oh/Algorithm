@@ -25,4 +25,5 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 |  |
 | ------- |
 | [0176-second-highest-salary](https://github.com/Heee-oh/Algorithm/tree/master/0176-second-highest-salary) |
+| [0180-consecutive-numbers](https://github.com/Heee-oh/Algorithm/tree/master/0180-consecutive-numbers) |
 <!---LeetCode Topics End-->
