@@ -21,4 +21,8 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 |  |
 | ------- |
 | [3761-minimum-absolute-distance-between-mirror-pairs](https://github.com/Heee-oh/Algorithm/tree/master/3761-minimum-absolute-distance-between-mirror-pairs) |
+## Database
+|  |
+| ------- |
+| [0176-second-highest-salary](https://github.com/Heee-oh/Algorithm/tree/master/0176-second-highest-salary) |
 <!---LeetCode Topics End-->
