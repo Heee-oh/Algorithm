@@ -10,12 +10,14 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 | [1855-maximum-distance-between-a-pair-of-values](https://github.com/Heee-oh/Algorithm/tree/master/1855-maximum-distance-between-a-pair-of-values) |
 | [2078-two-furthest-houses-with-different-colors](https://github.com/Heee-oh/Algorithm/tree/master/2078-two-furthest-houses-with-different-colors) |
 | [2452-words-within-two-edits-of-dictionary](https://github.com/Heee-oh/Algorithm/tree/master/2452-words-within-two-edits-of-dictionary) |
+| [2615-sum-of-distances](https://github.com/Heee-oh/Algorithm/tree/master/2615-sum-of-distances) |
 | [3488-closest-equal-element-queries](https://github.com/Heee-oh/Algorithm/tree/master/3488-closest-equal-element-queries) |
 | [3761-minimum-absolute-distance-between-mirror-pairs](https://github.com/Heee-oh/Algorithm/tree/master/3761-minimum-absolute-distance-between-mirror-pairs) |
 ## Hash Table
 |  |
 | ------- |
 | [0001-two-sum](https://github.com/Heee-oh/Algorithm/tree/master/0001-two-sum) |
+| [2615-sum-of-distances](https://github.com/Heee-oh/Algorithm/tree/master/2615-sum-of-distances) |
 | [3488-closest-equal-element-queries](https://github.com/Heee-oh/Algorithm/tree/master/3488-closest-equal-element-queries) |
 | [3761-minimum-absolute-distance-between-mirror-pairs](https://github.com/Heee-oh/Algorithm/tree/master/3761-minimum-absolute-distance-between-mirror-pairs) |
 ## Binary Search
@@ -57,4 +59,8 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 |  |
 | ------- |
 | [2452-words-within-two-edits-of-dictionary](https://github.com/Heee-oh/Algorithm/tree/master/2452-words-within-two-edits-of-dictionary) |
+## Prefix Sum
+|  |
+| ------- |
+| [2615-sum-of-distances](https://github.com/Heee-oh/Algorithm/tree/master/2615-sum-of-distances) |
 <!---LeetCode Topics End-->
