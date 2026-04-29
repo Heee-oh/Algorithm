@@ -13,6 +13,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 | [2078-two-furthest-houses-with-different-colors](https://github.com/Heee-oh/Algorithm/tree/master/2078-two-furthest-houses-with-different-colors) |
 | [2452-words-within-two-edits-of-dictionary](https://github.com/Heee-oh/Algorithm/tree/master/2452-words-within-two-edits-of-dictionary) |
 | [2615-sum-of-distances](https://github.com/Heee-oh/Algorithm/tree/master/2615-sum-of-distances) |
+| [3225-maximum-score-from-grid-operations](https://github.com/Heee-oh/Algorithm/tree/master/3225-maximum-score-from-grid-operations) |
 | [3488-closest-equal-element-queries](https://github.com/Heee-oh/Algorithm/tree/master/3488-closest-equal-element-queries) |
 | [3761-minimum-absolute-distance-between-mirror-pairs](https://github.com/Heee-oh/Algorithm/tree/master/3761-minimum-absolute-distance-between-mirror-pairs) |
 ## Hash Table
@@ -69,6 +70,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 |  |
 | ------- |
 | [2615-sum-of-distances](https://github.com/Heee-oh/Algorithm/tree/master/2615-sum-of-distances) |
+| [3225-maximum-score-from-grid-operations](https://github.com/Heee-oh/Algorithm/tree/master/3225-maximum-score-from-grid-operations) |
 ## Counting
 |  |
 | ------- |
@@ -90,8 +92,13 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 | ------- |
 | [1391-check-if-there-is-a-valid-path-in-a-grid](https://github.com/Heee-oh/Algorithm/tree/master/1391-check-if-there-is-a-valid-path-in-a-grid) |
 | [2033-minimum-operations-to-make-a-uni-value-grid](https://github.com/Heee-oh/Algorithm/tree/master/2033-minimum-operations-to-make-a-uni-value-grid) |
+| [3225-maximum-score-from-grid-operations](https://github.com/Heee-oh/Algorithm/tree/master/3225-maximum-score-from-grid-operations) |
 ## Sorting
 |  |
 | ------- |
 | [2033-minimum-operations-to-make-a-uni-value-grid](https://github.com/Heee-oh/Algorithm/tree/master/2033-minimum-operations-to-make-a-uni-value-grid) |
+## Dynamic Programming
+|  |
+| ------- |
+| [3225-maximum-score-from-grid-operations](https://github.com/Heee-oh/Algorithm/tree/master/3225-maximum-score-from-grid-operations) |
 <!---LeetCode Topics End-->
