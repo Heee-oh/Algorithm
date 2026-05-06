@@ -10,6 +10,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 | [0396-rotate-function](https://github.com/Heee-oh/Algorithm/tree/master/0396-rotate-function) |
 | [1391-check-if-there-is-a-valid-path-in-a-grid](https://github.com/Heee-oh/Algorithm/tree/master/1391-check-if-there-is-a-valid-path-in-a-grid) |
 | [1855-maximum-distance-between-a-pair-of-values](https://github.com/Heee-oh/Algorithm/tree/master/1855-maximum-distance-between-a-pair-of-values) |
+| [1861-rotating-the-box](https://github.com/Heee-oh/Algorithm/tree/master/1861-rotating-the-box) |
 | [2033-minimum-operations-to-make-a-uni-value-grid](https://github.com/Heee-oh/Algorithm/tree/master/2033-minimum-operations-to-make-a-uni-value-grid) |
 | [2078-two-furthest-houses-with-different-colors](https://github.com/Heee-oh/Algorithm/tree/master/2078-two-furthest-houses-with-different-colors) |
 | [2452-words-within-two-edits-of-dictionary](https://github.com/Heee-oh/Algorithm/tree/master/2452-words-within-two-edits-of-dictionary) |
@@ -53,6 +54,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 |  |
 | ------- |
 | [1855-maximum-distance-between-a-pair-of-values](https://github.com/Heee-oh/Algorithm/tree/master/1855-maximum-distance-between-a-pair-of-values) |
+| [1861-rotating-the-box](https://github.com/Heee-oh/Algorithm/tree/master/1861-rotating-the-box) |
 ## Greedy
 |  |
 | ------- |
@@ -100,6 +102,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 |  |
 | ------- |
 | [1391-check-if-there-is-a-valid-path-in-a-grid](https://github.com/Heee-oh/Algorithm/tree/master/1391-check-if-there-is-a-valid-path-in-a-grid) |
+| [1861-rotating-the-box](https://github.com/Heee-oh/Algorithm/tree/master/1861-rotating-the-box) |
 | [2033-minimum-operations-to-make-a-uni-value-grid](https://github.com/Heee-oh/Algorithm/tree/master/2033-minimum-operations-to-make-a-uni-value-grid) |
 | [3225-maximum-score-from-grid-operations](https://github.com/Heee-oh/Algorithm/tree/master/3225-maximum-score-from-grid-operations) |
 ## Sorting
