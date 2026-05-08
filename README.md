@@ -17,6 +17,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 | [2615-sum-of-distances](https://github.com/Heee-oh/Algorithm/tree/master/2615-sum-of-distances) |
 | [3225-maximum-score-from-grid-operations](https://github.com/Heee-oh/Algorithm/tree/master/3225-maximum-score-from-grid-operations) |
 | [3488-closest-equal-element-queries](https://github.com/Heee-oh/Algorithm/tree/master/3488-closest-equal-element-queries) |
+| [3629-minimum-jumps-to-reach-end-via-prime-teleportation](https://github.com/Heee-oh/Algorithm/tree/master/3629-minimum-jumps-to-reach-end-via-prime-teleportation) |
 | [3660-jump-game-ix](https://github.com/Heee-oh/Algorithm/tree/master/3660-jump-game-ix) |
 | [3761-minimum-absolute-distance-between-mirror-pairs](https://github.com/Heee-oh/Algorithm/tree/master/3761-minimum-absolute-distance-between-mirror-pairs) |
 ## Hash Table
@@ -25,6 +26,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 | [0001-two-sum](https://github.com/Heee-oh/Algorithm/tree/master/0001-two-sum) |
 | [2615-sum-of-distances](https://github.com/Heee-oh/Algorithm/tree/master/2615-sum-of-distances) |
 | [3488-closest-equal-element-queries](https://github.com/Heee-oh/Algorithm/tree/master/3488-closest-equal-element-queries) |
+| [3629-minimum-jumps-to-reach-end-via-prime-teleportation](https://github.com/Heee-oh/Algorithm/tree/master/3629-minimum-jumps-to-reach-end-via-prime-teleportation) |
 | [3761-minimum-absolute-distance-between-mirror-pairs](https://github.com/Heee-oh/Algorithm/tree/master/3761-minimum-absolute-distance-between-mirror-pairs) |
 ## Binary Search
 |  |
@@ -37,6 +39,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 | [0002-add-two-numbers](https://github.com/Heee-oh/Algorithm/tree/master/0002-add-two-numbers) |
 | [0396-rotate-function](https://github.com/Heee-oh/Algorithm/tree/master/0396-rotate-function) |
 | [2033-minimum-operations-to-make-a-uni-value-grid](https://github.com/Heee-oh/Algorithm/tree/master/2033-minimum-operations-to-make-a-uni-value-grid) |
+| [3629-minimum-jumps-to-reach-end-via-prime-teleportation](https://github.com/Heee-oh/Algorithm/tree/master/3629-minimum-jumps-to-reach-end-via-prime-teleportation) |
 | [3761-minimum-absolute-distance-between-mirror-pairs](https://github.com/Heee-oh/Algorithm/tree/master/3761-minimum-absolute-distance-between-mirror-pairs) |
 ## Database
 |  |
@@ -95,6 +98,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 |  |
 | ------- |
 | [1391-check-if-there-is-a-valid-path-in-a-grid](https://github.com/Heee-oh/Algorithm/tree/master/1391-check-if-there-is-a-valid-path-in-a-grid) |
+| [3629-minimum-jumps-to-reach-end-via-prime-teleportation](https://github.com/Heee-oh/Algorithm/tree/master/3629-minimum-jumps-to-reach-end-via-prime-teleportation) |
 ## Union-Find
 |  |
 | ------- |
@@ -120,4 +124,8 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 |  |
 | ------- |
 | [0796-rotate-string](https://github.com/Heee-oh/Algorithm/tree/master/0796-rotate-string) |
+## Number Theory
+|  |
+| ------- |
+| [3629-minimum-jumps-to-reach-end-via-prime-teleportation](https://github.com/Heee-oh/Algorithm/tree/master/3629-minimum-jumps-to-reach-end-via-prime-teleportation) |
 <!---LeetCode Topics End-->
