@@ -9,6 +9,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 | [0001-two-sum](https://github.com/Heee-oh/Algorithm/tree/master/0001-two-sum) |
 | [0396-rotate-function](https://github.com/Heee-oh/Algorithm/tree/master/0396-rotate-function) |
 | [1391-check-if-there-is-a-valid-path-in-a-grid](https://github.com/Heee-oh/Algorithm/tree/master/1391-check-if-there-is-a-valid-path-in-a-grid) |
+| [1665-minimum-initial-energy-to-finish-tasks](https://github.com/Heee-oh/Algorithm/tree/master/1665-minimum-initial-energy-to-finish-tasks) |
 | [1855-maximum-distance-between-a-pair-of-values](https://github.com/Heee-oh/Algorithm/tree/master/1855-maximum-distance-between-a-pair-of-values) |
 | [1861-rotating-the-box](https://github.com/Heee-oh/Algorithm/tree/master/1861-rotating-the-box) |
 | [2033-minimum-operations-to-make-a-uni-value-grid](https://github.com/Heee-oh/Algorithm/tree/master/2033-minimum-operations-to-make-a-uni-value-grid) |
@@ -65,6 +66,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 ## Greedy
 |  |
 | ------- |
+| [1665-minimum-initial-energy-to-finish-tasks](https://github.com/Heee-oh/Algorithm/tree/master/1665-minimum-initial-energy-to-finish-tasks) |
 | [2078-two-furthest-houses-with-different-colors](https://github.com/Heee-oh/Algorithm/tree/master/2078-two-furthest-houses-with-different-colors) |
 ## Linked List
 |  |
@@ -116,6 +118,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 ## Sorting
 |  |
 | ------- |
+| [1665-minimum-initial-energy-to-finish-tasks](https://github.com/Heee-oh/Algorithm/tree/master/1665-minimum-initial-energy-to-finish-tasks) |
 | [2033-minimum-operations-to-make-a-uni-value-grid](https://github.com/Heee-oh/Algorithm/tree/master/2033-minimum-operations-to-make-a-uni-value-grid) |
 ## Dynamic Programming
 |  |
