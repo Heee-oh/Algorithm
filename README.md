@@ -10,6 +10,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 | [0396-rotate-function](https://github.com/Heee-oh/Algorithm/tree/master/0396-rotate-function) |
 | [1391-check-if-there-is-a-valid-path-in-a-grid](https://github.com/Heee-oh/Algorithm/tree/master/1391-check-if-there-is-a-valid-path-in-a-grid) |
 | [1665-minimum-initial-energy-to-finish-tasks](https://github.com/Heee-oh/Algorithm/tree/master/1665-minimum-initial-energy-to-finish-tasks) |
+| [1674-minimum-moves-to-make-array-complementary](https://github.com/Heee-oh/Algorithm/tree/master/1674-minimum-moves-to-make-array-complementary) |
 | [1855-maximum-distance-between-a-pair-of-values](https://github.com/Heee-oh/Algorithm/tree/master/1855-maximum-distance-between-a-pair-of-values) |
 | [1861-rotating-the-box](https://github.com/Heee-oh/Algorithm/tree/master/1861-rotating-the-box) |
 | [2033-minimum-operations-to-make-a-uni-value-grid](https://github.com/Heee-oh/Algorithm/tree/master/2033-minimum-operations-to-make-a-uni-value-grid) |
@@ -26,6 +27,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 |  |
 | ------- |
 | [0001-two-sum](https://github.com/Heee-oh/Algorithm/tree/master/0001-two-sum) |
+| [1674-minimum-moves-to-make-array-complementary](https://github.com/Heee-oh/Algorithm/tree/master/1674-minimum-moves-to-make-array-complementary) |
 | [2615-sum-of-distances](https://github.com/Heee-oh/Algorithm/tree/master/2615-sum-of-distances) |
 | [3488-closest-equal-element-queries](https://github.com/Heee-oh/Algorithm/tree/master/3488-closest-equal-element-queries) |
 | [3629-minimum-jumps-to-reach-end-via-prime-teleportation](https://github.com/Heee-oh/Algorithm/tree/master/3629-minimum-jumps-to-reach-end-via-prime-teleportation) |
@@ -89,6 +91,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 ## Prefix Sum
 |  |
 | ------- |
+| [1674-minimum-moves-to-make-array-complementary](https://github.com/Heee-oh/Algorithm/tree/master/1674-minimum-moves-to-make-array-complementary) |
 | [2615-sum-of-distances](https://github.com/Heee-oh/Algorithm/tree/master/2615-sum-of-distances) |
 | [3225-maximum-score-from-grid-operations](https://github.com/Heee-oh/Algorithm/tree/master/3225-maximum-score-from-grid-operations) |
 ## Counting
