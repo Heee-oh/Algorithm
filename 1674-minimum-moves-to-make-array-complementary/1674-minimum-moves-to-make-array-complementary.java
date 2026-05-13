@@ -23,8 +23,7 @@ class Solution {
             diff[a + b] -= 1;
             diff[a + b + 1] += 1;
         }
-
-        System.out.println(Arrays.toString(diff));
+        
         int minMoves = n; // 최대 이동 횟수는 n번 (모든 숫자를 다 바꾸는 경우)
         int currentMoves = 0;
 
