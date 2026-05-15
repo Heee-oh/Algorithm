@@ -7,6 +7,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 |  |
 | ------- |
 | [0001-two-sum](https://github.com/Heee-oh/Algorithm/tree/master/0001-two-sum) |
+| [0153-find-minimum-in-rotated-sorted-array](https://github.com/Heee-oh/Algorithm/tree/master/0153-find-minimum-in-rotated-sorted-array) |
 | [0396-rotate-function](https://github.com/Heee-oh/Algorithm/tree/master/0396-rotate-function) |
 | [1391-check-if-there-is-a-valid-path-in-a-grid](https://github.com/Heee-oh/Algorithm/tree/master/1391-check-if-there-is-a-valid-path-in-a-grid) |
 | [1665-minimum-initial-energy-to-finish-tasks](https://github.com/Heee-oh/Algorithm/tree/master/1665-minimum-initial-energy-to-finish-tasks) |
@@ -35,6 +36,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 ## Binary Search
 |  |
 | ------- |
+| [0153-find-minimum-in-rotated-sorted-array](https://github.com/Heee-oh/Algorithm/tree/master/0153-find-minimum-in-rotated-sorted-array) |
 | [1855-maximum-distance-between-a-pair-of-values](https://github.com/Heee-oh/Algorithm/tree/master/1855-maximum-distance-between-a-pair-of-values) |
 | [3488-closest-equal-element-queries](https://github.com/Heee-oh/Algorithm/tree/master/3488-closest-equal-element-queries) |
 ## Math
