@@ -19,6 +19,7 @@ class Solution {
             minDp[num][num] = maxDp[num][num] = Integer.parseInt(arr[i]);
         }
         
+        // 구간별 최대 최소 dp를 구함
         for (int len = 2; len < arr.length; len += 2) {
             
             for (int l = 0; l < arr.length - len; l += 2) {
@@ -27,9 +28,9 @@ class Solution {
                 int e = r >>> 1;
                 
                 for (int mid = l + 1; mid < r; mid += 2) {
-                    if (arr[mid].equals("-")) {
+                    if (arr[mid].equals("-")) { // - 일 경우 max - min이 최댓값이 됨 
                         maxDp[s][e] = Math.max(maxDp[s][e], maxDp[s][(mid - 1) >>> 1] - minDp[(mid+1) >>> 1][e]);    
-                        minDp[s][e] = Math.min(minDp[s][e], minDp[s][(mid - 1) >>> 1] - maxDp[(mid+1) >>> 1][e]);    
+                        minDp[s][e] = Math.min(minDp[s][e], minDp[s][(mid - 1) >>> 1] - maxDp[(mid+1) >>> 1][e]);    // min의 경우 (left)min - (right)max 로 해야 최소값이 나옴 
                     } else {
                         maxDp[s][e] = Math.max(maxDp[s][e], maxDp[s][(mid - 1) >>> 1] + maxDp[(mid+1) >>> 1][e]);
                         minDp[s][e] = Math.min(minDp[s][e], minDp[s][(mid - 1) >>> 1] + minDp[(mid+1) >>> 1][e]);
