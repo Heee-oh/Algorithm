@@ -1,7 +1,7 @@
 class Solution {
     public long solution(int n, int[] times) {
         long answer = 0;
-        long s = 1, e = (long)1e13;
+        long s = 1, e = (long)1e14;
         
         while (s < e) {
             
