@@ -64,6 +64,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 | [0197-rising-temperature](https://github.com/Heee-oh/Algorithm/tree/master/0197-rising-temperature) |
 | [0262-trips-and-users](https://github.com/Heee-oh/Algorithm/tree/master/0262-trips-and-users) |
 | [0511-game-play-analysis-i](https://github.com/Heee-oh/Algorithm/tree/master/0511-game-play-analysis-i) |
+| [0550-game-play-analysis-iv](https://github.com/Heee-oh/Algorithm/tree/master/0550-game-play-analysis-iv) |
 ## Two Pointers
 |  |
 | ------- |
