@@ -3,7 +3,6 @@ import java.util.*;
 class Solution {
     public int[] solution(String msg) {
         List<Integer> list = new ArrayList<>();
-        int[] answer = {};
         
         // 1. 초기 사전 생성
         int idx = 1;
