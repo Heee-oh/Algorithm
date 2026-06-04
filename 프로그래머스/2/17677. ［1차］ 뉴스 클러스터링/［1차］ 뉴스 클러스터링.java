@@ -1,4 +1,6 @@
-import java.util.*;
+import java.util.Map;
+import java.util.HashMap;
+
 
 class Solution {
     // 자카드 유사도 = 두 집합의 교집합 크기 / 합집합 크기
