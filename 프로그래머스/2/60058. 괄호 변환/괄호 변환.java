@@ -1,10 +1,7 @@
-import java.util.Stack;
-
 class Solution {
     char[] arr;
     
     public String solution(String p) {
-        String answer = "";
         arr = p.toCharArray();
         
         // 2. 올바른 괄호 문자열 변환 로직
@@ -47,7 +44,6 @@ class Solution {
             // u가 더이상 분리 불가 균형잡힌 괄호 문자열이여야함
             if (open == close) {
                 String v = v(i+1, e);
-                
                 
                 if (isAlright(s, i)) {
                     String u = charToString(s, i);
