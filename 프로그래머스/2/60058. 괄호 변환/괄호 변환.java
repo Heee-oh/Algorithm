@@ -63,22 +63,19 @@ class Solution {
     }
     
     private boolean isAlright(int s, int e) {
-        Stack<Character> stack = new Stack<>();
+        int open = 0;
         
         for (int i = s; i <= e; i++) {
             char c = arr[i];
-            if (stack.isEmpty()) {
-                stack.push(c);
-                
-            } else if (c == ')' && stack.peek() == '(') {
-                stack.pop();
-                
+            if (c == ')') {
+                if (open == 0) return false;
+                open--;
             } else {
-                stack.push(c);
+                open++;
             }
         }
         
-        return stack.isEmpty();
+        return true;
     }
     
     private String charToString(int s, int e) {
