@@ -17,20 +17,8 @@ class Solution {
                 map[j] = places[i][j].toCharArray();                
             }
             
-            boolean flag = false;
-            for (int r = 0; r < 5; r++) {
-                for (int c = 0; c < 5; c++) {
-                    if (map[r][c] == 'P') {
-                        if (!bfs(map, r, c)) {
-                            answer[i] = 0;
-                            flag = true;
-                            break;
-                        }
-                    }
-                }
-                
-                if (flag) break;
-            }
+            valid(map, answer, i);
+            
             
         }
         
@@ -38,8 +26,19 @@ class Solution {
         return answer;
     }
     
+    private void valid(char[][] map, int[] answer, int i){
+        for (int r = 0; r < 5; r++) {
+            for (int c = 0; c < 5; c++) {
+                if (map[r][c] == 'P' && !bfs(map, r, c)) {
+                    answer[i] = 0;
+                    return;
+                }
+            }
+        }
+    }
+    
     private boolean bfs(char[][] map, int r, int c) {
-        boolean[][] visited = new boolean[map.length][map[0].length];
+        boolean[][] visited = new boolean[5][5];
         Queue<int[]> q = new LinkedList<>();
         q.offer(new int[] {r, c, 0});
         visited[r][c] = true;
@@ -55,8 +54,8 @@ class Solution {
                 int nr = cur[0] + dr[d];
                 int nc = cur[1] + dc[d];
                 
-                if (nr < 0 || nr >= map.length 
-                    || nc < 0 || nc >= map[0].length 
+                if (nr < 0 || nr >= 5 
+                    || nc < 0 || nc >= 5 
                     || visited[nr][nc] || map[nr][nc] == 'X') continue;
                     
                 
@@ -67,9 +66,6 @@ class Solution {
                 
                 visited[nr][nc] = true;
                 q.offer(new int[] {nr, nc, cur[2] + 1});
-                
-                
-                
             }
         }
         
