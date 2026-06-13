@@ -27,15 +27,18 @@ class Solution {
         }
         
         
-        long[] origin = nums.clone();
+        long[] origin = nums.clone(); // 원본값 저장 
+        // 각 패턴에 대하여 탐색
         for (String pattern : patterns) {
             parent = IntStream.range(0, nums.length).toArray();
             nums = origin.clone();
+            
             for (char c : pattern.toCharArray()) {
                 if (!map.containsKey(c)) continue;
                 
                 for (int idx : map.get(c)) {
-                    int a = find(idx);
+                    // 각 숫자의 집합을 찾음
+                    int a = find(idx); 
                     int b = find(idx+1);
                     
                     if (c == '+') {
@@ -48,6 +51,7 @@ class Solution {
                         nums[a] *= nums[b];
                     }
                     
+                    // 작은 집합으로 합침 
                     union(a, b);
                 }
             }
