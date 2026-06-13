@@ -9,7 +9,7 @@ class Solution {
     public long solution(String expression) {
         long answer = 0;
         
-        long [] nums = Arrays.stream(expression
+        long [] origin = Arrays.stream(expression
                                       .replaceAll("[^0-9]", " ")
                                       .split(" ")
                                      )
@@ -27,11 +27,10 @@ class Solution {
         }
         
         
-        long[] origin = nums.clone(); // 원본값 저장 
         // 각 패턴에 대하여 탐색
         for (String pattern : patterns) {
-            parent = IntStream.range(0, nums.length).toArray();
-            nums = origin.clone();
+            parent = IntStream.range(0, origin.length).toArray();
+            long[] nums = origin.clone();
             
             for (char c : pattern.toCharArray()) {
                 if (!map.containsKey(c)) continue;
@@ -81,4 +80,3 @@ class Solution {
         return parent[x] = find(parent[x]);
     }
 }
-
