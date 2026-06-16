@@ -29,7 +29,7 @@ class Solution {
         for (String req : requests) {
             char container = req.charAt(0);
             if (req.length() > 1) {
-                crain(container);
+                crane(container);
             } else {
                 bfs(container);
             }
@@ -46,7 +46,7 @@ class Solution {
         return answer;
     }
     
-    private void crain(char target) {
+    private void crane(char target) {
         for (int i = 1; i <= n; i++) {
             for (int j = 1; j <= m; j++) {
                 if (map[i][j] == target) {
