@@ -4,7 +4,6 @@ class Solution {
         StringBuilder sb = new StringBuilder(s);
         String answer = "a".repeat(2000);
         
-        if (s.length() == 1) return 1;
         
         // 앞에서 부터 잘랐을때 나머지를 제외하고 탐색해야함
         for (int len = 1; len < s.length(); len++) {
@@ -48,6 +47,8 @@ class Solution {
             }
         }
         
-        return answer.length();
+        return answer.length() == 2000 
+            ? s.length() 
+            : answer.length();
     }
 }
