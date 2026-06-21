@@ -11,11 +11,11 @@ WHERE id IN (
         SELECT t.prev
         FROM t
         WHERE post - prev = 2
-    ) UNION ALL (
+    ) UNION (
         SELECT t.id
         FROM t
         WHERE post - prev = 2
-    ) UNION ALL (
+    ) UNION (
         SELECT t.post
         FROM t
         WHERE post - prev = 2
