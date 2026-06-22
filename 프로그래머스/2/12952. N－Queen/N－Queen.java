@@ -29,19 +29,19 @@ class Solution {
         row = new boolean[n];
         col = new boolean[n];
         
-        dfs(0, 0, 0);
+        dfs(0, 0);
         
         return answer;
     }
     
     
-    private void dfs(int r, int c, int cnt) {
+    private void dfs(int r, int cnt) {
         if (cnt == size) {
             answer++;
             return;
         }
         
-        if (r >= size || c >= size) {
+        if (r >= size) {
             return;
         }
         
@@ -63,7 +63,7 @@ class Solution {
                     arr1[len1] = new Queen(r, j);
                     len1++;
                     row[r] = col[j] = true;
-                    dfs(r + 1, j, cnt + 1);
+                    dfs(r + 1, cnt + 1);
                     len1--;
                     
                 } else {
@@ -80,7 +80,7 @@ class Solution {
                     arr2[len2] = new Queen(r, j);
                     len2++;
                     row[r] = col[j] = true;
-                    dfs(r + 1, j, cnt + 1);
+                    dfs(r + 1, cnt + 1);
                     len2--;
                 }
     
