@@ -26,6 +26,8 @@ class Solution {
         }
         
         Queue<int[]> q = new LinkedList<>();
+        Queue<int[]> check = new LinkedList<>();
+        
         for (int i = 0; i < routes.length; i++) {
             int route = routes[i][0];
             // 루트 번호, 현재 진행중인 루트, 현재 위치 
@@ -33,9 +35,10 @@ class Solution {
             
         }
         
+        // 충돌 체크용 맵 
+        int[][] map = new int[101][101];
         
         while (!q.isEmpty()) {
-            int[][] map = new int[101][101];
             int size = q.size();
             
             while (size--> 0) {
@@ -44,6 +47,7 @@ class Solution {
                 int route = cur[1];
                 int r = cur[2];
                 int c = cur[3];
+                check.offer(new int[] {r, c});
                 map[r][c]++;
 
                 // 해당 로봇이 모든 루트를 이동했다면 종료
@@ -54,20 +58,10 @@ class Solution {
 
                 // r 먼저 이동
                 if (target.r != r) {
-                    if (target.r < r) {
-                        r--;
-                    } else {
-                        r++;
-                    }
-
-
+                    r += (target.r < r) ? -1 : 1;
                     // c 이동
                 } else if (target.c != c) {
-                    if (target.c < c) {
-                        c--;
-                    } else {
-                        c++;
-                    }
+                    c += (target.c < c) ? -1 : 1;
                 } 
 
                 // 현재 선택한 루트에 도달했다면 
@@ -78,12 +72,15 @@ class Solution {
                 q.offer(new int[] {routeNum, route, r, c});
             }
             
-            // 매 초마다 충돌 체크 
-            for (int i = 1; i < map.length; i++) {
-                for (int j = 1; j < map[0].length; j++) {
-                    if (map[i][j] > 1) answer++;
-                }
+            // 현재 초에 이동한 로봇들의 충돌 체크
+            while (!check.isEmpty()) {
+                int[] cur = check.poll();
+                int r = cur[0], c = cur[1];
+                
+                if (map[r][c] > 1) answer++;
+                map[r][c] = 0; // 체크 후 원래대로 
             }
+
         }
         
         
