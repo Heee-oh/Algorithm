@@ -74,6 +74,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 | [0596-classes-with-at-least-5-students](https://github.com/Heee-oh/Algorithm/tree/master/0596-classes-with-at-least-5-students) |
 | [0601-human-traffic-of-stadium](https://github.com/Heee-oh/Algorithm/tree/master/0601-human-traffic-of-stadium) |
 | [0602-friend-requests-ii-who-has-the-most-friends](https://github.com/Heee-oh/Algorithm/tree/master/0602-friend-requests-ii-who-has-the-most-friends) |
+| [0626-exchange-seats](https://github.com/Heee-oh/Algorithm/tree/master/0626-exchange-seats) |
 ## Two Pointers
 |  |
 | ------- |
