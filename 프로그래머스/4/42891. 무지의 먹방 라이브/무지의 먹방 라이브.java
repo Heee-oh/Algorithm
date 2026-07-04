@@ -41,6 +41,8 @@ class Solution {
             
             long totalDiffTime = (long)pq.size() * (cur.time - prevTime);
             
+            
+            // 남은 k 시간보다 현재 남은 음식의 시간만큼 한 사이클을 돌아서 먹는 시간의 합이 더 크다면 중지
             if (k < totalDiffTime) break;
             
             k -= totalDiffTime; // 먹은 시간만큼 빼준다
