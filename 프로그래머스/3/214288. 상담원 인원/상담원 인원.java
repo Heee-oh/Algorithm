@@ -94,13 +94,13 @@ class Solution {
     
     
     private void dfs(int[][] arr, int n, int type, int sum) {
+        // k-1개의 유형에 대하여 인원을 선택했으므로 나머지 k번째 유형은 나머지 인원을 다 받음 
         if (type == arr.length - 1) {
-            answer = Math.min(answer, sum + arr[type][n ]);
+            answer = Math.min(answer, sum + arr[type][n]);
             return;
         }
         
         for (int i = 1; i <= n; i++) {
-            
             dfs(arr, n - (i - 1), type + 1,  sum + arr[type][i]);
         }
     }
