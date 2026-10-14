@@ -1,23 +1,27 @@
-import java.util.Arrays;
 
 class Solution {
     public int solution(int[] money) {
+        int answer = 0;
         int n = money.length;
+        int[] dp0 = new int[n + 1]; // 처음집 포함
+        int[] dp1 = new int[n + 1]; // 처음집 미포함
         
-        int[][] dp = new int[n][2];
-        for (int i = 0; i < n; i++) {
-            dp[i][0] = dp[i][1] = -1;
-        }
+        dp0[1] = money[0]; // 첫집 포함
+    
         
-        dp[0][0] = dp[1][0] = money[0];
-        dp[0][1] = 0;
-        dp[1][1] = money[1];
-        
+        // 포함 부터 
         for (int i = 2; i < n; i++) {
-            dp[i][0] = Math.max(dp[i-1][0], dp[i-2][0] + money[i]);
-            dp[i][1] = Math.max(dp[i-1][1], dp[i-2][1] + money[i]);
+            dp0[i] = Math.max(dp0[i-2] + money[i-1], dp0[i-1]);
         }
         
-        return Math.max(dp[n-2][0], dp[n-1][1]);
+        
+        // 미포함 
+        for (int i = 2; i <= n; i++) {
+            dp1[i] = Math.max(dp1[i-2] + money[i-1], dp1[i-1]);
+        }
+        
+        
+        
+        return Math.max(dp0[n - 1], dp1[n]);
     }
 }
